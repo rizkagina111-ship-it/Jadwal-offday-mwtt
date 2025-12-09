@@ -1,0 +1,1669 @@
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050301">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Jadwal Offday</title>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --text:#eef2ff;
+      --muted:#aab3d1;
+      --accent:#8b5cf6;
+      --green:#22c55e;
+      --radius:18px;
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+      --ring:0 0 0 2px rgba(139,92,246,.25);
+      --gold:#f6d365;
+      --gold2:#fda085;
+    }
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background: url("https://mariterbang.io/download/LFVvAEcj.jpg")
+                  center/cover no-repeat fixed;
+      min-height:100vh;
+      width:100vw;
+      display:block;
+      padding:0;
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(1200px 900px at 50% 30%,
+          rgba(0,0,0,0.12) 0%,
+          rgba(0,0,0,0.42) 60%);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .app{
+      width:100%;
+      max-width:none;
+      min-height:100vh;
+      display:grid;
+      gap:14px;
+      padding:16px;
+    }
+
+    .header{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 16px; background:rgba(255,255,255,.06); border-radius:18px;
+      box-shadow:var(--shadow); backdrop-filter:blur(10px);
+      position:sticky; top:0; z-index:10;
+      gap:10px; flex-wrap:wrap;
+    }
+    .brand{display:flex; gap:10px; align-items:center;}
+    .logo{
+      width:40px; height:40px; border-radius:12px; display:grid; place-items:center;
+      background:conic-gradient(from 120deg,var(--accent),#06b6d4,#f59e0b,var(--accent));
+      font-weight:900;
+    }
+    .brand h1{margin:0; font-size:18px}
+    .brand p{margin:2px 0 0; font-size:12px; color:var(--muted)}
+
+    .controls{display:flex; gap:8px; flex-wrap:wrap;}
+    button{
+      border:0; background:rgba(255,255,255,.04); color:var(--text); cursor:pointer; font-weight:700;
+      padding:9px 12px; border-radius:12px; transition:.15s; outline:none;
+    }
+    button:hover{transform:translateY(-1px); background:rgba(255,255,255,.08)}
+    button:focus-visible{box-shadow:var(--ring)}
+    .btn-green{background:rgba(34,197,94,.16)}
+    .btn-green:hover{background:rgba(34,197,94,.26)}
+    .btn-accent{background:rgba(139,92,246,.18)}
+    .btn-accent:hover{background:rgba(139,92,246,.28)}
+    .btn-danger{background:rgba(244,63,94,.18)}
+    .btn-danger:hover{background:rgba(244,63,94,.28)}
+    .btn-amber{background:rgba(245,158,11,.16)}
+    .btn-amber:hover{background:rgba(245,158,11,.26)}
+
+    /* ✅ TOP TABS */
+    .top-tabs{
+      display:flex; gap:8px; align-items:center; justify-content:center;
+      padding:6px 8px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      backdrop-filter: blur(8px);
+      flex-wrap:wrap;
+    }
+    .tab-btn{
+      border:0; cursor:pointer; font-weight:900; letter-spacing:.4px;
+      font-size:12px; padding:7px 10px; border-radius:10px;
+      color:#e2e8f0; background:rgba(255,255,255,.06);
+      transition:.15s; text-transform:uppercase; white-space:nowrap;
+    }
+    .tab-btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.12)}
+    .tab-btn.active{
+      background:rgba(139,92,246,.85);
+      color:white;
+      box-shadow:0 6px 20px rgba(139,92,246,.45);
+    }
+
+    /* ✅ PANELS */
+    .panel{
+      background:rgba(255,255,255,.06); border-radius:18px;
+      box-shadow:var(--shadow); backdrop-filter:blur(10px); padding:12px;
+      display:flex; flex-direction:column;
+      min-height:calc(100vh - 130px);
+    }
+
+    /* ✅ CALENDAR PANEL */
+    .cal-head{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:8px; background:rgba(255,255,255,.04); border-radius:14px; margin-bottom:8px;
+    }
+    .month{font-weight:900; letter-spacing:.3px}
+    .weekdays{
+      display:grid; grid-template-columns:repeat(7,1fr); gap:8px;
+      padding:4px 6px 8px; color:#dde3f7; font-size:12px; font-weight:900;
+      text-transform:uppercase;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:10px;
+      padding:8px;
+      flex:1;
+      grid-auto-rows: minmax(190px, 1fr);
+      align-items: stretch;
+    }
+
+    .day{
+      min-height:190px; height:100%;
+      border-radius:14px; padding:8px;
+      background: linear-gradient(145deg,
+          rgba(245, 247, 255, 0.95) 0%,
+          rgba(205, 210, 225, 0.92) 32%,
+          rgba(160, 165, 185, 0.98) 68%,
+          rgba(235, 238, 248, 0.92) 100%);
+      border:1px solid rgba(255,255,255,0.22);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.55),
+        inset 0 -10px 22px rgba(0,0,0,0.35),
+        0 10px 30px rgba(0,0,0,0.45);
+      display:flex; flex-direction:column; gap:6px;
+      cursor:pointer; position:relative; overflow:hidden;
+      transition:.15s; color:#0b1020;
+    }
+    .day:hover{transform:translateY(-2px)}
+    .day.muted{opacity:.25; cursor:default; box-shadow:none}
+
+    .date-row{display:flex; align-items:center; gap:6px; font-weight:900; font-size:14px;}
+    .badge{
+      font-size:10px; padding:2px 6px; border-radius:999px; font-weight:900;
+      background: rgba(15, 23, 42, 0.12);
+      color: #111827; border: 1px solid rgba(15, 23, 42, 0.18);
+      text-transform:uppercase; letter-spacing:.3px;
+    }
+    .day.weekend .badge{
+      background: rgba(245,158,11,0.18);
+      border-color: rgba(245,158,11,0.35);
+    }
+
+    .day.off{ box-shadow: inset 0 1px 0 rgba(255,255,255,0.75),
+                       inset 0 -14px 26px rgba(0,0,0,0.45),
+                       0 0 24px rgba(220,225,240,0.9); }
+    .day.blocked{
+      background: linear-gradient(145deg,#785500,#f5be28,#aa780a,#ffd75a);
+      border-color:#ffd75a; color:#1a1200;
+    }
+
+    .day.cuti{
+      background: linear-gradient(145deg,#d2ebff,#aad7ff,#78b4f0,#ebf8ff);
+      border-color:#8cc8ff; color:#031628;
+    }
+    .day.bagan{
+      background: linear-gradient(145deg,#ebe6ff,#d2c8f5,#afa5dc,#f5f2ff);
+      border-color:#c8b9ff; color:#16092a;
+    }
+
+    .dot{
+      position:absolute; right:8px; bottom:8px; width:10px; height:10px; border-radius:50%;
+      background:transparent; box-shadow:0 0 0 2px rgba(15,23,42,.18) inset;
+    }
+    .day.off .dot,.day.blocked .dot,.day.cuti .dot,.day.bagan .dot{
+      background:#fff; box-shadow:0 0 12px rgba(255,255,255,.95);
+    }
+
+    .names-mini{
+      font-size:12.5px; color:#0f172a; line-height:1.2; font-weight:900;
+      display:grid; gap:4px; margin-top:2px;
+    }
+    .names-mini .line{display:flex; gap:6px; padding:2px 4px; border-radius:6px}
+    .names-mini .empty{opacity:.7; font-weight:700}
+
+    .today{outline:2px dashed rgba(34,197,94,.9); outline-offset:-2px;}
+
+    /* =========================
+       ✅ CUTI PANEL (TABEL)
+       ========================== */
+    .cuti-panel{display:none;}
+    .cuti-head{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 12px; background:rgba(255,255,255,.05);
+      border-radius:14px; margin-bottom:10px; gap:8px; flex-wrap:wrap;
+    }
+    .cuti-title{font-weight:900; letter-spacing:.4px}
+    .cuti-table-wrap{
+      width:100%;
+      overflow:auto;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.35);
+      backdrop-filter: blur(6px);
+      box-shadow:var(--shadow);
+    }
+    table.cuti-table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:850px;
+      font-size:14px;
+    }
+    .cuti-table thead th{
+      background:linear-gradient(90deg, var(--gold), var(--gold2));
+      color:#0b1020;
+      text-align:center;
+      padding:12px 10px;
+      font-weight:900;
+      letter-spacing:.4px;
+      position:sticky; top:0; z-index:1;
+    }
+    .cuti-table tbody td{
+      padding:10px 10px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+      text-align:center;
+      font-weight:800;
+      color:#f8fafc;
+      background:rgba(0,0,0,.25);
+    }
+    .cuti-table tbody tr:hover td{background:rgba(255,255,255,.06)}
+    .cuti-table td.name{text-align:left; padding-left:16px;}
+    .cuti-table .info-btn{
+      padding:6px 10px; border-radius:6px;
+      background:#0ea5e9; color:white; font-weight:900; font-size:12px;
+    }
+    .cuti-table .del-btn{
+      padding:6px 10px; border-radius:6px;
+      background:#ef4444; color:white; font-weight:900; font-size:12px;
+      margin-left:6px;
+    }
+
+    /* =========================
+       ✅ BAGAN PANEL (LAYOUT MEJA)
+       ========================== */
+    .bagan-panel{display:none;}
+    .bagan-head{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 12px; background:rgba(255,255,255,.05);
+      border-radius:14px; margin-bottom:10px; gap:8px; flex-wrap:wrap;
+    }
+    .bagan-title{
+      font-weight:900; letter-spacing:.5px; text-transform:uppercase;
+    }
+    .bagan-wrap{
+      position:relative;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.45);
+      box-shadow:var(--shadow);
+      padding:14px;
+      overflow:auto;
+      min-height:65vh;
+    }
+    .bagan-board{
+      display:grid;
+      grid-auto-rows:70px;
+      gap:10px;
+      width:max-content;
+      padding:8px;
+      background:rgba(255,255,255,.04);
+      border-radius:12px;
+    }
+    .seat{
+      position:relative;
+      border-radius:10px;
+      background: linear-gradient(145deg,#f6d365,#fda085);
+      color:#111827;
+      font-weight:900;
+      font-size:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:6px;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.7),
+        0 8px 18px rgba(0,0,0,.6);
+      cursor:pointer;
+      user-select:none;
+      border:2px solid rgba(120,70,0,.7);
+    }
+    .seat.empty{
+      opacity:.5;
+      background:linear-gradient(145deg,#cbd5e1,#94a3b8);
+      border-color:rgba(0,0,0,.25);
+    }
+    .seat small{
+      position:absolute;
+      top:-7px; left:6px;
+      background:#0b1020;
+      color:#e2e8f0;
+      font-size:9px;
+      padding:2px 5px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.2);
+      min-width:20px;
+      text-align:center;
+    }
+    .seat.dragging{opacity:.35; transform:scale(.98);}
+    .seat.drop-target{outline:2px dashed #22c55e; outline-offset:2px;}
+
+    .seat.hidden{
+      visibility: hidden;
+      pointer-events: none;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    /* ✅ MODALS UMUM */
+    .modal-backdrop{
+      position:fixed; inset:0; background:rgba(2,6,23,.6); display:none;
+      place-items:center; padding:18px; z-index:50; backdrop-filter: blur(4px);
+    }
+    .modal{
+      width:min(820px,100%);
+      background:#0e1430; border:1px solid rgba(255,255,255,.08);
+      border-radius:16px; padding:14px; box-shadow:var(--shadow);
+      color:var(--text);
+      display:grid; grid-template-columns: 1.2fr .8fr; gap:12px;
+    }
+    .modal h3{margin:0 0 6px; font-size:16px}
+    .modal .sub{color:var(--muted); font-size:12px; margin-bottom:10px}
+
+    .names-grid{display:grid; grid-template-columns:1fr; gap:8px;}
+    .names-grid input{
+      width:100%; padding:9px 10px; border-radius:10px; outline:none;
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+      color:var(--text); font-size:13px;
+    }
+
+    .modal-actions{
+      display:flex; justify-content:space-between; gap:8px; margin-top:12px; flex-wrap:wrap;
+      grid-column: 1 / -1;
+    }
+    .left-actions,.right-actions{display:flex; gap:8px; flex-wrap:wrap;}
+
+    .role-row{display:grid; grid-template-columns:1.6fr 0.9fr; gap:8px;}
+    .select-wrap{position:relative; width:100%;}
+    .role-select{
+      appearance:none; width:100%; padding:9px 34px 9px 10px; border-radius:10px;
+      border:1px solid rgba(255,255,255,.12); outline:none; font-size:12.5px; font-weight:900;
+      letter-spacing:.3px; background:#202741; color:#eef2ff;
+    }
+    .select-wrap .chev{
+      position:absolute; right:10px; top:50%; transform:translateY(-50%);
+      font-size:12px; opacity:.7; pointer-events:none;
+    }
+
+    .role-pill{
+      font-size:9.5px; font-weight:900; padding:2px 6px; border-radius:999px;
+      border:1px solid rgba(15,23,42,.18); text-transform:uppercase; white-space:nowrap;
+    }
+
+    .copy-panel{
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px; padding:10px; display:flex; flex-direction:column; gap:8px;
+      height:100%;
+    }
+    .copy-panel textarea{
+      width:100%; flex:1; min-height:220px; resize:vertical; border-radius:10px; padding:10px;
+      font-size:12.5px; line-height:1.4; background:#0b1020; color:#eef2ff;
+      border:1px dashed rgba(255,255,255,.18); outline:none; white-space:pre;
+    }
+
+    /* CUTI MODAL FORM */
+    .cuti-form{
+      display:grid; gap:8px;
+      grid-template-columns:1fr 1fr;
+    }
+    .cuti-form .full{grid-column:1/-1;}
+    .cuti-form label{font-size:12px; font-weight:900; letter-spacing:.3px;}
+    .cuti-form input, .cuti-form textarea{
+      width:100%; padding:9px 10px; border-radius:10px; outline:none;
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+      color:var(--text); font-size:13px;
+    }
+    .cuti-form textarea{min-height:90px; resize:vertical;}
+
+    .toast{
+      position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
+      background:rgba(0,0,0,.7); color:white; padding:10px 12px; border-radius:10px;
+      font-size:13px; opacity:0; pointer-events:none; transition:.2s; z-index:99;
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-4px);}
+
+    /* ✅ PIKET PANEL */
+    .piket-panel{display:none;}
+    .piket-panel .cuti-table thead th{
+      background: linear-gradient(90deg,#111827,#334155);
+      color:#f8fafc;
+    }
+    .piket-name{
+      display:inline-block;
+      padding:6px 8px;
+      margin:2px;
+      border-radius:8px;
+      background:rgba(255,255,255,.08);
+      font-weight:900;
+      cursor:pointer;
+      min-width:70px;
+      text-align:center;
+    }
+    .piket-name.empty{opacity:.5; font-weight:700;}
+
+    @media (max-width: 700px){
+      .modal{grid-template-columns:1fr;}
+      .day{min-height:175px}
+      .grid{ grid-auto-rows: minmax(175px,1fr); }
+      .bagan-board{grid-template-columns:repeat(20, 80px);}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="header">
+      <div class="brand">
+        <div class="logo">OFF</div>
+        <div>
+          <h1>Jadwal Offday</h1>
+          <p>Klik tanggal → pilih jenis jadwal → isi 8 nama di dalam kotak</p>
+        </div>
+      </div>
+
+      <div class="top-tabs" id="topTabs">
+        <button class="tab-btn active" data-type="ALL">ALL</button>
+        <button class="tab-btn" data-type="OFF">OFFDAY</button>
+        <button class="tab-btn" data-type="CUTI">CUTI</button>
+        <button class="tab-btn" data-type="BAGAN_VIEW">BAGAN</button>
+        <button class="tab-btn" data-type="PIKET">PIKET</button>
+      </div>
+
+      <div class="controls">
+        <button id="prev">← Bulan lalu</button>
+        <button id="todayBtn" class="btn-green">Hari ini</button>
+        <button id="next">Bulan depan →</button>
+        <button id="clear" class="btn-accent">Reset bulan ini</button>
+        <button id="bulkImport" class="btn-accent">📥 Import Excel</button>
+        <button id="lockBtn" class="btn-amber">🔒 TERKUNCI</button>
+      </div>
+    </div>
+
+    <!-- ✅ CALENDAR PANEL -->
+    <section class="panel" id="calendarPanel">
+      <div class="cal-head">
+        <div style="display:flex; gap:6px">
+          <button id="prevMini">←</button>
+          <button id="nextMini">→</button>
+        </div>
+        <div class="month" id="monthLabel">-</div>
+        <div><button id="jumpYear">Loncat Tahun</button></div>
+      </div>
+
+      <div class="weekdays" id="weekdays"></div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <!-- ✅ CUTI PANEL -->
+    <section class="panel cuti-panel" id="cutiPanel">
+      <div class="cuti-head">
+        <div class="cuti-title">Daftar CUTI Staff</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button id="addCutiBtn" class="btn-green">+ Tambah Cuti</button>
+          <button id="exportCutiBtn" class="btn-accent">Export (Copy)</button>
+        </div>
+      </div>
+
+      <div class="cuti-table-wrap">
+        <table class="cuti-table">
+          <thead>
+            <tr>
+              <th>Nama Staff</th>
+              <th>Tanggal Cuti</th>
+              <th>Selesai Cuti</th>
+              <th>Info</th>
+            </tr>
+          </thead>
+          <tbody id="cutiTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ✅ BAGAN PANEL -->
+    <section class="panel bagan-panel" id="baganPanel">
+      <div class="bagan-head">
+        <div class="bagan-title">Tata Letak Meja Kerja (BAGAN)</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button id="addRowBtn" class="btn-green">+ Baris</button>
+          <button id="addColBtn" class="btn-green">+ Kolom</button>
+
+          <button id="removeColBtn" class="btn-danger">🗑 Hapus Kolom</button>
+
+          <button id="toggleDeleteSeatBtn" class="btn-amber">🧽 MODE HAPUS: OFF</button>
+
+          <button id="resetBaganBtn" class="btn-danger">Reset Bagan</button>
+          <button id="exportBaganBtn" class="btn-accent">Export (Copy)</button>
+        </div>
+      </div>
+
+      <div class="bagan-wrap">
+        <div style="font-size:12px; opacity:.8; margin:0 0 10px;">
+          Grid dinamis — klik seat untuk edit nama.  
+          <br>Jika <b>MODE HAPUS ON</b>, klik seat → kotak hilang tapi posisi lain tidak geser.
+        </div>
+        <div class="bagan-board" id="baganBoard"></div>
+      </div>
+    </section>
+
+    <!-- ✅ PIKET PANEL -->
+    <section class="panel piket-panel" id="piketPanel">
+      <div class="bagan-head">
+        <div class="bagan-title">Piket Buang Sampah Mawar Group</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button id="resetPiketBtn" class="btn-danger">Reset Piket</button>
+          <button id="exportPiketBtn" class="btn-accent">Export (Copy)</button>
+        </div>
+      </div>
+
+      <div class="cuti-table-wrap">
+        <table class="cuti-table" id="piketTable">
+          <thead>
+            <tr>
+              <th>Hari</th>
+              <th colspan="8">Nama Piket (maks 8 orang / hari)</th>
+            </tr>
+          </thead>
+          <tbody id="piketTableBody"></tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:10px; font-size:12px; opacity:.8;">
+        Klik nama untuk edit. PIKET ini <b>tidak mempengaruhi</b> OFFDAY / CUTI / BAGAN.
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================
+       ✅ MODAL KALENDER
+       ========================= -->
+  <div class="modal-backdrop" id="backdrop">
+    <div class="modal">
+      <div>
+        <h3 id="modalTitle">Isi Jadwal</h3>
+        <div class="sub" id="modalSub">Maksimal 8 orang</div>
+
+        <div style="margin:8px 0 10px;">
+          <label style="font-size:12px; font-weight:900; letter-spacing:.3px; opacity:.9;">
+            Jenis Jadwal
+          </label>
+          <div class="select-wrap" style="margin-top:6px;">
+            <select id="typeSelect" class="role-select" style="font-size:13px;">
+              <option value="OFF">OFFDAY</option>
+              <option value="BAGAN">BAGAN</option>
+              <!-- PIKET tidak dimasukkan ke kalender karena panel sendiri -->
+            </select>
+            <span class="chev">▾</span>
+          </div>
+        </div>
+
+        <div class="names-grid" id="modalNames"></div>
+      </div>
+
+      <div class="copy-panel">
+        <h4>Kolom Copy Nama</h4>
+        <p>List otomatis (nama saja). Blok manual atau klik Copy.</p>
+        <textarea id="copyBox" readonly placeholder="Belum ada nama..."></textarea>
+        <button id="copyBtn" class="btn-accent">Copy</button>
+      </div>
+
+      <div class="modal-actions">
+        <div class="left-actions">
+          <button id="toggleBlock" class="btn-danger">BLOCK TANGGAL</button>
+          <button id="deleteOff" class="btn-danger">Hapus Jadwal</button>
+        </div>
+        <div class="right-actions">
+          <button id="cancel">Batal</button>
+          <button id="save" class="btn-green">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================
+       ✅ MODAL CUTI
+       ========================= -->
+  <div class="modal-backdrop" id="cutiBackdrop">
+    <div class="modal" style="grid-template-columns:1fr;">
+      <div>
+        <h3 id="cutiModalTitle">Tambah CUTI</h3>
+        <div class="sub">Isi data cuti staff</div>
+
+        <div class="cuti-form">
+          <div class="full">
+            <label>Nama Staff</label>
+            <input id="cutiName" placeholder="Nama staff..." />
+          </div>
+          <div>
+            <label>Tanggal Cuti</label>
+            <input id="cutiStart" type="date" />
+          </div>
+          <div>
+            <label>Selesai Cuti</label>
+            <input id="cutiEnd" type="date" />
+          </div>
+          <div class="full">
+            <label>Info / Keterangan</label>
+            <textarea id="cutiInfo" placeholder="Contoh: Cuti tahunan / urusan keluarga / dll"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <div class="left-actions">
+            <button id="cutiDeleteBtn" class="btn-danger" style="display:none;">Hapus CUTI</button>
+          </div>
+          <div class="right-actions">
+            <button id="cutiCancelBtn">Batal</button>
+            <button id="cutiSaveBtn" class="btn-green">Simpan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  const $ = q => document.querySelector(q);
+
+  const WEEKDAYS_ID = ["SENIN","SELASA","RABU","KAMIS","JUMAT","SABTU","MINGGU"];
+  const MONTHS_ID = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+  const ROLE_OPTIONS = [
+    { value: "", label: "Pilih Divisi", color: "#202741" },
+    { value: "FINANCE", label: "FINANCE", color: "#f7d88b" },
+    { value: "DESIGN", label: "DESIGN", color: "#7a3a00" },
+    { value: "LIVECHAT", label: "LIVECHAT", color: "#bfe3ff" },
+    { value: "SPV_WD", label: "SPV WD", color: "#1f5a6b" },
+    { value: "WORKER_WD", label: "WORKER WD", color: "#e5c9ff" },
+    { value: "DEPOSIT", label: "DEPOSIT", color: "#8B5CF6" },
+    { value: "ADMIN", label: "BANKER", color: "#F59E0B" },
+    { value: "ADMIN", label: "ADMIN", color: "#FB923C" },
+    { value: "SPV_WD", label: "WD PGA", color: "#FB7185" },
+    { value: "ASSIST LEAD UTAMA", label: "ASSIST LEAD UTAMA", color: "#9F1239" },
+    { value: "QRIS", label: "QRIS", color: "#C4B5FD" },
+    { value: "LEADER WD", label: "LEADER WD", color: "#22D3EE" },
+    { value: "LEADER DEPOSIT", label: "LEADER DEPOSIT", color: "#FDE047" },
+    { value: "LEADER WD", label: "WHATSAPP", color: "#A3E635" },
+    { value: "LEADER LIVE CHAT", label: "LEADER LIVE CHAT", color: "#CA8A04" },
+    { value: "ASSIT LEADER W", label: "ASSIT LEADER WD", color: "#EC4899" },
+  ];
+  const ROLE_COLOR_MAP = Object.fromEntries(ROLE_OPTIONS.map(o => [o.value, o.color]));
+
+  const TYPE_OPTIONS = [
+    { value:"OFF", label:"OFFDAY" },
+    { value:"BAGAN", label:"BAGAN" }
+  ];
+
+  const EDIT_PASSWORD = "bosku123";
+  const lockKey = "offday-lock-state";
+  let isLocked = (localStorage.getItem(lockKey) ?? "true") === "true";
+
+  const storeKey = "offday-v4";
+  const store = JSON.parse(localStorage.getItem(storeKey) || "{}");
+  const saveStore = () => localStorage.setItem(storeKey, JSON.stringify(store));
+
+  // ✅ CUTI store
+  const cutiKey = "cuti-v1";
+  const cutiStore = JSON.parse(localStorage.getItem(cutiKey) || "[]");
+  const saveCuti = () => localStorage.setItem(cutiKey, JSON.stringify(cutiStore));
+
+  // ✅ BAGAN store
+  const baganKey = "bagan-v3";
+  const baganMetaKey = "bagan-meta-v1";
+
+  let baganMeta = JSON.parse(localStorage.getItem(baganMetaKey) || "null")
+               || { rows: 10, cols: 20 };
+
+  function BAGAN_ROWS(){ return baganMeta.rows; }
+  function BAGAN_COLS(){ return baganMeta.cols; }
+  function BAGAN_SIZE(){ return BAGAN_ROWS() * BAGAN_COLS(); }
+
+  let baganStore = JSON.parse(localStorage.getItem(baganKey) || "null")
+                 || Array.from({length:BAGAN_SIZE()}, ()=>({name:"", active:true}));
+
+  const saveBagan = () => {
+    localStorage.setItem(baganKey, JSON.stringify(baganStore));
+    localStorage.setItem(baganMetaKey, JSON.stringify(baganMeta));
+  };
+
+  function ensureBaganSize(){
+    const sizeNeeded = BAGAN_SIZE();
+
+    if(baganStore.length < sizeNeeded){
+      baganStore.push(
+        ...Array.from(
+          {length:sizeNeeded-baganStore.length},
+          ()=>({name:"", active:true})
+        )
+      );
+    }
+    if(baganStore.length > sizeNeeded){
+      baganStore = baganStore.slice(0, sizeNeeded);
+    }
+
+    baganStore.forEach(s=>{
+      if(typeof s.active !== "boolean") s.active = true;
+      if(typeof s.name !== "string") s.name = "";
+    });
+  }
+
+  // ✅ PIKET store TERPISAH (weekly) — aman semua browser
+  const piketKey = "piket-v1";
+  const defaultPiket = {
+    SENIN: Array(8).fill(""),
+    SELASA: Array(8).fill(""),
+    RABU: Array(8).fill(""),
+    KAMIS: Array(8).fill(""),
+    JUMAT: Array(8).fill(""),
+    SABTU: Array(8).fill(""),
+    MINGGU: Array(8).fill("")
+  };
+  const safeClone = obj => JSON.parse(JSON.stringify(obj));
+  const piketStore = JSON.parse(localStorage.getItem(piketKey) || "null")
+    || safeClone(defaultPiket);
+  const savePiket = () => localStorage.setItem(piketKey, JSON.stringify(piketStore));
+
+  let view = new Date();
+  let activeKey = null;
+  let activeFilterType = "ALL";
+  let editingCutiIndex = null;
+
+  function toast(msg){
+    const t=$("#toast");
+    t.textContent=msg;
+    t.classList.add("show");
+    setTimeout(()=>t.classList.remove("show"), 1600);
+  }
+
+  function updateLockUI(){
+    const b=$("#lockBtn");
+    b.textContent = isLocked ? "🔒 TERKUNCI" : "🔓 EDIT MODE";
+    b.className = isLocked ? "btn-amber" : "btn-green";
+    localStorage.setItem(lockKey, String(isLocked));
+    $("#addCutiBtn").style.display = isLocked ? "none" : "inline-block";
+  }
+
+  $("#lockBtn").onclick = () => {
+    if(!isLocked){
+      isLocked = true; updateLockUI();
+      toast("Mode terkunci");
+      return;
+    }
+    const pw = prompt("Masukkan password untuk buka edit:");
+    if(pw === EDIT_PASSWORD){
+      isLocked = false; updateLockUI();
+      toast("Edit mode aktif");
+    }else toast("Password salah");
+  };
+
+  function ymd(date){
+    const y=date.getFullYear();
+    const m=String(date.getMonth()+1).padStart(2,"0");
+    const d=String(date.getDate()).padStart(2,"0");
+    return y + "-" + m + "-" + d;
+  }
+
+  function getMonthData(date){
+    const y=date.getFullYear(), m=date.getMonth();
+    const first=new Date(y,m,1), last=new Date(y,m+1,0);
+    const startDay=(first.getDay()+6)%7;
+    return {y:y, m:m, startDay:startDay, daysInMonth:last.getDate()};
+  }
+
+  function ensureDay(key){
+    store[key]=store[key]||{};
+    if(store[key].off===true && !store[key].type) store[key].type="OFF";
+    if(!store[key].type) store[key].type="OFF";
+
+    if(!store[key].entries){
+      const old = store[key].names || Array(8).fill("");
+      store[key].entries = old.map(n=>({name:n||"",role:""}));
+      delete store[key].names;
+    }
+    while(store[key].entries.length<8) store[key].entries.push({name:"",role:""});
+    store[key].entries = store[key].entries.slice(0,8);
+
+    store[key].blocked = store[key].blocked || false;
+  }
+
+  function isDark(hex){
+    let c = (hex||"#000").replace("#","");
+    if(c.length===3) c=c.split("").map(x=>x+x).join("");
+    const r=parseInt(c.slice(0,2),16);
+    const g=parseInt(c.slice(2,4),16);
+    const b=parseInt(c.slice(4,6),16);
+    const lum=0.299*r+0.587*g+0.114*b;
+    return lum<140;
+  }
+
+  function renderWeekdays(){
+    $("#weekdays").innerHTML = WEEKDAYS_ID.map(d=>"<div>"+d+"</div>").join("");
+  }
+
+  function buildCopyText(key){
+    const entries=(store[key]?.entries||[])
+      .map(e=>({name:(e.name||"").trim()}))
+      .filter(e=>e.name);
+    return entries.length? entries.map(e=>e.name).join("\n") : "";
+  }
+
+  function refreshCopyBox(){
+    if(!activeKey) return;
+    $("#copyBox").value = buildCopyText(activeKey);
+  }
+
+  /* =========================
+     ✅ RENDER KALENDER
+     ========================= */
+  function renderCalendar(){
+    const grid=$("#grid");
+    const md=getMonthData(view);
+    const y=md.y, m=md.m, startDay=md.startDay, daysInMonth=md.daysInMonth;
+    $("#monthLabel").textContent=MONTHS_ID[m]+" "+y;
+    grid.innerHTML="";
+
+    for(let i=0;i<startDay;i++){
+      const blank=document.createElement("div");
+      blank.className="day muted";
+      grid.appendChild(blank);
+    }
+
+    const today=new Date();
+
+    for(let d=1; d<=daysInMonth; d++){
+      const date=new Date(y,m,d);
+      const key=ymd(date);
+      const dow=(date.getDay()+6)%7;
+      const isWeekend=dow>=5;
+
+      ensureDay(key);
+
+      const isBlocked=store[key]?.blocked===true;
+      const type=store[key]?.type||"OFF";
+
+      const hideByFilter =
+        activeFilterType !== "ALL" &&
+        activeFilterType !== "CUTI" &&
+        activeFilterType !== "BAGAN_VIEW" &&
+        activeFilterType !== "PIKET" &&
+        !isBlocked &&
+        type !== activeFilterType;
+
+      const cell=document.createElement("div");
+      cell.className=
+        "day"+
+        (isWeekend?" weekend":"")+
+        (isBlocked?" blocked":"")+
+        (!isBlocked && type==="OFF"?" off":"")+
+        (!isBlocked && type==="BAGAN"?" bagan":"")+
+        (hideByFilter ? " muted":"")+
+        (date.toDateString()===today.toDateString()?" today":"");
+      cell.dataset.key=key;
+
+      let miniHtml="";
+      if(isBlocked){
+        miniHtml=
+          '<div class="names-mini">'+
+            '<div class="line"><b>BLOCKED</b></div>'+
+            '<div class="line empty">Tanggal ditutup</div>'+
+          '</div>';
+      } else{
+        const entries=(store[key].entries||[])
+          .map(e=>({name:(e.name||"").trim(),role:(e.role||"").trim()}))
+          .filter(e=>e.name);
+
+        const typeLabel=(TYPE_OPTIONS.find(t=>t.value===type)||{}).label||type;
+
+        if(entries.length===0){
+          miniHtml=
+            '<div class="names-mini">'+
+              '<div class="line empty">'+typeLabel+': klik untuk isi</div>'+
+            '</div>';
+        } else{
+          const lines=entries.map(e=>{
+            const copyText=e.name;
+            if(!e.role){
+              return '<div class="line copy-line" data-copy="'+copyText+'">'+
+                        '<span class="nm">'+e.name+'</span>'+
+                      '</div>';
+            }
+            const color=ROLE_COLOR_MAP[e.role]||"#CBD5E1";
+            const dark=isDark(color);
+            const text=dark?"#F8FAFC":"#0B0F1D";
+            return '<div class="line copy-line" data-copy="'+copyText+'">'+
+                     '<span class="nm">'+e.name+'</span>'+
+                     '<span class="role-pill" style="background:'+color+'; color:'+text+'; border-color:rgba(0,0,0,.15)">'+
+                       e.role+
+                     '</span>'+
+                   '</div>';
+          }).join("");
+          miniHtml=
+            '<div class="names-mini">'+
+              '<div class="line"><b>'+typeLabel+'</b></div>'+
+              lines+
+            '</div>';
+        }
+      }
+
+      cell.innerHTML=
+        '<div class="date-row">'+
+          '<span>'+d+'</span>'+
+          '<span class="badge">'+(isWeekend?"WEEKEND":"WORKDAY")+'</span>'+
+        '</div>'+
+        miniHtml+
+        '<div class="dot"></div>';
+
+      cell.querySelectorAll(".copy-line").forEach(line=>{
+        line.addEventListener("click", async ev=>{
+          ev.stopPropagation();
+          const txt=line.dataset.copy||"";
+          if(!txt) return;
+          try{
+            await navigator.clipboard.writeText(txt);
+            toast("Tercopy: "+txt);
+          }catch(e){ toast("Gagal auto copy, blok manual ya"); }
+        });
+      });
+
+      cell.addEventListener("click", ()=>{
+        if(isLocked){ toast("Terkunci. Hanya bos yang bisa edit."); return; }
+        activeKey=key; openCalendarModal(key,date);
+      });
+
+      grid.appendChild(cell);
+    }
+  }
+
+  /* =========================
+     ✅ MODAL KALENDER
+     ========================= */
+  function openCalendarModal(key,date){
+    ensureDay(key);
+    const type=store[key].type||"OFF";
+
+    $("#modalTitle").textContent =
+      "Jadwal: "+WEEKDAYS_ID[(date.getDay()+6)%7]+", "+date.getDate()+" "+MONTHS_ID[date.getMonth()]+" "+date.getFullYear();
+
+    const isBlocked=store[key].blocked===true;
+    $("#modalSub").textContent=isBlocked
+      ? "Tanggal ini sedang diblok."
+      : "Isi sampai 8 orang (boleh kosong).";
+
+    const typeSelect=$("#typeSelect");
+    typeSelect.value=type;
+    typeSelect.disabled=isBlocked;
+
+    const wrap=$("#modalNames");
+    wrap.innerHTML="";
+
+    store[key].entries.forEach((entry,i)=>{
+      const row=document.createElement("div");
+      row.className="role-row";
+
+      const input=document.createElement("input");
+      input.placeholder="Nama "+(i+1);
+      input.value=entry.name||"";
+      input.dataset.i=i;
+      input.disabled=isBlocked;
+
+      const selectWrap=document.createElement("div");
+      selectWrap.className="select-wrap";
+
+      const select=document.createElement("select");
+      select.className="role-select";
+      select.dataset.i=i;
+      select.disabled=isBlocked;
+
+      ROLE_OPTIONS.forEach(opt=>{
+        const o=document.createElement("option");
+        o.value=opt.value; o.textContent=opt.label;
+        o.setAttribute("data-color",opt.color);
+        if(opt.value===entry.role) o.selected=true;
+        select.appendChild(o);
+      });
+
+      const chev=document.createElement("span");
+      chev.className="chev"; chev.textContent="▾";
+
+      selectWrap.appendChild(select);
+      selectWrap.appendChild(chev);
+      row.appendChild(input); row.appendChild(selectWrap);
+      wrap.appendChild(row);
+
+      const applyColor=()=>{
+        const opt=select.options[select.selectedIndex];
+        const color=opt.getAttribute("data-color")||"#202741";
+        select.style.background=color;
+        const dark=isDark(color);
+        select.style.color=dark?"#eef2ff":"#0b0f1d";
+        chev.style.color=dark?"#eef2ff":"#0b0f1d";
+      };
+
+      input.addEventListener("input",()=>{
+        store[key].entries[i].name=input.value;
+        refreshCopyBox();
+      });
+      select.addEventListener("change",()=>{
+        store[key].entries[i].role=select.value;
+        applyColor(); refreshCopyBox();
+      });
+      applyColor();
+    });
+
+    typeSelect.onchange=()=>{
+      store[key].type=typeSelect.value;
+      store[key].off=true;
+      saveStore(); refreshCopyBox(); renderCalendar();
+    };
+
+    refreshCopyBox();
+    $("#backdrop").style.display="grid";
+  }
+
+  function closeCalendarModal(){
+    $("#backdrop").style.display="none";
+    activeKey=null;
+  }
+  $("#cancel").onclick=closeCalendarModal;
+
+  $("#save").onclick=()=>{
+    if(!activeKey) return;
+    if(store[activeKey].blocked){ saveStore(); closeCalendarModal(); renderCalendar(); return; }
+
+    const inputs=[...$("#modalNames").querySelectorAll("input")];
+    const selects=[...$("#modalNames").querySelectorAll("select")];
+
+    inputs.forEach(inp=>{
+      const i=Number(inp.dataset.i); store[activeKey].entries[i].name=inp.value;
+    });
+    selects.forEach(sel=>{
+      const i=Number(sel.dataset.i); store[activeKey].entries[i].role=sel.value;
+    });
+
+    store[activeKey].off=true;
+    store[activeKey].type=store[activeKey].type||"OFF";
+    saveStore(); closeCalendarModal(); renderCalendar();
+  };
+
+  $("#deleteOff").onclick=()=>{
+    if(!activeKey) return;
+    store[activeKey].off=false;
+    store[activeKey].type="OFF";
+    store[activeKey].entries=Array.from({length:8},()=>({name:"",role:""}));
+    if(!store[activeKey].blocked) delete store[activeKey];
+    saveStore(); closeCalendarModal(); renderCalendar();
+  };
+
+  $("#toggleBlock").onclick=()=>{
+    if(!activeKey) return;
+    store[activeKey]=store[activeKey]||{};
+    store[activeKey].blocked=!store[activeKey].blocked;
+    if(store[activeKey].blocked){
+      store[activeKey].off=false;
+      store[activeKey].entries=Array.from({length:8},()=>({name:"",role:""}));
+    } else {
+      store[activeKey].type=store[activeKey].type||"OFF";
+    }
+    saveStore(); closeCalendarModal(); renderCalendar();
+  };
+
+  $("#copyBtn").onclick = async ()=>{
+    const txt=$("#copyBox").value.trim();
+    if(!txt){ toast("Belum ada nama"); return; }
+    try{
+      await navigator.clipboard.writeText(txt);
+      toast("Tersalin ke clipboard");
+    }catch(e){
+      toast("Gagal auto copy, silakan copy manual");
+      $("#copyBox").focus(); $("#copyBox").select();
+    }
+  };
+
+  /* =========================
+     ✅ CUTI TABLE
+     ========================= */
+  function fmtDateID(iso){
+    if(!iso) return "-";
+    const d=new Date(iso);
+    return d.toLocaleDateString("id-ID",{day:"2-digit",month:"long",year:"numeric"});
+  }
+
+  function renderCutiTable(){
+    const body=$("#cutiTableBody");
+    body.innerHTML="";
+
+    if(cutiStore.length===0){
+      body.innerHTML = '<tr><td colspan="4" style="padding:16px; opacity:.7;">Belum ada data cuti.</td></tr>';
+      return;
+    }
+
+    cutiStore.forEach((row,idx)=>{
+      const tr=document.createElement("tr");
+      tr.innerHTML=
+        '<td class="name">'+(row.name||"-")+'</td>'+
+        '<td>'+fmtDateID(row.start)+'</td>'+
+        '<td>'+fmtDateID(row.end)+'</td>'+
+        '<td>'+
+          '<button class="info-btn" data-idx="'+idx+'">Detail</button>'+
+          (!isLocked? '<button class="del-btn" data-del="'+idx+'">Hapus</button>' : '')+
+        '</td>';
+      body.appendChild(tr);
+    });
+
+    body.querySelectorAll(".info-btn").forEach(btn=>{
+      btn.onclick=()=>{
+        const idx=Number(btn.dataset.idx);
+        openCutiModal(idx);
+      };
+    });
+
+    body.querySelectorAll(".del-btn").forEach(btn=>{
+      btn.onclick=()=>{
+        if(isLocked) return;
+        const idx=Number(btn.dataset.del);
+        if(confirm("Hapus data CUTI ini?")){
+          cutiStore.splice(idx,1);
+          saveCuti(); renderCutiTable();
+          toast("Data CUTI dihapus");
+        }
+      };
+    });
+  }
+
+  function openCutiModal(idx=null){
+    if(idx===null && isLocked){
+      toast("Terkunci. Tidak bisa tambah CUTI.");
+      return;
+    }
+    editingCutiIndex = idx;
+    $("#cutiModalTitle").textContent = idx===null ? "Tambah CUTI" : "Detail / Edit CUTI";
+    $("#cutiDeleteBtn").style.display = (!isLocked && idx!==null) ? "inline-block" : "none";
+
+    const data = idx===null ? {name:"",start:"",end:"",info:""} : cutiStore[idx];
+
+    $("#cutiName").value = data.name||"";
+    $("#cutiStart").value = data.start||"";
+    $("#cutiEnd").value = data.end||"";
+    $("#cutiInfo").value = data.info||"";
+
+    ["cutiName","cutiStart","cutiEnd","cutiInfo","cutiSaveBtn"].forEach(id=>{
+      $("#"+id).disabled = isLocked && idx!==null;
+    });
+
+    $("#cutiBackdrop").style.display="grid";
+  }
+
+  function closeCutiModal(){
+    $("#cutiBackdrop").style.display="none";
+    editingCutiIndex=null;
+  }
+  $("#cutiCancelBtn").onclick=closeCutiModal;
+  $("#addCutiBtn").onclick=()=>openCutiModal(null);
+
+  $("#cutiSaveBtn").onclick=()=>{
+    if(isLocked) return;
+
+    const data={
+      name: $("#cutiName").value.trim(),
+      start: $("#cutiStart").value,
+      end: $("#cutiEnd").value,
+      info: $("#cutiInfo").value.trim()
+    };
+    if(!data.name || !data.start || !data.end){
+      toast("Nama & tanggal wajib diisi");
+      return;
+    }
+
+    if(editingCutiIndex===null){
+      cutiStore.push(data);
+      toast("CUTI ditambahkan");
+    } else {
+      cutiStore[editingCutiIndex]=data;
+      toast("CUTI diupdate");
+    }
+
+    saveCuti(); renderCutiTable(); closeCutiModal();
+  };
+
+  $("#cutiDeleteBtn").onclick=()=>{
+    if(isLocked || editingCutiIndex===null) return;
+    if(confirm("Hapus data CUTI ini?")){
+      cutiStore.splice(editingCutiIndex,1);
+      saveCuti(); renderCutiTable(); closeCutiModal();
+      toast("Data CUTI dihapus");
+    }
+  };
+
+  $("#exportCutiBtn").onclick=async ()=>{
+    const txt = cutiStore.map((r,i)=>(
+      (i+1)+". "+r.name+"\n   "+fmtDateID(r.start)+" → "+fmtDateID(r.end)+"\n   "+(r.info||"-")
+    )).join("\n\n");
+    try{
+      await navigator.clipboard.writeText(txt||"Belum ada data cuti");
+      toast("Data CUTI dicopy");
+    }catch(e){
+      toast("Gagal copy, blok manual");
+      alert(txt);
+    }
+  };
+
+  /* =========================
+     ✅ BAGAN BOARD
+     ========================= */
+  function seatLabel(i){ return String(i + 1); }
+
+  let deleteSeatMode = false;
+  function updateDeleteSeatUI(){
+    const b = $("#toggleDeleteSeatBtn");
+    b.textContent = deleteSeatMode ? "🧽 MODE HAPUS: ON" : "🧽 MODE HAPUS: OFF";
+    b.className = deleteSeatMode ? "btn-danger" : "btn-amber";
+  }
+
+  $("#toggleDeleteSeatBtn").onclick = () => {
+    if(isLocked){ toast("Terkunci. Tidak bisa hapus seat."); return; }
+    deleteSeatMode = !deleteSeatMode;
+    updateDeleteSeatUI();
+    toast(deleteSeatMode ? "Klik seat untuk hapus (kotak hilang)" : "Mode hapus dimatikan");
+  };
+
+  function renderBagan(){
+    ensureBaganSize();
+
+    const board=$("#baganBoard");
+    const cols = BAGAN_COLS();
+    board.style.gridTemplateColumns = "repeat("+cols+", 90px)";
+    board.innerHTML="";
+
+    baganStore.forEach((seat,i)=>{
+      const div=document.createElement("div");
+      const isActive = seat.active !== false;
+
+      div.className =
+        "seat" +
+        (!isActive ? " hidden" : (!seat.name ? " empty" : ""));
+
+      div.draggable = !isLocked && isActive;
+      div.dataset.i=i;
+
+      div.innerHTML = isActive
+        ? "<small>"+seatLabel(i)+"</small>"+(seat.name || "-")
+        : "";
+
+      div.addEventListener("click", ()=>{
+        if(isLocked){
+          toast("Terkunci. Tidak bisa edit BAGAN.");
+          return;
+        }
+
+        if(deleteSeatMode){
+          if(!baganStore[i].active){
+            toast("Seat "+seatLabel(i)+" sudah dihapus");
+            return;
+          }
+          if(!confirm("Hapus seat "+seatLabel(i)+"? Kotak akan hilang.")) return;
+
+          baganStore[i].name = "";
+          baganStore[i].active = false;
+          saveBagan();
+          renderBagan();
+          toast("Seat "+seatLabel(i)+" dihapus");
+          return;
+        }
+
+        const nm = prompt("Isi nama untuk seat "+seatLabel(i)+":", seat.name||"");
+        if(nm===null) return;
+        baganStore[i].name = nm.trim();
+        baganStore[i].active = true;
+        saveBagan();
+        renderBagan();
+      });
+
+      div.addEventListener("dragstart", e=>{
+        div.classList.add("dragging");
+        e.dataTransfer.setData("text/plain", String(i));
+      });
+      div.addEventListener("dragend", ()=>{
+        div.classList.remove("dragging");
+        board.querySelectorAll(".seat").forEach(s=>s.classList.remove("drop-target"));
+      });
+      div.addEventListener("dragover", e=>{
+        if(isLocked || !isActive) return;
+        e.preventDefault();
+        div.classList.add("drop-target");
+      });
+      div.addEventListener("dragleave", ()=> div.classList.remove("drop-target"));
+      div.addEventListener("drop", e=>{
+        if(isLocked || !isActive) return;
+        e.preventDefault();
+        const from = Number(e.dataTransfer.getData("text/plain"));
+        const to = i;
+        if(from===to) return;
+        const tmp = baganStore[from];
+        baganStore[from]=baganStore[to];
+        baganStore[to]=tmp;
+        saveBagan(); renderBagan();
+        toast("Swap seat "+seatLabel(from)+" ↔ "+seatLabel(to));
+      });
+
+      board.appendChild(div);
+    });
+  }
+
+  $("#addRowBtn").onclick=()=>{
+    if(isLocked){ toast("Terkunci. Tidak bisa tambah baris."); return; }
+    baganMeta.rows += 1;
+    ensureBaganSize();
+    saveBagan();
+    renderBagan();
+    toast("Baris ditambah. Total: "+baganMeta.rows);
+  };
+
+  $("#addColBtn").onclick=()=>{
+    if(isLocked){ toast("Terkunci. Tidak bisa tambah kolom."); return; }
+    baganMeta.cols += 1;
+    ensureBaganSize();
+    saveBagan();
+    renderBagan();
+    toast("Kolom ditambah. Total: "+baganMeta.cols);
+  };
+
+  $("#removeColBtn").onclick = () => {
+    if (isLocked) { toast("Terkunci. Tidak bisa hapus kolom."); return; }
+
+    const cols = baganMeta.cols;
+    const rows = baganMeta.rows;
+    if (cols <= 1) { toast("Kolom minimal 1"); return; }
+
+    const input = prompt(
+      "Mau hapus kolom ke berapa?\n\nTotal kolom sekarang: "+cols+"\nIsi angka 1 - "+cols,
+      String(cols)
+    );
+    if (input === null) return;
+
+    const colToRemove = Number(input);
+    if (!Number.isInteger(colToRemove) || colToRemove < 1 || colToRemove > cols) {
+      toast("Nomor kolom tidak valid");
+      return;
+    }
+
+    if (!confirm("Yakin hapus kolom ke-"+colToRemove+"?\nSemua nama di kolom ini akan hilang.")) return;
+
+    const oldCols = cols;
+    const removeIndexInRow = colToRemove - 1;
+
+    for (let r = rows - 1; r >= 0; r--) {
+      const idx = r * oldCols + removeIndexInRow;
+      baganStore.splice(idx, 1);
+    }
+
+    baganMeta.cols -= 1;
+
+    ensureBaganSize();
+    saveBagan();
+    renderBagan();
+    toast("Kolom ke-"+colToRemove+" dihapus. Total kolom: "+baganMeta.cols);
+  };
+
+  $("#resetBaganBtn").onclick=()=>{
+    if(isLocked){ toast("Terkunci. Tidak bisa reset BAGAN."); return; }
+    if(confirm("Reset BAGAN? Semua nama hilang & seat yang dihapus muncul lagi.")){
+      ensureBaganSize();
+      for(let i=0;i<BAGAN_SIZE();i++) baganStore[i]={name:"", active:true};
+      saveBagan(); renderBagan();
+      toast("BAGAN direset");
+    }
+  };
+
+  $("#exportBaganBtn").onclick=async ()=>{
+    const lines = baganStore.map((s,i)=>seatLabel(i)+": "+(s.active===false ? "[DELETED]" : (s.name||"-")));
+    const txt = lines.join("\n");
+    try{
+      await navigator.clipboard.writeText(txt);
+      toast("BAGAN dicopy");
+    }catch(e){
+      toast("Gagal copy, blok manual");
+      alert(txt);
+    }
+  };
+
+  /* =========================
+     ✅ PIKET weekly TERPISAH
+     ========================= */
+  function renderPiketTable(){
+    const body = $("#piketTableBody");
+    body.innerHTML = "";
+    const days = ["SENIN","SELASA","RABU","KAMIS","JUMAT","SABTU","MINGGU"];
+
+    days.forEach(day=>{
+      const tr = document.createElement("tr");
+      const names = piketStore[day] || Array(8).fill("");
+
+      const wrap = document.createElement("div");
+      names.forEach((nm,i)=>{
+        const span = document.createElement("span");
+        span.className = "piket-name " + ((nm||"").trim() ? "" : "empty");
+        span.dataset.day = day;
+        span.dataset.i = i;
+        span.textContent = (nm||"").trim() || "—";
+        wrap.appendChild(span);
+      });
+
+      const tdDay = document.createElement("td");
+      tdDay.className = "name";
+      tdDay.style.fontWeight = "900";
+      tdDay.textContent = day;
+
+      const tdNames = document.createElement("td");
+      tdNames.colSpan = 8;
+      tdNames.appendChild(wrap);
+
+      tr.appendChild(tdDay);
+      tr.appendChild(tdNames);
+      body.appendChild(tr);
+    });
+
+    body.querySelectorAll(".piket-name").forEach(el=>{
+      el.onclick = ()=>{
+        if(isLocked){ toast("Terkunci. Hanya bos yang bisa edit."); return; }
+        const day = el.dataset.day;
+        const i = Number(el.dataset.i);
+        const old = piketStore[day][i] || "";
+        const nm = prompt("Nama piket " + day + " slot " + (i+1) + ":", old);
+        if(nm===null) return;
+        piketStore[day][i] = nm.trim();
+        savePiket();
+        renderPiketTable();
+      };
+    });
+  }
+
+  $("#resetPiketBtn").onclick = ()=>{
+    if(isLocked){ toast("Terkunci. Tidak bisa reset PIKET."); return; }
+    if(confirm("Reset semua jadwal PIKET?")){
+      Object.keys(defaultPiket).forEach(d=>{
+        piketStore[d] = Array(8).fill("");
+      });
+      savePiket();
+      renderPiketTable();
+      toast("PIKET direset");
+    }
+  };
+
+  $("#exportPiketBtn").onclick = async ()=>{
+    const days = ["SENIN","SELASA","RABU","KAMIS","JUMAT","SABTU","MINGGU"];
+    let txt = "";
+    days.forEach(d=>{
+      const list = (piketStore[d]||[]).filter(n=>String(n).trim());
+      txt += d + ":\n" + (list.length ? list.map(x=>"- "+x).join("\n") : "- (kosong)") + "\n\n";
+    });
+
+    try{
+      await navigator.clipboard.writeText(txt);
+      toast("PIKET dicopy");
+    }catch(e){
+      alert(txt);
+      toast("Gagal copy, blok manual");
+    }
+  };
+
+  /* =========================
+     ✅ TOP TABS SWITCH VIEW
+     ========================= */
+  function setActiveTab(type){
+    activeFilterType = type;
+
+    $("#topTabs").querySelectorAll(".tab-btn").forEach(b=>{
+      b.classList.toggle("active", b.dataset.type===type);
+    });
+
+    if(type==="CUTI"){
+      $("#calendarPanel").style.display="none";
+      $("#baganPanel").style.display="none";
+      $("#piketPanel").style.display="none";
+      $("#cutiPanel").style.display="flex";
+      renderCutiTable();
+      toast("Mode: CUTI");
+      return;
+    }
+
+    if(type==="BAGAN_VIEW"){
+      $("#calendarPanel").style.display="none";
+      $("#cutiPanel").style.display="none";
+      $("#piketPanel").style.display="none";
+      $("#baganPanel").style.display="flex";
+      renderBagan();
+      updateDeleteSeatUI();
+      toast("Mode: BAGAN");
+      return;
+    }
+
+    if(type==="PIKET"){
+      $("#calendarPanel").style.display="none";
+      $("#cutiPanel").style.display="none";
+      $("#baganPanel").style.display="none";
+      $("#piketPanel").style.display="flex";
+      renderPiketTable();
+      toast("Mode: PIKET");
+      return;
+    }
+
+    $("#calendarPanel").style.display="flex";
+    $("#cutiPanel").style.display="none";
+    $("#baganPanel").style.display="none";
+    $("#piketPanel").style.display="none";
+    renderCalendar();
+    toast(type==="ALL" ? "Mode: ALL" : "Filter: "+type);
+  }
+
+  function initTopTabs(){
+    $("#topTabs").querySelectorAll(".tab-btn").forEach(btn=>{
+      btn.addEventListener("click", ()=> setActiveTab(btn.dataset.type));
+    });
+  }
+
+  /* =========================
+     ✅ NAVIGASI KALENDER
+     ========================= */
+  const prev=()=>{view.setMonth(view.getMonth()-1); renderCalendar();};
+  const next=()=>{view.setMonth(view.getMonth()+1); renderCalendar();};
+  $("#prev").onclick=$("#prevMini").onclick=prev;
+  $("#next").onclick=$("#nextMini").onclick=next;
+  $("#todayBtn").onclick=()=>{view=new Date(); renderCalendar();};
+  $("#jumpYear").onclick=()=>{
+    const y=prompt("Masukkan tahun (contoh 2026):", view.getFullYear());
+    if(!y) return; view.setFullYear(Number(y)); renderCalendar();
+  };
+  $("#clear").onclick=()=>{
+    if(isLocked){ toast("Terkunci. Tidak bisa reset."); return; }
+    const md=getMonthData(view);
+    const prefix = md.y+"-"+String(md.m+1).padStart(2,"0");
+    Object.keys(store).forEach(k=>{ if(k.startsWith(prefix)) delete store[k]; });
+    saveStore(); renderCalendar();
+  };
+
+  function parseNamesFromPaste(text){
+    return text.split(/\r?\n|\t|,|;/g).map(s=>s.trim()).filter(Boolean);
+  }
+  function shuffle(arr){
+    const a=arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+  function normalizeName(n){ return (n||"").trim().toLowerCase(); }
+
+  function bulkImportNames(){
+    if(isLocked){ toast("Terkunci. Tidak bisa import."); return; }
+
+    const pasted = prompt(
+      "Paste nama dari Excel.\n\nMODE: PENCAR PERIODE\n- Periode 1: tgl 1–15\n- Periode 2: tgl 16–akhir\nNama sama otomatis beda periode.\nRandom 1 nama per tanggal.\nSkip BLOCKED.",
+      ""
+    );
+    if(!pasted) return;
+
+    let rawNames=parseNamesFromPaste(pasted);
+    if(rawNames.length===0){ toast("Tidak ada nama terdeteksi"); return; }
+
+    const toggleByName={}, namesP1=[], namesP2=[];
+    for(const nm of rawNames){
+      const key=normalizeName(nm);
+      if(!(key in toggleByName)) toggleByName[key]=0;
+      if(toggleByName[key]===0){ namesP1.push(nm); toggleByName[key]=1; }
+      else { namesP2.push(nm); toggleByName[key]=0; }
+    }
+
+    const listP1=shuffle(namesP1), listP2=shuffle(namesP2);
+    const md=getMonthData(view);
+    const y=md.y, m=md.m, daysInMonth=md.daysInMonth;
+
+    let eligibleP1=[], eligibleP2=[];
+    for(let d=1; d<=daysInMonth; d++){
+      const key=ymd(new Date(y,m,d));
+      ensureDay(key);
+      if(store[key]?.blocked) continue;
+      (d<=15?eligibleP1:eligibleP2).push(key);
+    }
+
+    function fillPeriod(namesList, eligibleKeys){
+      let idx=0, filled=0;
+      while(idx<namesList.length){
+        const roundKeys=shuffle(eligibleKeys);
+        let any=false;
+        for(const key of roundKeys){
+          if(idx>=namesList.length) break;
+          ensureDay(key);
+          const slot=store[key].entries.find(e=>!(e.name||"").trim());
+          if(slot){
+            slot.name=namesList[idx];
+            store[key].off=true;
+            store[key].type=store[key].type||"OFF";
+            idx++; filled++; any=true;
+          }
+        }
+        if(!any) break;
+      }
+      return {filled:filled, remaining:namesList.length-idx};
+    }
+
+    const r1=fillPeriod(listP1, eligibleP1);
+    const r2=fillPeriod(listP2, eligibleP2);
+    saveStore(); renderCalendar();
+    toast("P1 masuk "+r1.filled+" | P2 masuk "+r2.filled);
+  }
+  $("#bulkImport").onclick=bulkImportNames;
+
+  /* =========================
+     ✅ INIT
+     ========================= */
+  window.addEventListener("load", () => {
+    updateLockUI();
+    initTopTabs();
+    renderWeekdays();
+    renderCalendar();
+    setActiveTab("ALL");
+    updateDeleteSeatUI();
+  });
+})();
+</script>
+</body>
+</html>
