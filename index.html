@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="id">
 <head>
@@ -198,7 +199,7 @@
     }
 
     .names-mini{
-      font-size:12.5px; color:#0f172a; line-height:1.2; font-weight:900;
+      font-size:12.5px; color:#0b0b0b; line-height:1.2; font-weight:900;
       display:grid; gap:4px; margin-top:2px;
     }
     .names-mini .line{display:flex; gap:6px; padding:2px 4px; border-radius:6px}
@@ -206,13 +207,99 @@
 
     .today{outline:2px dashed rgba(34,197,94,.9); outline-offset:-2px;}
 
-    .cuti-panel{display:none;}
-    .cuti-head{
-      display:flex; justify-content:space-between; align-items:center;
-      padding:10px 12px; background:rgba(255,255,255,.05);
-      border-radius:14px; margin-bottom:10px; gap:8px; flex-wrap:wrap;
+    /* ====== HEADERS ====== */
+    .section-head{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      background:rgba(255,255,255,.05);
+      border-radius:14px;
+      margin-bottom:10px;
     }
-    .cuti-title{font-weight:900; letter-spacing:.4px}
+    .section-title{
+      justify-self:center;
+      font-weight:900;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      text-align:center;
+      padding:8px 14px;
+      border-radius:14px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
+      min-width:min(520px, 90%);
+      color:#f8fafc;
+    }
+    @media (max-width: 700px){
+      .section-title{min-width:unset; width:100%;}
+      .section-head{grid-template-columns:1fr;}
+      .section-head > div:last-child{justify-self:center;}
+    }
+
+    /* ====== TEKS HIDUP ====== */
+    @supports (-webkit-background-clip:text) or (background-clip:text){
+      .section-title{
+        position:relative;
+        overflow:hidden;
+        color: transparent !important;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        background-size: 220% 220%;
+        animation: titleFlow 4.5s ease-in-out infinite;
+        text-shadow: 0 10px 30px rgba(0,0,0,.35);
+      }
+      .section-title::after{
+        content:"";
+        position:absolute;
+        inset:-40% -60%;
+        background: linear-gradient(120deg,
+          transparent 0%,
+          rgba(255,255,255,.22) 45%,
+          rgba(255,255,255,.45) 50%,
+          rgba(255,255,255,.22) 55%,
+          transparent 100%
+        );
+        transform: translateX(-60%);
+        animation: titleShine 3.2s ease-in-out infinite;
+        pointer-events:none;
+        mix-blend-mode: screen;
+      }
+      .section-title.title-cuti{
+        background-image: linear-gradient(90deg,#38bdf8 0%,#a78bfa 35%,#22c55e 70%,#38bdf8 100%);
+      }
+      .section-title.title-bagan{
+        background-image: linear-gradient(90deg,#f59e0b 0%,#f97316 35%,#ec4899 70%,#f59e0b 100%);
+      }
+      .section-title.title-piket{
+        background-image: linear-gradient(90deg,#e5e7eb 0%,#94a3b8 30%,#f8fafc 55%,#6b7280 80%,#e5e7eb 100%);
+        animation-duration: 5.2s;
+      }
+      .section-title.title-cs{
+        background-image: linear-gradient(90deg,#22c55e 0%,#06b6d4 35%,#a78bfa 70%,#22c55e 100%);
+      }
+
+      @keyframes titleFlow{
+        0%   { background-position: 0% 50%; }
+        50%  { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      @keyframes titleShine{
+        0%   { transform: translateX(-60%) rotate(2deg); opacity:0; }
+        20%  { opacity:.55; }
+        50%  { transform: translateX(60%) rotate(2deg); opacity:.35; }
+        100% { transform: translateX(60%) rotate(2deg); opacity:0; }
+      }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .section-title, .section-title::after{ animation:none !important; }
+    }
+
+    /* ===== CUTI ===== */
+    .cuti-panel{display:none;}
     .cuti-table-wrap{
       width:100%;
       overflow:auto;
@@ -257,15 +344,8 @@
       margin-left:6px;
     }
 
+    /* ===== BAGAN ===== */
     .bagan-panel{display:none;}
-    .bagan-head{
-      display:flex; justify-content:space-between; align-items:center;
-      padding:10px 12px; background:rgba(255,255,255,.05);
-      border-radius:14px; margin-bottom:10px; gap:8px; flex-wrap:wrap;
-    }
-    .bagan-title{
-      font-weight:900; letter-spacing:.5px; text-transform:uppercase;
-    }
     .bagan-wrap{
       position:relative;
       border-radius:16px;
@@ -331,6 +411,7 @@
       box-shadow: none !important;
     }
 
+    /* ===== MODAL ===== */
     .modal-backdrop{
       position:fixed; inset:0; background:rgba(2,6,23,.6); display:none;
       place-items:center; padding:18px; z-index:50; backdrop-filter: blur(4px);
@@ -406,6 +487,7 @@
     }
     .toast.show{opacity:1; transform:translateX(-50%) translateY(-4px);}
 
+    /* ===== PIKET ===== */
     .piket-panel{display:none;}
     .piket-panel .cuti-table thead th{
       background: linear-gradient(90deg,#111827,#334155);
@@ -415,14 +497,151 @@
       display:inline-block;
       padding:6px 8px;
       margin:2px;
-      border-radius:8px;
-      background:rgba(255,255,255,.08);
+      border-radius:10px;
       font-weight:900;
       cursor:pointer;
       min-width:70px;
       text-align:center;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
     }
-    .piket-name.empty{opacity:.5; font-weight:700;}
+    .piket-name.empty{opacity:.55; font-weight:800;}
+    #piketPanel .piket-name{
+      background: rgba(0,0,0,.28);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 6px 18px rgba(0,0,0,.35);
+      background-image: linear-gradient(180deg,
+        #f8fafc 0%,
+        #d1d5db 18%,
+        #9ca3af 45%,
+        #e5e7eb 70%,
+        #6b7280 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: .6px rgba(0,0,0,.35);
+      text-shadow:
+        0 1px 0 rgba(255,255,255,.12),
+        0 2px 10px rgba(0,0,0,.55);
+    }
+    #piketPanel .piket-name.empty{
+      background-image: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      color: rgba(255,255,255,.55);
+      -webkit-text-stroke: 0;
+      text-shadow: none;
+    }
+
+    /* ===== CS MAWAROTO TABLE ===== */
+    .cs-panel{display:none;}
+    .cs-wrap{
+      width:100%;
+      overflow:auto;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.35);
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow);
+    }
+    table.cs-table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:920px;
+      font-size:14px;
+    }
+    .cs-table thead th{
+      background:linear-gradient(90deg,#22c55e,#06b6d4,#a78bfa);
+      color:#06121a;
+      text-align:center;
+      padding:12px 10px;
+      font-weight:900;
+      letter-spacing:.4px;
+      position:sticky; top:0; z-index:1;
+    }
+    .cs-table tbody td{
+      padding:10px 10px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+      text-align:center;
+      font-weight:900;
+      color:#f8fafc;
+      background:rgba(0,0,0,.25);
+    }
+    .cs-table tbody tr:hover td{background:rgba(255,255,255,.06)}
+    .cs-table td.name{
+      text-align:left;
+      padding-left:16px;
+      font-weight:900;
+      color:#fff;
+    }
+    .cs-table td.name:hover{ text-decoration: underline; opacity: .95; }
+
+    .cs-job-wrap{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+    }
+    .cs-job-select{
+      appearance:none;
+      padding:8px 34px 8px 10px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.18);
+      outline:none;
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.3px;
+      background:#202741;
+      color:#eef2ff;
+      cursor:pointer;
+      min-width:220px;
+    }
+    .cs-del-btn{
+      padding:7px 10px;
+      border-radius:10px;
+      background:#ef4444;
+      color:white;
+      font-weight:900;
+      border:0;
+      cursor:pointer;
+    }
+    .cs-del-btn:hover{filter:brightness(1.05); transform:translateY(-1px);}
+
+    .cs-panel .btn-green{
+      background:rgba(34,197,94,.28);
+      color:#eafff2;
+      font-weight:900;
+      border-radius:10px;
+      padding:7px 10px;
+      border:0;
+      cursor:pointer;
+    }
+    .cs-panel .btn-green:hover{
+      background:rgba(34,197,94,.38);
+      transform:translateY(-1px);
+    }
+
+    .cs-add-btn{
+      padding:9px 12px;
+      border-radius:12px;
+      background:rgba(34,197,94,.20);
+      color:#eafff2;
+      font-weight:900;
+      border:0;
+      cursor:pointer;
+    }
+    .cs-add-btn:hover{background:rgba(34,197,94,.30); transform:translateY(-1px);}
+    .cs-reset-btn{
+      padding:9px 12px;
+      border-radius:12px;
+      background:rgba(244,63,94,.20);
+      color:#ffe9ed;
+      font-weight:900;
+      border:0;
+      cursor:pointer;
+    }
+    .cs-reset-btn:hover{background:rgba(244,63,94,.30); transform:translateY(-1px);}
 
     @media (max-width: 700px){
       .modal{grid-template-columns:1fr;}
@@ -430,15 +649,15 @@
       .grid{ grid-auto-rows: minmax(175px,1fr); }
       .bagan-board{grid-template-columns:repeat(20, 80px);}
     }
-  </style>
+  
+    .cs-name-span{font-weight:900; letter-spacing:.2px;}
+</style>
 
   <!-- Firebase SDK (v8 compat CDN) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
   <script>
-    // ====== FIREBASE CONFIG (PASTIKAN SESUAI PROJECT KAMU) ======
-    // databaseURL harus sama persis seperti di Realtime Database console (biasanya ...firebaseio.com)
     const firebaseConfig = {
       apiKey: "AIzaSyD0gaCXH6ny4EwLwhJhUVAZzS5x1nLjs-s",
       authDomain: "dedy-b7d09.firebaseapp.com",
@@ -458,7 +677,7 @@
       <div class="brand">
         <div class="logo">OFF</div>
         <div>
-          <h1>Jadwal Offday</h1>
+          <h1>MAWARTOTO</h1>
           <p>Klik tanggal → pilih jenis jadwal → isi 8 nama di dalam kotak</p>
         </div>
       </div>
@@ -469,6 +688,7 @@
         <button class="tab-btn" data-type="CUTI">CUTI</button>
         <button class="tab-btn" data-type="BAGAN_VIEW">BAGAN</button>
         <button class="tab-btn" data-type="PIKET">PIKET</button>
+        <button class="tab-btn" data-type="CS_MAWAROTO">CS MAWAROTO</button>
       </div>
 
       <div class="controls">
@@ -481,6 +701,7 @@
       </div>
     </div>
 
+    <!-- CALENDAR -->
     <section class="panel" id="calendarPanel">
       <div class="cal-head">
         <div style="display:flex; gap:6px">
@@ -495,10 +716,11 @@
       <div class="grid" id="grid"></div>
     </section>
 
+    <!-- CUTI -->
     <section class="panel cuti-panel" id="cutiPanel">
-      <div class="cuti-head">
-        <div class="cuti-title">Daftar CUTI Staff</div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <div class="section-head">
+        <div class="section-title title-cuti"> ✨ DAFTAR CUTI STAFF  ✨</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
           <button id="addCutiBtn" class="btn-green">+ Tambah Cuti</button>
           <button id="exportCutiBtn" class="btn-accent">Export (Copy)</button>
         </div>
@@ -519,17 +741,15 @@
       </div>
     </section>
 
+    <!-- BAGAN -->
     <section class="panel bagan-panel" id="baganPanel">
-      <div class="bagan-head">
-        <div class="bagan-title">Tata Letak Meja Kerja (BAGAN)</div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <div class="section-head">
+        <div class="section-title title-bagan">🌟 TATA LETAK MEJA KERJA 🌟</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
           <button id="addRowBtn" class="btn-green">+ Baris</button>
           <button id="addColBtn" class="btn-green">+ Kolom</button>
-
           <button id="removeColBtn" class="btn-danger">🗑 Hapus Kolom</button>
-
           <button id="toggleDeleteSeatBtn" class="btn-amber">🧽 MODE HAPUS: OFF</button>
-
           <button id="resetBaganBtn" class="btn-danger">Reset Bagan</button>
           <button id="exportBaganBtn" class="btn-accent">Export (Copy)</button>
         </div>
@@ -544,10 +764,11 @@
       </div>
     </section>
 
+    <!-- PIKET -->
     <section class="panel piket-panel" id="piketPanel">
-      <div class="bagan-head">
-        <div class="bagan-title">Piket Buang Sampah Mawar Group</div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <div class="section-head">
+        <div class="section-title title-piket">⬇️ PIKET BUANG SAMPAH MAWARTOTO ⬇️</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
           <button id="resetPiketBtn" class="btn-danger">Reset Piket</button>
           <button id="exportPiketBtn" class="btn-accent">Export (Copy)</button>
         </div>
@@ -558,7 +779,7 @@
           <thead>
             <tr>
               <th>Hari</th>
-              <th colspan="8">Nama Piket (maks 8 orang / hari)</th>
+              <th colspan="8">PIKET SHIF PAGI</th>
             </tr>
           </thead>
           <tbody id="piketTableBody"></tbody>
@@ -569,8 +790,38 @@
         Klik nama untuk edit. PIKET ini <b>tidak mempengaruhi</b> OFFDAY / CUTI / BAGAN.
       </div>
     </section>
+
+    <!-- CS MAWAROTO -->
+    <section class="panel cs-panel" id="csPanel">
+      <div class="section-head">
+        <div class="section-title title-cs">👤 CS MAWAROTO 👤</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
+          <button id="addCsBtn" class="cs-add-btn">+ Tambah CS</button>
+          <button id="resetCsBtn" class="cs-reset-btn">Reset CS</button>
+          <button id="exportCsBtn" class="btn-accent">Export (Copy)</button>
+        </div>
+      </div>
+
+      <div class="cs-wrap">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th style="width:45%;">NAMA CS</th>
+              <th style="width:30%;">JOBDESK</th>
+              <th style="width:25%;">AKSI</th>
+            </tr>
+          </thead>
+          <tbody id="csTableBody"></tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:10px; font-size:12px; opacity:.85;">
+        Dropdown untuk <b>ganti jobdesk</b>. Tombol <b>→ OFFDAY</b> untuk masukin nama ke kalender.
+      </div>
+    </section>
   </div>
 
+  <!-- MODAL OFFDAY/BAGAN -->
   <div class="modal-backdrop" id="backdrop">
     <div class="modal">
       <div>
@@ -613,6 +864,7 @@
     </div>
   </div>
 
+  <!-- MODAL CUTI -->
   <div class="modal-backdrop" id="cutiBackdrop">
     <div class="modal" style="grid-template-columns:1fr;">
       <div>
@@ -662,7 +914,6 @@
   // =========================
   const GLOBAL_ROOM_ID = "mwtt-main"; // semua user pakai room ini → data sama global
 
-  // ID device biar update gak “ke-loop” (optional)
   const clientIdKey = "mwtt-client-id";
   const clientId = localStorage.getItem(clientIdKey) || ("c_" + Math.random().toString(16).slice(2));
   localStorage.setItem(clientIdKey, clientId);
@@ -688,6 +939,7 @@
       cuti: cutiStore,
       bagan: { meta: baganMeta, seats: baganStore },
       piket: piketStore,
+      csMawaroto: csStore,
       lock: { isLocked }
     };
     dbRef.set(payload).catch(err => console.error("GLOBAL SAVE ERR:", err));
@@ -695,8 +947,6 @@
 
   function applyRemote(payload) {
     if (!payload) return;
-
-    // ignore payload lama
     const u = Number(payload.updatedAt || 0);
     if (u && u <= lastRemoteUpdatedAt) return;
 
@@ -704,43 +954,43 @@
     try {
       lastRemoteUpdatedAt = u || lastRemoteUpdatedAt;
 
-      // calendar
       if (payload.calendar && typeof payload.calendar === "object") {
         Object.keys(store).forEach(k => delete store[k]);
         Object.assign(store, payload.calendar);
         saveStore();
       }
 
-      // cuti
       if (Array.isArray(payload.cuti)) {
         cutiStore.splice(0, cutiStore.length, ...payload.cuti);
         saveCuti();
       }
 
-      // bagan
       if (payload.bagan && typeof payload.bagan === "object") {
         if (payload.bagan.meta) baganMeta = payload.bagan.meta;
         if (Array.isArray(payload.bagan.seats)) baganStore = payload.bagan.seats;
         saveBagan();
       }
 
-      // piket
       if (payload.piket && typeof payload.piket === "object") {
         Object.keys(piketStore).forEach(k => delete piketStore[k]);
         Object.assign(piketStore, payload.piket);
         savePiket();
       }
 
-      // lock state (optional)
+      if (Array.isArray(payload.csMawaroto)) {
+        csStore.splice(0, csStore.length, ...payload.csMawaroto);
+        saveCS();
+      }
+
       if (payload.lock && typeof payload.lock.isLocked === "boolean") {
         isLocked = payload.lock.isLocked;
         updateLockUI();
       }
 
-      // rerender sesuai tab yang aktif
       if (activeFilterType === "CUTI") renderCutiTable();
       else if (activeFilterType === "BAGAN_VIEW") { renderBagan(); updateDeleteSeatUI(); }
       else if (activeFilterType === "PIKET") renderPiketTable();
+      else if (activeFilterType === "CS_MAWAROTO") renderCSTable();
       else renderCalendar();
 
     } finally {
@@ -752,7 +1002,6 @@
     dbRef.on("value", snap => {
       const payload = snap.val();
       applyRemote(payload);
-      // console.log("🌍 GLOBAL DATA:", payload);
     }, err => {
       console.error("GLOBAL LOAD ERR:", err);
     });
@@ -781,7 +1030,7 @@
     { value: "LEADER DEPOSIT", label: "LEADER DEPOSIT", color: "#FDE047" },
     { value: "LEADER WD", label: "WHATSAPP", color: "#A3E635" },
     { value: "LEADER LIVE CHAT", label: "LEADER LIVE CHAT", color: "#CA8A04" },
-    { value: "ASSIT LEADER W", label: "ASSIT LEADER WD", color: "#EC4899" },
+    { value: "ASSIT LEADER W", label: "ASSIT LEADER WD", color: "#003333" },
   ];
   const ROLE_COLOR_MAP = Object.fromEntries(ROLE_OPTIONS.map(o => [o.value, o.color]));
 
@@ -822,7 +1071,6 @@
 
   function ensureBaganSize(){
     const sizeNeeded = BAGAN_SIZE();
-
     if(baganStore.length < sizeNeeded){
       baganStore.push(
         ...Array.from(
@@ -856,6 +1104,40 @@
     || safeClone(defaultPiket);
   const savePiket = () => localStorage.setItem(piketKey, JSON.stringify(piketStore));
 
+  // ===== CS MAWAROTO STORE =====
+  const csKey = "cs-mawaroto-v1";
+  const csDefault = [
+    { name: "CS ANITA", job: "LIVECHAT" },
+    { name: "CS RINA", job: "WHATSAPP" },
+    { name: "CS DWI", job: "REPORT PHISING" }
+  ];
+  const csStore = JSON.parse(localStorage.getItem(csKey) || "null") || csDefault.slice();
+  const saveCS = () => localStorage.setItem(csKey, JSON.stringify(csStore));
+
+  const CS_JOB_OPTIONS = [
+    { value:"", label:"Pilih Jobdesk", color:"#202741" },
+    { value:"LIVECHAT", label:"LIVECHAT", color:"#bfe3ff" },
+    { value:"WHATSAPP", label:"WHATSAPP", color:"#A3E635" },
+    { value:"DEPOSIT", label:"DEPOSIT", color:"#8B5CF6" },
+    { value:"WORKER WD", label:"WORKER WD", color:"#e5c9ff" },
+    { value:"DESIGN", label:"DESIGN", color:"#f59e0b" },
+    { value:"ADMIN", label:"ADMIN", color:"#FB923C" },
+    { value:"BANKER", label:"BANKER", color:"#22c55e" },
+    { value:"FINANCE", label:"FINANCE", color:"#f7d88b" },
+    { value:"TELEMARKETING", label:"TELEMARKETING", color:"#fda085" },
+    { value:"MARKETING", label:"MARKETING", color:"#ef4444" },
+    { value:"LEADER DEPOSIT", label:"LEADER DEPOSIT", color:"#94a3b8" },
+    { value:"TELEGRAM / SOSMED", label:"TELEGRAM / SOSMED", color:"#38bdf8" },
+    { value:"REPORT PHISING", label:"REPORT PHISING", color:"#2563eb" },
+    { value:"LEADER WD", label:"LEADER WD", color:"#b91c1c" },
+    { value:"QRIS", label:"QRIS", color:"#C4B5FD" },
+    { value:"SPV WD", label:"SPV WD", color:"#0f766e" },
+    { value:"WD PGA", label:"WD PGA", color:"#22c55e" },
+    { value:"LEADER LIVE CHAT", label:"LEADER LIVE CHAT", color:"#a16207" },
+    { value:"ASSIT LEADER UTAMA", label:"ASSIT LEADER UTAMA", color:"#FBCFE8" },
+    { value:"ASSIT LEADER WD", label:"ASSIT LEADER WD", color:"#9D174D" },
+  ];
+
   let view = new Date();
   let activeKey = null;
   let activeFilterType = "ALL";
@@ -866,6 +1148,33 @@
     t.textContent=msg;
     t.classList.add("show");
     setTimeout(()=>t.classList.remove("show"), 1600);
+  }
+
+  async function copyToClipboard(text){
+    const t = String(text||"");
+    // navigator.clipboard butuh HTTPS/secure context, jadi kita sediakan fallback
+    try{
+      if(navigator.clipboard && window.isSecureContext){
+        await navigator.clipboard.writeText(t);
+        return true;
+      }
+    }catch(e){}
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = t;
+      ta.setAttribute("readonly","");
+      ta.style.position="fixed";
+      ta.style.left="-9999px";
+      ta.style.top="0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return !!ok;
+    }catch(e){
+      return false;
+    }
   }
 
   function updateLockUI(){
@@ -879,14 +1188,14 @@
   $("#lockBtn").onclick = () => {
     if(!isLocked){
       isLocked = true; updateLockUI();
-      schedulePush(); // global
+      schedulePush();
       toast("Mode terkunci");
       return;
     }
     const pw = prompt("Masukkan password untuk buka edit:");
     if(pw === EDIT_PASSWORD){
       isLocked = false; updateLockUI();
-      schedulePush(); // global
+      schedulePush();
       toast("Edit mode aktif");
     }else toast("Password salah");
   };
@@ -978,6 +1287,7 @@
         activeFilterType !== "CUTI" &&
         activeFilterType !== "BAGAN_VIEW" &&
         activeFilterType !== "PIKET" &&
+        activeFilterType !== "CS_MAWAROTO" &&
         !isBlocked &&
         type !== activeFilterType;
 
@@ -1007,9 +1317,10 @@
         const typeLabel=(TYPE_OPTIONS.find(t=>t.value===type)||{}).label||type;
 
         if(entries.length===0){
+          const emptyText = (type==="OFF") ? "Klik untuk isi" : (typeLabel + ": klik untuk isi");
           miniHtml=
             '<div class="names-mini">'+
-              '<div class="line empty">'+typeLabel+': klik untuk isi</div>'+
+              '<div class="line empty">'+emptyText+'</div>'+
             '</div>';
         } else{
           const lines=entries.map(e=>{
@@ -1029,9 +1340,13 @@
                      '</span>'+
                    '</div>';
           }).join("");
+
+          const showHeader = (type !== "OFF");
+          const headerHtml = showHeader ? ('<div class="line"><b>'+typeLabel+'</b></div>') : "";
+
           miniHtml=
             '<div class="names-mini">'+
-              '<div class="line"><b>'+typeLabel+'</b></div>'+
+              headerHtml+
               lines+
             '</div>';
         }
@@ -1143,7 +1458,7 @@
       store[key].type=typeSelect.value;
       store[key].off=true;
       saveStore(); refreshCopyBox(); renderCalendar();
-      schedulePush(); // global
+      schedulePush();
     };
 
     refreshCopyBox();
@@ -1177,7 +1492,7 @@
     store[activeKey].off=true;
     store[activeKey].type=store[activeKey].type||"OFF";
     saveStore(); closeCalendarModal(); renderCalendar();
-    schedulePush(); // global
+    schedulePush();
   };
 
   $("#deleteOff").onclick=()=>{
@@ -1187,7 +1502,7 @@
     store[activeKey].entries=Array.from({length:8},()=>({name:"",role:""}));
     if(!store[activeKey].blocked) delete store[activeKey];
     saveStore(); closeCalendarModal(); renderCalendar();
-    schedulePush(); // global
+    schedulePush();
   };
 
   $("#toggleBlock").onclick=()=>{
@@ -1201,7 +1516,7 @@
       store[activeKey].type=store[activeKey].type||"OFF";
     }
     saveStore(); closeCalendarModal(); renderCalendar();
-    schedulePush(); // global
+    schedulePush();
   };
 
   $("#copyBtn").onclick = async ()=>{
@@ -1258,7 +1573,7 @@
         if(confirm("Hapus data CUTI ini?")){
           cutiStore.splice(idx,1);
           saveCuti(); renderCutiTable();
-          schedulePush(); // global
+          schedulePush();
           toast("Data CUTI dihapus");
         }
       };
@@ -1318,7 +1633,7 @@
     }
 
     saveCuti(); renderCutiTable(); closeCutiModal();
-    schedulePush(); // global
+    schedulePush();
   };
 
   $("#cutiDeleteBtn").onclick=()=>{
@@ -1326,7 +1641,7 @@
     if(confirm("Hapus data CUTI ini?")){
       cutiStore.splice(editingCutiIndex,1);
       saveCuti(); renderCutiTable(); closeCutiModal();
-      schedulePush(); // global
+      schedulePush();
       toast("Data CUTI dihapus");
     }
   };
@@ -1400,7 +1715,7 @@
           baganStore[i].active = false;
           saveBagan();
           renderBagan();
-          schedulePush(); // global
+          schedulePush();
           toast("Seat "+seatLabel(i)+" dihapus");
           return;
         }
@@ -1411,7 +1726,7 @@
         baganStore[i].active = true;
         saveBagan();
         renderBagan();
-        schedulePush(); // global
+        schedulePush();
       });
 
       div.addEventListener("dragstart", e=>{
@@ -1438,7 +1753,7 @@
         baganStore[from]=baganStore[to];
         baganStore[to]=tmp;
         saveBagan(); renderBagan();
-        schedulePush(); // global
+        schedulePush();
         toast("Swap seat "+seatLabel(from)+" ↔ "+seatLabel(to));
       });
 
@@ -1452,7 +1767,7 @@
     ensureBaganSize();
     saveBagan();
     renderBagan();
-    schedulePush(); // global
+    schedulePush();
     toast("Baris ditambah. Total: "+baganMeta.rows);
   };
 
@@ -1462,7 +1777,7 @@
     ensureBaganSize();
     saveBagan();
     renderBagan();
-    schedulePush(); // global
+    schedulePush();
     toast("Kolom ditambah. Total: "+baganMeta.cols);
   };
 
@@ -1500,7 +1815,7 @@
     ensureBaganSize();
     saveBagan();
     renderBagan();
-    schedulePush(); // global
+    schedulePush();
     toast("Kolom ke-"+colToRemove+" dihapus. Total kolom: "+baganMeta.cols);
   };
 
@@ -1510,7 +1825,7 @@
       ensureBaganSize();
       for(let i=0;i<BAGAN_SIZE();i++) baganStore[i]={name:"", active:true};
       saveBagan(); renderBagan();
-      schedulePush(); // global
+      schedulePush();
       toast("BAGAN direset");
     }
   };
@@ -1571,7 +1886,7 @@
         piketStore[day][i] = nm.trim();
         savePiket();
         renderPiketTable();
-        schedulePush(); // global
+        schedulePush();
       };
     });
   }
@@ -1584,7 +1899,7 @@
       });
       savePiket();
       renderPiketTable();
-      schedulePush(); // global
+      schedulePush();
       toast("PIKET direset");
     }
   };
@@ -1606,6 +1921,205 @@
     }
   };
 
+  // ===== CS MAWAROTO TABLE RENDER + tombol → OFFDAY =====
+  function renderCSTable(){
+    const body = $("#csTableBody");
+    if(!body) return;
+    body.innerHTML = "";
+
+    if(csStore.length === 0){
+      body.innerHTML = `<tr><td colspan="3" style="padding:16px; opacity:.7;">Belum ada data CS.</td></tr>`;
+      return;
+    }
+
+    csStore.forEach((row, idx) => {
+      const tr = document.createElement("tr");
+
+            const tdName = document.createElement("td");
+      tdName.className = "name";
+      tdName.style.display = "flex";
+      tdName.style.alignItems = "center";
+      tdName.style.gap = "10px";
+
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "cs-name-span";
+      nameSpan.textContent = ((idx+1) + ". " + ((row.name||"-").trim() || "-"));
+      nameSpan.style.cursor = "pointer";
+      nameSpan.title = "Klik untuk copy nama";
+      nameSpan.onclick = async (ev) => {
+        ev.stopPropagation();
+        const nm = (row.name || "").trim();
+        if(!nm) { toast("Nama kosong"); return; }
+        const ok = await copyToClipboard(nm);
+        if(ok) toast("Tercopy: " + nm);
+        else { prompt("Copy manual (CTRL+C):", nm); toast("Gagal auto copy, copy manual"); }
+      };
+
+      const editBtn = document.createElement("button");
+      editBtn.textContent = "✎";
+      editBtn.title = "Edit nama CS";
+      editBtn.style.padding = "6px 10px";
+      editBtn.style.borderRadius = "10px";
+      editBtn.style.border = "1px solid rgba(255,255,255,.16)";
+      editBtn.style.background = "rgba(255,255,255,.06)";
+      editBtn.style.color = "#eef2ff";
+      editBtn.style.cursor = "pointer";
+      editBtn.onmouseenter = () => editBtn.style.background = "rgba(255,255,255,.10)";
+      editBtn.onmouseleave = () => editBtn.style.background = "rgba(255,255,255,.06)";
+      editBtn.onclick = (ev) => {
+        ev.stopPropagation();
+        if(isLocked){ toast("Terkunci. Hanya bos yang bisa edit."); return; }
+        const cur = (csStore[idx]?.name || "").trim();
+        const nm = prompt("Edit nama CS:", cur);
+        if(nm === null) return;
+        const name = nm.trim();
+        if(!name){ toast("Nama tidak boleh kosong"); return; }
+        csStore[idx].name = name;
+        saveCS();
+        renderCSTable();
+        schedulePush();
+        toast("Nama CS diupdate");
+      };
+
+      tdName.appendChild(nameSpan);
+      tdName.appendChild(editBtn);
+
+      const tdJob = document.createElement("td");
+      const wrap = document.createElement("div");
+      wrap.className = "cs-job-wrap";
+
+      const select = document.createElement("select");
+      select.className = "cs-job-select";
+
+      CS_JOB_OPTIONS.forEach(opt=>{
+        const o = document.createElement("option");
+        o.value = opt.value;
+        o.textContent = opt.label;
+        o.setAttribute("data-color", opt.color);
+        if(opt.value === (row.job||"")) o.selected = true;
+        select.appendChild(o);
+      });
+
+      const applyJobColor = () => {
+        const opt = select.options[select.selectedIndex];
+        const color = opt.getAttribute("data-color") || "#202741";
+        select.style.background = color;
+        const dark = isDark(color);
+        select.style.color = dark ? "#eef2ff" : "#0b0f1d";
+      };
+      applyJobColor();
+
+      select.onchange = () => {
+        if(isLocked){ toast("Terkunci. Hanya bos yang bisa edit."); renderCSTable(); return; }
+        csStore[idx].job = select.value;
+        saveCS();
+        applyJobColor();
+        schedulePush();
+        toast("Jobdesk diubah");
+      };
+
+      wrap.appendChild(select);
+      tdJob.appendChild(wrap);
+
+      const tdAct = document.createElement("td");
+
+      const offBtn = document.createElement("button");
+      offBtn.className = "btn-green";
+      offBtn.textContent = "→ OFFDAY";
+      offBtn.style.marginRight = "6px";
+
+      offBtn.onclick = () => {
+        if(isLocked){
+          toast("Terkunci. Hanya bos yang bisa edit.");
+          return;
+        }
+
+        const tgl = prompt("Masukkan tanggal OFFDAY (YYYY-MM-DD):", ymd(new Date()));
+        if(!tgl) return;
+
+        ensureDay(tgl);
+
+        if(store[tgl].blocked){
+          toast("Tanggal diblokir");
+          return;
+        }
+
+        const slot = store[tgl].entries.find(e => !(e.name||"").trim());
+        if(!slot){
+          toast("Slot OFFDAY penuh (maks 8)");
+          return;
+        }
+
+        slot.name = row.name || "";
+        slot.role = row.job || "";
+        store[tgl].type = "OFF";
+        store[tgl].off = true;
+
+        saveStore();
+        renderCalendar();
+        schedulePush();
+        toast((row.name||"CS") + " masuk OFFDAY " + tgl);
+      };
+
+      const del = document.createElement("button");
+      del.className = "cs-del-btn";
+      del.textContent = "HAPUS";
+      del.onclick = () => {
+        if(isLocked){ toast("Terkunci. Hanya bos yang bisa edit."); return; }
+        if(confirm("Hapus CS ini?")){
+          csStore.splice(idx, 1);
+          saveCS();
+          renderCSTable();
+          schedulePush();
+          toast("CS dihapus");
+        }
+      };
+
+      tdAct.appendChild(offBtn);
+      tdAct.appendChild(del);
+
+      tr.appendChild(tdName);
+      tr.appendChild(tdJob);
+      tr.appendChild(tdAct);
+      body.appendChild(tr);
+    });
+  }
+
+  $("#addCsBtn").onclick = () => {
+    if(isLocked){ toast("Terkunci. Hanya bos yang bisa edit."); return; }
+    const nm = prompt("Masukkan nama CS:", "");
+    if(nm === null) return;
+    const name = nm.trim();
+    if(!name){ toast("Nama tidak boleh kosong"); return; }
+    csStore.push({ name, job: "" });
+    saveCS();
+    renderCSTable();
+    schedulePush();
+    toast("CS ditambahkan");
+  };
+
+  $("#resetCsBtn").onclick = () => {
+    if(isLocked){ toast("Terkunci. Hanya bos yang bisa edit."); return; }
+    if(confirm("Reset data CS MAWAROTO?")){
+      csStore.splice(0, csStore.length, ...csDefault.slice());
+      saveCS();
+      renderCSTable();
+      schedulePush();
+      toast("CS direset");
+    }
+  };
+
+  $("#exportCsBtn").onclick = async () => {
+    const txt = csStore.map((r,i)=>`${i+1}. ${r.name} — ${r.job || "-"}`).join("\n") || "Belum ada data CS";
+    try{
+      await navigator.clipboard.writeText(txt);
+      toast("CS dicopy");
+    }catch(e){
+      alert(txt);
+      toast("Gagal copy, blok manual");
+    }
+  };
+
   function setActiveTab(type){
     activeFilterType = type;
 
@@ -1613,10 +2127,16 @@
       b.classList.toggle("active", b.dataset.type===type);
     });
 
-    if(type==="CUTI"){
+    const hideAll = () => {
       $("#calendarPanel").style.display="none";
+      $("#cutiPanel").style.display="none";
       $("#baganPanel").style.display="none";
       $("#piketPanel").style.display="none";
+      $("#csPanel").style.display="none";
+    };
+
+    if(type==="CUTI"){
+      hideAll();
       $("#cutiPanel").style.display="flex";
       renderCutiTable();
       toast("Mode: CUTI");
@@ -1624,9 +2144,7 @@
     }
 
     if(type==="BAGAN_VIEW"){
-      $("#calendarPanel").style.display="none";
-      $("#cutiPanel").style.display="none";
-      $("#piketPanel").style.display="none";
+      hideAll();
       $("#baganPanel").style.display="flex";
       renderBagan();
       updateDeleteSeatUI();
@@ -1635,12 +2153,18 @@
     }
 
     if(type==="PIKET"){
-      $("#calendarPanel").style.display="none";
-      $("#cutiPanel").style.display="none";
-      $("#baganPanel").style.display="none";
+      hideAll();
       $("#piketPanel").style.display="flex";
       renderPiketTable();
       toast("Mode: PIKET");
+      return;
+    }
+
+    if(type==="CS_MAWAROTO"){
+      hideAll();
+      $("#csPanel").style.display="flex";
+      renderCSTable();
+      toast("Menu: CS MAWAROTO");
       return;
     }
 
@@ -1648,6 +2172,7 @@
     $("#cutiPanel").style.display="none";
     $("#baganPanel").style.display="none";
     $("#piketPanel").style.display="none";
+    $("#csPanel").style.display="none";
     renderCalendar();
     toast(type==="ALL" ? "Mode: ALL" : "Filter: "+type);
   }
@@ -1673,9 +2198,10 @@
     const prefix = md.y+"-"+String(md.m+1).padStart(2,"0");
     Object.keys(store).forEach(k=>{ if(k.startsWith(prefix)) delete store[k]; });
     saveStore(); renderCalendar();
-    schedulePush(); // global
+    schedulePush();
   };
 
+  // bulk import (tetap)
   function parseNamesFromPaste(text){
     return text.split(/\r?\n|\t|,|;/g).map(s=>s.trim()).filter(Boolean);
   }
@@ -1688,6 +2214,12 @@
     return a;
   }
   function normalizeName(n){ return (n||"").trim().toLowerCase(); }
+
+  function getCsJobForName(name){
+    const key = normalizeName(name);
+    const found = (csStore||[]).find(r => normalizeName(r.name) === key);
+    return found ? (found.job || "") : "";
+  }
 
   function bulkImportNames(){
     if(isLocked){ toast("Terkunci. Tidak bisa import."); return; }
@@ -1732,6 +2264,8 @@
           const slot=store[key].entries.find(e=>!(e.name||"").trim());
           if(slot){
             slot.name=namesList[idx];
+            // otomatis isi jobdesk jika nama ada di CS MAWAROTO
+            slot.role=getCsJobForName(namesList[idx]);
             store[key].off=true;
             store[key].type=store[key].type||"OFF";
             idx++; filled++; any=true;
@@ -1745,7 +2279,7 @@
     const r1=fillPeriod(listP1, eligibleP1);
     const r2=fillPeriod(listP2, eligibleP2);
     saveStore(); renderCalendar();
-    schedulePush(); // global
+    schedulePush();
     toast("P1 masuk "+r1.filled+" | P2 masuk "+r2.filled);
   }
   $("#bulkImport").onclick=bulkImportNames;
@@ -1757,11 +2291,10 @@
     renderCalendar();
     setActiveTab("ALL");
     updateDeleteSeatUI();
+    renderCSTable();
 
-    // ✅ start realtime global sync
     startRealtimeSync();
 
-    // optional: kalau database kosong, push cache lokal pertama kali
     setTimeout(() => {
       dbRef.once("value").then(snap => {
         if (!snap.exists()) pushNow();
