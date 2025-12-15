@@ -1,5 +1,3 @@
-
-
 <!doctype html>
 <html lang="id">
 <head>
@@ -652,7 +650,165 @@
     }
   
     .cs-name-span{font-weight:900; letter-spacing:.2px;}
-</style>
+
+    /* ===== MENU CATATAN SEDERHANA ===== */
+    .catatan-panel{display:none;}
+    .catatan-container{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+      padding:10px;
+    }
+    
+    .catatan-form{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;
+      padding:15px;
+      margin-bottom:10px;
+    }
+    
+    .catatan-form h3{
+      margin:0 0 15px 0;
+      color:#fff;
+      font-size:16px;
+    }
+    
+    .catatan-form .form-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    
+    .catatan-form input,
+    .catatan-form textarea,
+    .catatan-form select{
+      flex:1;
+      min-width:200px;
+      padding:8px 12px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-size:14px;
+    }
+    
+    .catatan-form textarea{
+      min-height:80px;
+      resize:vertical;
+      width:100%;
+    }
+    
+    .catatan-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    
+    .catatan-item{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:10px;
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    
+    .catatan-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    
+    .catatan-title{
+      font-weight:bold;
+      color:#fff;
+      font-size:15px;
+    }
+    
+    .catatan-category{
+      font-size:11px;
+      background:rgba(139,92,246,.3);
+      padding:3px 8px;
+      border-radius:20px;
+      color:#e2e8f0;
+    }
+    
+    .catatan-content{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.4;
+    }
+    
+    .catatan-footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:11px;
+      color:var(--muted);
+    }
+    
+    .catatan-actions{
+      display:flex;
+      gap:5px;
+    }
+    
+    .catatan-btn{
+      padding:4px 8px;
+      border-radius:6px;
+      font-size:11px;
+      border:none;
+      cursor:pointer;
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+    }
+    
+    .catatan-btn:hover{
+      background:rgba(255,255,255,.12);
+    }
+    
+    .catatan-btn.delete{
+      background:rgba(244,63,94,.2);
+      color:#ffb8c6;
+    }
+    
+    .catatan-btn.delete:hover{
+      background:rgba(244,63,94,.3);
+    }
+    
+    .catatan-btn.edit{
+      background:rgba(245,158,11,.2);
+      color:#fed7aa;
+    }
+    
+    .catatan-btn.edit:hover{
+      background:rgba(245,158,11,.3);
+    }
+    
+    .empty-catatan{
+      text-align:center;
+      padding:40px 20px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* Menu Catatan di Top Tabs */
+    #topTabs .tab-btn[data-type="CATATAN"] {
+      background:rgba(34,197,94,.16);
+      color:#a7f3d0;
+    }
+    
+    #topTabs .tab-btn[data-type="CATATAN"]:hover {
+      background:rgba(34,197,94,.26);
+    }
+    
+    #topTabs .tab-btn[data-type="CATATAN"].active {
+      background:rgba(34,197,94,.85);
+      color:white;
+    }
+  </style>
 
   <!-- Firebase SDK (v8 compat CDN) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -690,6 +846,7 @@
         <button class="tab-btn" data-type="BAGAN_VIEW">BAGAN</button>
         <button class="tab-btn" data-type="PIKET">PIKET</button>
         <button class="tab-btn" data-type="CS_MAWAROTO">STAFF MAWAROTO</button>
+        <button class="tab-btn" data-type="CATATAN">CATATAN</button>
       </div>
 
       <div class="controls">
@@ -820,6 +977,48 @@
         Dropdown untuk <b>ganti jobdesk</b>. Tombol <b>→ OFFDAY</b> untuk masukin nama ke kalender.
       </div>
     </section>
+
+    <!-- CS BARU AWAL MASUK KERJA -->
+    <section class="panel catatan-panel" id="catatanPanel">
+      <div class="section-head">
+        <div class="section-title title-cs">📝 INFO CS BARU & RESIGN 📝</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
+          <button id="addCatatanBtn" class="btn-green">+ Tambah Catatan</button>
+          <button id="exportCatatanBtn" class="btn-accent">Export (Copy)</button>
+        </div>
+      </div>
+
+      <div class="catatan-container">
+        <!-- Form Input Catatan -->
+        <div class="catatan-form">
+          <h3>MASUKAN NAMA STAFF</h3>
+          <form id="catatanForm">
+            <div class="form-row">
+              <input type="text" id="catatanTitle" placeholder="Nama Staff" required>
+              <select id="catatanCategory" required>
+                <option value="">Pilih Kategori</option>
+                <option value="Dibawah 3 bulan">Di bawah 3 bulan</option>
+                <option value="Diatas 3 bulan">Di atas 3 bulan</option>
+                <option value="Dibawah 6 bulan">Di bawah 6 bulan</option>
+                <option value="Diatas 6 bulan">Di atas 3 bulan</option>
+                <option value="RESIGN">Resign</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <textarea id="catatanContent" placeholder="Isi catatan di sini..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-green" style="margin-top:10px;">
+              <i class="fas fa-plus"></i> Simpan Catatan
+            </button>
+          </form>
+        </div>
+
+        <!-- Daftar Catatan -->
+        <div class="catatan-list" id="catatanList">
+          <!-- Catatan akan muncul di sini -->
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- MODAL OFFDAY/BAGAN -->
@@ -941,6 +1140,7 @@
       bagan: { meta: baganMeta, seats: baganStore },
       piket: piketStore,
       csMawaroto: csStore,
+      catatan: catatanStore,
       lock: { isLocked }
     };
     dbRef.set(payload).catch(err => console.error("GLOBAL SAVE ERR:", err));
@@ -983,6 +1183,11 @@
         saveCS();
       }
 
+      if (Array.isArray(payload.catatan)) {
+        catatanStore.splice(0, catatanStore.length, ...payload.catatan);
+        saveCatatan();
+      }
+
       if (payload.lock && typeof payload.lock.isLocked === "boolean") {
         isLocked = payload.lock.isLocked;
         updateLockUI();
@@ -992,6 +1197,7 @@
       else if (activeFilterType === "BAGAN_VIEW") { renderBagan(); updateDeleteSeatUI(); }
       else if (activeFilterType === "PIKET") renderPiketTable();
       else if (activeFilterType === "CS_MAWAROTO") renderCSTable();
+      else if (activeFilterType === "CATATAN") renderCatatanList();
       else renderCalendar();
 
     } finally {
@@ -1139,10 +1345,16 @@
     { value:"ASSIT LEADER WD", label:"ASSIT LEADER WD", color:"#9D174D" },
   ];
 
+  // ===== CATATAN STORE =====
+  const catatanKey = "catatan-v1";
+  const catatanStore = JSON.parse(localStorage.getItem(catatanKey) || "[]");
+  const saveCatatan = () => localStorage.setItem(catatanKey, JSON.stringify(catatanStore));
+
   let view = new Date();
   let activeKey = null;
   let activeFilterType = "ALL";
   let editingCutiIndex = null;
+  let editingCatatanIndex = null;
 
   function toast(msg){
     const t=$("#toast");
@@ -1153,7 +1365,6 @@
 
   async function copyToClipboard(text){
     const t = String(text||"");
-    // navigator.clipboard butuh HTTPS/secure context, jadi kita sediakan fallback
     try{
       if(navigator.clipboard && window.isSecureContext){
         await navigator.clipboard.writeText(t);
@@ -1184,6 +1395,7 @@
     b.className = isLocked ? "btn-amber" : "btn-green";
     localStorage.setItem(lockKey, String(isLocked));
     $("#addCutiBtn").style.display = isLocked ? "none" : "inline-block";
+    $("#addCatatanBtn").style.display = isLocked ? "none" : "inline-block";
   }
 
   $("#lockBtn").onclick = () => {
@@ -1289,6 +1501,7 @@
         activeFilterType !== "BAGAN_VIEW" &&
         activeFilterType !== "PIKET" &&
         activeFilterType !== "CS_MAWAROTO" &&
+        activeFilterType !== "CATATAN" &&
         !isBlocked &&
         type !== activeFilterType;
 
@@ -1936,7 +2149,7 @@
     csStore.forEach((row, idx) => {
       const tr = document.createElement("tr");
 
-            const tdName = document.createElement("td");
+      const tdName = document.createElement("td");
       tdName.className = "name";
       tdName.style.display = "flex";
       tdName.style.alignItems = "center";
@@ -2121,6 +2334,180 @@
     }
   };
 
+  // ===== CATATAN FUNCTIONS =====
+  function renderCatatanList() {
+    const container = $("#catatanList");
+    if (!container) return;
+    
+    container.innerHTML = "";
+    
+    if (catatanStore.length === 0) {
+      container.innerHTML = '<div class="empty-catatan">Belum ada catatan. Tambahkan catatan baru.</div>';
+      return;
+    }
+    
+    // Urutkan dari yang terbaru
+    const sortedCatatan = [...catatanStore].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+    
+    sortedCatatan.forEach((catatan, idx) => {
+      const item = document.createElement("div");
+      item.className = "catatan-item";
+      
+      const categoryLabels = {
+        'orientasi': 'Orientasi',
+        'tugas': 'Tugas & Tanggung Jawab',
+        'kontak': 'Kontak Penting',
+        'deadline': 'Deadline',
+        'lainnya': 'Lainnya'
+      };
+      
+      const categoryLabel = categoryLabels[catatan.category] || catatan.category;
+      
+      item.innerHTML = `
+        <div class="catatan-header">
+          <div class="catatan-title">${catatan.title || "Tanpa Judul"}</div>
+          <div class="catatan-category">${categoryLabel}</div>
+        </div>
+        <div class="catatan-content">${catatan.content || ""}</div>
+        <div class="catatan-footer">
+          <div class="catatan-date">${catatan.date || ""}</div>
+          <div class="catatan-actions">
+            <button class="catatan-btn edit" data-index="${idx}">Edit</button>
+            <button class="catatan-btn delete" data-index="${idx}">Hapus</button>
+          </div>
+        </div>
+      `;
+      
+      container.appendChild(item);
+    });
+    
+    // Tambahkan event listener untuk tombol edit dan hapus
+    container.querySelectorAll(".catatan-btn.edit").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        if (isLocked) { toast("Terkunci. Hanya bos yang bisa edit."); return; }
+        const idx = parseInt(e.target.dataset.index);
+        editCatatan(idx);
+      });
+    });
+    
+    container.querySelectorAll(".catatan-btn.delete").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        if (isLocked) { toast("Terkunci. Hanya bos yang bisa edit."); return; }
+        const idx = parseInt(e.target.dataset.index);
+        deleteCatatan(idx);
+      });
+    });
+  }
+
+  function editCatatan(idx) {
+    if (idx < 0 || idx >= catatanStore.length) return;
+    
+    const catatan = catatanStore[idx];
+    editingCatatanIndex = idx;
+    
+    $("#catatanTitle").value = catatan.title || "";
+    $("#catatanCategory").value = catatan.category || "";
+    $("#catatanContent").value = catatan.content || "";
+    
+    $("#catatanForm button[type='submit']").innerHTML = '<i class="fas fa-save"></i> Update Catatan';
+  }
+
+  function deleteCatatan(idx) {
+    if (isLocked) { toast("Terkunci. Hanya bos yang bisa hapus."); return; }
+    
+    if (confirm("Hapus catatan ini?")) {
+      catatanStore.splice(idx, 1);
+      saveCatatan();
+      renderCatatanList();
+      schedulePush();
+      toast("Catatan dihapus");
+    }
+  }
+
+  function setupCatatanForm() {
+    const form = $("#catatanForm");
+    if (!form) return;
+    
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      
+      if (isLocked) {
+        toast("Terkunci. Hanya bos yang bisa tambah catatan.");
+        return;
+      }
+      
+      const title = $("#catatanTitle").value.trim();
+      const category = $("#catatanCategory").value;
+      const content = $("#catatanContent").value.trim();
+      
+      if (!title || !category || !content) {
+        toast("Harap isi semua field!");
+        return;
+      }
+      
+      const now = new Date();
+      const dateStr = `${now.getDate()} ${MONTHS_ID[now.getMonth()]} ${now.getFullYear()}`;
+      
+      const newCatatan = {
+        title,
+        category,
+        content,
+        date: dateStr
+      };
+      
+      if (editingCatatanIndex !== null) {
+        // Update catatan yang sedang diedit
+        catatanStore[editingCatatanIndex] = newCatatan;
+        toast("Catatan diupdate");
+      } else {
+        // Tambah catatan baru
+        catatanStore.push(newCatatan);
+        toast("Catatan ditambahkan");
+      }
+      
+      saveCatatan();
+      renderCatatanList();
+      schedulePush();
+      
+      // Reset form
+      form.reset();
+      editingCatatanIndex = null;
+      $("#catatanForm button[type='submit']").innerHTML = '<i class="fas fa-plus"></i> Simpan Catatan';
+    });
+  }
+
+  $("#addCatatanBtn").onclick = () => {
+    if (isLocked) {
+      toast("Terkunci. Hanya bos yang bisa tambah catatan.");
+      return;
+    }
+    
+    // Reset form dan fokus ke input judul
+    $("#catatanForm").reset();
+    editingCatatanIndex = null;
+    $("#catatanForm button[type='submit']").innerHTML = '<i class="fas fa-plus"></i> Simpan Catatan';
+    $("#catatanTitle").focus();
+  };
+
+  $("#exportCatatanBtn").onclick = async () => {
+    if (catatanStore.length === 0) {
+      toast("Belum ada catatan untuk diexport");
+      return;
+    }
+    
+    const txt = catatanStore.map((c, i) => 
+      `${i+1}. ${c.title}\nKategori: ${c.category}\nTanggal: ${c.date}\n${c.content}\n`
+    ).join("\n---\n\n");
+    
+    try {
+      await navigator.clipboard.writeText(txt);
+      toast("Catatan dicopy ke clipboard");
+    } catch(e) {
+      alert(txt);
+      toast("Gagal copy, blok manual");
+    }
+  };
+
   function setActiveTab(type){
     activeFilterType = type;
 
@@ -2134,6 +2521,7 @@
       $("#baganPanel").style.display="none";
       $("#piketPanel").style.display="none";
       $("#csPanel").style.display="none";
+      $("#catatanPanel").style.display="none";
     };
 
     if(type==="CUTI"){
@@ -2169,11 +2557,20 @@
       return;
     }
 
+    if(type==="CATATAN"){
+      hideAll();
+      $("#catatanPanel").style.display="flex";
+      renderCatatanList();
+      toast("Menu: Catatan Awal Masuk Kerja");
+      return;
+    }
+
     $("#calendarPanel").style.display="flex";
     $("#cutiPanel").style.display="none";
     $("#baganPanel").style.display="none";
     $("#piketPanel").style.display="none";
     $("#csPanel").style.display="none";
+    $("#catatanPanel").style.display="none";
     renderCalendar();
     toast(type==="ALL" ? "Mode: ALL" : "Filter: "+type);
   }
@@ -2293,6 +2690,7 @@
     setActiveTab("ALL");
     updateDeleteSeatUI();
     renderCSTable();
+    setupCatatanForm();
 
     startRealtimeSync();
 
