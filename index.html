@@ -1,5 +1,3 @@
-
-
 <!doctype html>
 <html lang="id">
 <head>
@@ -282,6 +280,9 @@
       .section-title.title-cs{
         background-image: linear-gradient(90deg,#22c55e 0%,#06b6d4 35%,#a78bfa 70%,#22c55e 100%);
       }
+      .section-title.title-catatan{
+        background-image: linear-gradient(90deg,#FFE5E5 0%,#FFAAAA 35%,#FF6B6B 70%,#FFE5E5 100%);
+      }
 
       @keyframes titleFlow{
         0%   { background-position: 0% 50%; }
@@ -494,114 +495,105 @@
       background: linear-gradient(90deg,#111827,#334155);
       color:#f8fafc;
     }
-    /* Tambahkan di bagian CSS yang sudah ada, sekitar line 470-490 */
-.piket-name {
-  display: inline-block;
-  padding: 6px 8px;
-  margin: 2px;
-  border-radius: 10px;
-  font-weight: 900;
-  cursor: pointer;
-  min-width: 70px;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  
-  /* Warna teks putih kemerahan metalik */
-  color: #FFE5E5; /* Putih dengan sentuhan merah muda */
-  text-shadow: 
-    0 0 8px rgba(255, 100, 100, 0.7),  /* Glow merah */
-    0 0 12px rgba(255, 200, 200, 0.5), /* Glow putih kemerahan */
-    0 0 20px rgba(255, 255, 255, 0.3); /* Glow putih */
-  
-  /* Efek metalik dengan gradient */
-  background-image: linear-gradient(
-    180deg,
-    rgba(255, 245, 245, 0.9) 0%,
-    rgba(255, 230, 230, 0.8) 25%,
-    rgba(255, 210, 210, 0.7) 50%,
-    rgba(255, 190, 190, 0.6) 75%,
-    rgba(255, 170, 170, 0.5) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  
-  /* Border metalik */
-  border: 1px solid rgba(255, 200, 200, 0.5);
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 4px 12px rgba(255, 100, 100, 0.4);
-}
+    
+    .piket-name {
+      display: inline-block;
+      padding: 6px 8px;
+      margin: 2px;
+      border-radius: 10px;
+      font-weight: 900;
+      cursor: pointer;
+      min-width: 70px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      
+      color: #FFE5E5;
+      text-shadow: 
+        0 0 8px rgba(255, 100, 100, 0.7),
+        0 0 12px rgba(255, 200, 200, 0.5),
+        0 0 20px rgba(255, 255, 255, 0.3);
+      
+      background-image: linear-gradient(
+        180deg,
+        rgba(255, 245, 245, 0.9) 0%,
+        rgba(255, 230, 230, 0.8) 25%,
+        rgba(255, 210, 210, 0.7) 50%,
+        rgba(255, 190, 190, 0.6) 75%,
+        rgba(255, 170, 170, 0.5) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      
+      border: 1px solid rgba(255, 200, 200, 0.5);
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 4px 12px rgba(255, 100, 100, 0.4);
+    }
 
-/* Untuk nama yang kosong */
-.piket-name.empty {
-  opacity: 0.55;
-  font-weight: 800;
-  background-image: none;
-  -webkit-background-clip: initial;
-  background-clip: initial;
-  -webkit-text-fill-color: initial;
-  color: rgba(255, 255, 255, 0.55);
-  text-shadow: none;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-}
+    .piket-name.empty {
+      opacity: 0.55;
+      font-weight: 800;
+      background-image: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      -webkit-text-fill-color: initial;
+      color: rgba(255, 255, 255, 0.55);
+      text-shadow: none;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
 
-/* Efek hover */
-.piket-name:hover {
-  transform: translateY(-1px);
-  background-color: rgba(255, 200, 200, 0.15);
-  box-shadow: 
-    0 0 15px rgba(255, 100, 100, 0.8),
-    0 0 25px rgba(255, 200, 200, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  transition: all 0.2s ease;
-}
+    .piket-name:hover {
+      transform: translateY(-1px);
+      background-color: rgba(255, 200, 200, 0.15);
+      box-shadow: 
+        0 0 15px rgba(255, 100, 100, 0.8),
+        0 0 25px rgba(255, 200, 200, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      transition: all 0.2s ease;
+    }
 
-/* Untuk panel PIKET spesifik */
-#piketPanel .piket-name {
-  background: rgba(0, 0, 0, 0.28);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-  
-  /* Warna teks metalik putih kemerahan yang lebih kuat */
-  background-image: linear-gradient(
-    135deg,
-    #FFEAEA 0%,
-    #FFDADA 25%,
-    #FFCACA 50%,
-    #FFBABA 75%,
-    #FFAAAA 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  
-  /* Border metalik kemerahan */
-  border: 1px solid rgba(255, 180, 180, 0.6);
-  
-  /* Glow dan shadow yang lebih kuat */
-  text-shadow: 
-    0 0 10px rgba(255, 150, 150, 0.8),
-    0 0 20px rgba(255, 100, 100, 0.6),
-    0 0 30px rgba(255, 50, 50, 0.4);
-  
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    0 8px 20px rgba(255, 100, 100, 0.5);
-}
+    #piketPanel .piket-name {
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+      
+      background-image: linear-gradient(
+        135deg,
+        #FFEAEA 0%,
+        #FFDADA 25%,
+        #FFCACA 50%,
+        #FFBABA 75%,
+        #FFAAAA 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      
+      border: 1px solid rgba(255, 180, 180, 0.6);
+      
+      text-shadow: 
+        0 0 10px rgba(255, 150, 150, 0.8),
+        0 0 20px rgba(255, 100, 100, 0.6),
+        0 0 30px rgba(255, 50, 50, 0.4);
+      
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        0 8px 20px rgba(255, 100, 100, 0.5);
+    }
 
-#piketPanel .piket-name.empty {
-  background-image: none;
-  -webkit-background-clip: initial;
-  background-clip: initial;
-  -webkit-text-fill-color: initial;
-  color: rgba(255, 200, 200, 0.55);
-  -webkit-text-stroke: 0;
-  text-shadow: none;
-  border: 1px solid rgba(255, 200, 200, 0.3);
-}
+    #piketPanel .piket-name.empty {
+      background-image: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      -webkit-text-fill-color: initial;
+      color: rgba(255, 200, 200, 0.55);
+      -webkit-text-stroke: 0;
+      text-shadow: none;
+      border: 1px solid rgba(255, 200, 200, 0.3);
+    }
 
     /* ===== CS MAWAROTO TABLE ===== */
     .cs-panel{display:none;}
@@ -721,7 +713,7 @@
   
     .cs-name-span{font-weight:900; letter-spacing:.2px;}
 
-    /* ===== MENU CATATAN SEDERHANA ===== */
+    /* ===== CATATAN PANEL ===== */
     .catatan-panel{display:none;}
     .catatan-container{
       display:flex;
@@ -742,6 +734,16 @@
       margin:0 0 15px 0;
       color:#fff;
       font-size:16px;
+      font-weight:900;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      text-align:center;
+      padding:8px 14px;
+      border-radius:14px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
     }
     
     .catatan-form .form-row{
@@ -784,6 +786,8 @@
       display:flex;
       flex-direction:column;
       gap:8px;
+      position:relative;
+      overflow:hidden;
     }
     
     .catatan-header{
@@ -794,22 +798,53 @@
     
     .catatan-title{
       font-weight:bold;
-      color:#fff;
       font-size:15px;
+      font-weight:900;
+      letter-spacing:.5px;
+      
+      /* Efek teks putih kemerahan metalik */
+      color: transparent !important;
+      background-image: linear-gradient(
+        135deg,
+        #FFEAEA 0%,
+        #FFDADA 25%,
+        #FFCACA 50%,
+        #FFBABA 75%,
+        #FFAAAA 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 
+        0 0 10px rgba(255, 150, 150, 0.8),
+        0 0 20px rgba(255, 100, 100, 0.6),
+        0 0 30px rgba(255, 50, 50, 0.4);
     }
     
     .catatan-category{
       font-size:11px;
-      background:rgba(139,92,246,.3);
       padding:3px 8px;
       border-radius:20px;
-      color:#e2e8f0;
+      font-weight:900;
+      letter-spacing:.3px;
     }
     
     .catatan-content{
-      color:var(--muted);
       font-size:13px;
       line-height:1.4;
+      margin:5px 0;
+      padding:8px;
+      border-radius:6px;
+      background:rgba(0,0,0,.25);
+      
+      /* Efek teks putih kemerahan metalik untuk konten */
+      color: #FFE5E5;
+      text-shadow: 
+        0 0 8px rgba(255, 100, 100, 0.7),
+        0 0 12px rgba(255, 200, 200, 0.5),
+        0 0 20px rgba(255, 255, 255, 0.3);
+      
+      border: 1px solid rgba(255, 180, 180, 0.3);
     }
     
     .catatan-footer{
@@ -817,7 +852,17 @@
       justify-content:space-between;
       align-items:center;
       font-size:11px;
-      color:var(--muted);
+    }
+    
+    .catatan-date{
+      opacity:.8;
+      font-weight:900;
+      
+      /* Efek teks metalik untuk tanggal */
+      color: #FFCACA;
+      text-shadow: 
+        0 0 5px rgba(255, 150, 150, 0.6),
+        0 0 10px rgba(255, 100, 100, 0.4);
     }
     
     .catatan-actions{
@@ -833,28 +878,67 @@
       cursor:pointer;
       background:rgba(255,255,255,.08);
       color:var(--text);
+      font-weight:900;
+      letter-spacing:.3px;
+      
+      /* Efek tombol metalik */
+      background-image: linear-gradient(
+        180deg,
+        rgba(255, 245, 245, 0.9) 0%,
+        rgba(255, 230, 230, 0.8) 25%,
+        rgba(255, 210, 210, 0.7) 50%,
+        rgba(255, 190, 190, 0.6) 75%,
+        rgba(255, 170, 170, 0.5) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      
+      border: 1px solid rgba(255, 200, 200, 0.5);
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 2px 4px rgba(255, 100, 100, 0.3);
     }
     
     .catatan-btn:hover{
-      background:rgba(255,255,255,.12);
+      background-color: rgba(255, 200, 200, 0.15);
+      transform:translateY(-1px);
+      box-shadow: 
+        0 0 10px rgba(255, 100, 100, 0.6),
+        0 0 15px rgba(255, 200, 200, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     }
     
     .catatan-btn.delete{
-      background:rgba(244,63,94,.2);
-      color:#ffb8c6;
-    }
-    
-    .catatan-btn.delete:hover{
-      background:rgba(244,63,94,.3);
+      background-image: linear-gradient(
+        180deg,
+        #FFCACA 0%,
+        #FFAAAA 25%,
+        #FF8A8A 50%,
+        #FF6A6A 75%,
+        #FF4A4A 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      
+      border: 1px solid rgba(255, 100, 100, 0.6);
     }
     
     .catatan-btn.edit{
-      background:rgba(245,158,11,.2);
-      color:#fed7aa;
-    }
-    
-    .catatan-btn.edit:hover{
-      background:rgba(245,158,11,.3);
+      background-image: linear-gradient(
+        180deg,
+        #FFF4CA 0%,
+        #FFEAAA 25%,
+        #FFE08A 50%,
+        #FFD66A 75%,
+        #FFCC4A 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      
+      border: 1px solid rgba(255, 200, 100, 0.6);
     }
     
     .empty-catatan{
@@ -864,19 +948,51 @@
       font-size:14px;
     }
 
+    /* Kategori warna untuk catatan */
+    .catatan-category[data-category="DI BAWAH 3 BULAN"] {
+      background: rgba(34, 197, 94, 0.3);
+      color: #a7f3d0;
+      border: 1px solid rgba(34, 197, 94, 0.5);
+    }
+    
+    .catatan-category[data-category="DI ATAS 3 BULAN"] {
+      background: rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.5);
+    }
+    
+    .catatan-category[data-category="DI BAWAH 6 BULAN"] {
+      background: rgba(245, 158, 11, 0.3);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.5);
+    }
+    
+    .catatan-category[data-category="DI ATAS 6 BULAN"] {
+      background: rgba(139, 92, 246, 0.3);
+      color: #c4b5fd;
+      border: 1px solid rgba(139, 92, 246, 0.5);
+    }
+    
+    .catatan-category[data-category="RESIGN"] {
+      background: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.5);
+    }
+
     /* Menu Catatan di Top Tabs */
     #topTabs .tab-btn[data-type="CATATAN"] {
-      background:rgba(34,197,94,.16);
-      color:#a7f3d0;
+      background:rgba(255, 100, 100, 0.16);
+      color:#FFCACA;
     }
     
     #topTabs .tab-btn[data-type="CATATAN"]:hover {
-      background:rgba(34,197,94,.26);
+      background:rgba(255, 100, 100, 0.26);
     }
     
     #topTabs .tab-btn[data-type="CATATAN"].active {
-      background:rgba(34,197,94,.85);
-      color:white;
+      background:rgba(255, 100, 100, 0.85);
+      color:#FFEAEA;
+      box-shadow:0 6px 20px rgba(255, 100, 100, 0.45);
     }
   </style>
 
@@ -949,6 +1065,7 @@
         <div class="section-title title-cuti"> ✨ DAFTAR CUTI STAFF  ✨</div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
           <button id="addCutiBtn" class="btn-green">+ Tambah Cuti</button>
+          <button id="resetCutiBtn" class="btn-danger">Reset CUTI</button>
           <button id="exportCutiBtn" class="btn-accent">Export (Copy)</button>
         </div>
       </div>
@@ -977,7 +1094,7 @@
           <button id="addColBtn" class="btn-green">+ Kolom</button>
           <button id="removeColBtn" class="btn-danger">🗑 Hapus Kolom</button>
           <button id="toggleDeleteSeatBtn" class="btn-amber">🧽 MODE HAPUS: OFF</button>
-          <button id="resetBaganBtn" class="btn-danger">Reset Bagan</button>
+          <button id="resetBaganBtn" class="btn-danger">Reset BAGAN</button>
           <button id="exportBaganBtn" class="btn-accent">Export (Copy)</button>
         </div>
       </div>
@@ -1047,12 +1164,13 @@
       </div>
     </section>
 
-    <!-- CS BARU AWAL MASUK KERJA -->
+    <!-- CATATAN CS BARU & RESIGN -->
     <section class="panel catatan-panel" id="catatanPanel">
       <div class="section-head">
-        <div class="section-title title-cs">📝 INFO CS BARU & RESIGN 📝</div>
+        <div class="section-title title-catatan">📝 INFO CS BARU & RESIGN 📝</div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
           <button id="addCatatanBtn" class="btn-green">+ Tambah Catatan</button>
+          <button id="resetCatatanBtn" class="btn-danger">Reset CATATAN</button>
           <button id="exportCatatanBtn" class="btn-accent">Export (Copy)</button>
         </div>
       </div>
@@ -1465,24 +1583,18 @@
     b.textContent = isLocked ? "🔒 TERKUNCI" : "🔓 EDIT MODE";
     b.className = isLocked ? "btn-amber" : "btn-green";
     localStorage.setItem(lockKey, String(isLocked));
+    
+    // Sembunyikan tombol tambah
     $("#addCutiBtn").style.display = isLocked ? "none" : "inline-block";
     $("#addCatatanBtn").style.display = isLocked ? "none" : "inline-block";
+    
+    // Sembunyikan tombol reset di semua panel
+    $("#resetCutiBtn").style.display = isLocked ? "none" : "inline-block";
+    $("#resetBaganBtn").style.display = isLocked ? "none" : "inline-block";
+    $("#resetPiketBtn").style.display = isLocked ? "none" : "inline-block";
+    $("#resetCsBtn").style.display = isLocked ? "none" : "inline-block";
+    $("#resetCatatanBtn").style.display = isLocked ? "none" : "inline-block";
   }
-
-  $("#lockBtn").onclick = () => {
-    if(!isLocked){
-      isLocked = true; updateLockUI();
-      schedulePush();
-      toast("Mode terkunci");
-      return;
-    }
-    const pw = prompt("Masukkan password untuk buka edit:");
-    if(pw === EDIT_PASSWORD){
-      isLocked = false; updateLockUI();
-      schedulePush();
-      toast("Edit mode aktif");
-    }else toast("Password salah");
-  };
 
   function ymd(date){
     const y=date.getFullYear();
@@ -1944,6 +2056,32 @@
     }
   };
 
+  // ===== FUNGSI RESET DENGAN PASSWORD =====
+  function askResetPassword(panelName) {
+    const password = prompt(`Masukkan password untuk reset ${panelName}:`);
+    return password === EDIT_PASSWORD;
+  }
+
+  $("#resetCutiBtn").onclick = () => {
+    if (isLocked) {
+      toast("Terkunci. Tidak bisa reset CUTI.");
+      return;
+    }
+    
+    if (!askResetPassword("CUTI")) {
+      toast("Password salah.");
+      return;
+    }
+    
+    if (confirm("Reset semua data CUTI? Tindakan ini tidak dapat dikembalikan.")) {
+      cutiStore.length = 0;
+      saveCuti();
+      renderCutiTable();
+      schedulePush();
+      toast("Semua data CUTI direset.");
+    }
+  };
+
   function seatLabel(i){ return String(i + 1); }
 
   let deleteSeatMode = false;
@@ -2104,9 +2242,18 @@
     toast("Kolom ke-"+colToRemove+" dihapus. Total kolom: "+baganMeta.cols);
   };
 
-  $("#resetBaganBtn").onclick=()=>{
-    if(isLocked){ toast("Terkunci. Tidak bisa reset BAGAN."); return; }
-    if(confirm("Reset BAGAN? Semua nama hilang & seat yang dihapus muncul lagi.")){
+  $("#resetBaganBtn").onclick = () => {
+    if (isLocked) {
+      toast("Terkunci. Tidak bisa reset BAGAN.");
+      return;
+    }
+    
+    if (!askResetPassword("BAGAN")) {
+      toast("Password salah.");
+      return;
+    }
+    
+    if (confirm("Reset BAGAN? Semua nama hilang & seat yang dihapus muncul lagi.")) {
       ensureBaganSize();
       for(let i=0;i<BAGAN_SIZE();i++) baganStore[i]={name:"", active:true};
       saveBagan(); renderBagan();
@@ -2177,8 +2324,17 @@
   }
 
   $("#resetPiketBtn").onclick = ()=>{
-    if(isLocked){ toast("Terkunci. Tidak bisa reset PIKET."); return; }
-    if(confirm("Reset semua jadwal PIKET?")){
+    if (isLocked) {
+      toast("Terkunci. Tidak bisa reset PIKET.");
+      return;
+    }
+    
+    if (!askResetPassword("PIKET")) {
+      toast("Password salah.");
+      return;
+    }
+    
+    if (confirm("Reset semua jadwal PIKET?")) {
       Object.keys(defaultPiket).forEach(d=>{
         piketStore[d] = Array(8).fill("");
       });
@@ -2384,8 +2540,17 @@
   };
 
   $("#resetCsBtn").onclick = () => {
-    if(isLocked){ toast("Terkunci. Hanya bos yang bisa edit."); return; }
-    if(confirm("Reset data CS MAWAROTO?")){
+    if (isLocked) {
+      toast("Terkunci. Tidak bisa reset CS MAWAROTO.");
+      return;
+    }
+    
+    if (!askResetPassword("CS MAWAROTO")) {
+      toast("Password salah.");
+      return;
+    }
+    
+    if (confirm("Reset data CS MAWAROTO?")) {
       csStore.splice(0, csStore.length, ...csDefault.slice());
       saveCS();
       renderCSTable();
@@ -2424,20 +2589,10 @@
       const item = document.createElement("div");
       item.className = "catatan-item";
       
-      const categoryLabels = {
-        'orientasi': 'Orientasi',
-        'tugas': 'Tugas & Tanggung Jawab',
-        'kontak': 'Kontak Penting',
-        'deadline': 'Deadline',
-        'lainnya': 'Lainnya'
-      };
-      
-      const categoryLabel = categoryLabels[catatan.category] || catatan.category;
-      
       item.innerHTML = `
         <div class="catatan-header">
           <div class="catatan-title">${catatan.title || "Tanpa Judul"}</div>
-          <div class="catatan-category">${categoryLabel}</div>
+          <div class="catatan-category" data-category="${catatan.category || ''}">${catatan.category || ""}</div>
         </div>
         <div class="catatan-content">${catatan.content || ""}</div>
         <div class="catatan-footer">
@@ -2558,6 +2713,26 @@
     editingCatatanIndex = null;
     $("#catatanForm button[type='submit']").innerHTML = '<i class="fas fa-plus"></i> Simpan Catatan';
     $("#catatanTitle").focus();
+  };
+
+  $("#resetCatatanBtn").onclick = () => {
+    if (isLocked) {
+      toast("Terkunci. Tidak bisa reset Catatan.");
+      return;
+    }
+    
+    if (!askResetPassword("CATATAN")) {
+      toast("Password salah.");
+      return;
+    }
+    
+    if (confirm("Reset semua catatan? Tindakan ini tidak dapat dikembalikan.")) {
+      catatanStore.length = 0;
+      saveCatatan();
+      renderCatatanList();
+      schedulePush();
+      toast("Semua catatan direset.");
+    }
   };
 
   $("#exportCatatanBtn").onclick = async () => {
