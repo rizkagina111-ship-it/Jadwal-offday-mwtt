@@ -1568,7 +1568,7 @@
       background: #4A0000;
     }
     
-    /* ===== REVISI STYLE UNTUK BARI-BARIS KOLOM EXCEL DENGAN 3 NAMA DAN 2 TANGGAL ===== */
+    /* ===== REVISI STYLE UNTUK BARI-BARIS KOLOM EXCEL DENGAN 4 NAMA DAN 1 TANGGAL ===== */
     .baris-kolom-excel-table td {
       border: 1px solid rgba(255,215,0,0.3);
       padding: 0;
@@ -1580,19 +1580,19 @@
     .excel-input-group {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 1px;
       padding: 0;
       min-height: 160px;
     }
     
     .excel-nama-input {
       width: 100%;
-      padding: 8px 10px;
+      padding: 6px 8px;
       border: none;
       background: transparent;
       color: #FFFFFF !important;
       font-weight: 900 !important;
-      font-size: 13px;
+      font-size: 11px;
       outline: none;
       transition: all 0.2s ease;
       text-shadow: 
@@ -1611,25 +1611,25 @@
       font-weight: 700 !important;
     }
     
-    /* Container untuk input tanggal di samping */
+    /* Container untuk input tanggal */
     .excel-date-container {
       display: flex;
       flex-direction: column;
-      gap: 2px;
-      margin-top: 5px;
-      padding: 5px;
+      gap: 1px;
+      margin-top: 3px;
+      padding: 3px;
       background: rgba(0, 0, 0, 0.2);
       border-top: 1px solid rgba(0, 255, 0, 0.3);
     }
     
     .excel-date-input {
       width: 100%;
-      padding: 6px 8px;
+      padding: 5px 6px;
       border: none;
       background: transparent;
       color: #00FF00 !important;
       font-weight: 900 !important;
-      font-size: 12px;
+      font-size: 11px;
       outline: none;
       transition: all 0.2s ease;
       text-shadow: 
@@ -1953,13 +1953,13 @@
       }
       
       .excel-nama-input {
-        padding: 6px 8px;
-        font-size: 12px;
+        padding: 5px 6px;
+        font-size: 10px;
       }
       
       .excel-date-input {
-        padding: 5px 6px;
-        font-size: 11px;
+        padding: 4px 5px;
+        font-size: 10px;
       }
       
       .excel-input-group {
@@ -1969,13 +1969,13 @@
     
     @media (max-width: 480px) {
       .excel-nama-input {
-        padding: 5px 6px;
-        font-size: 11px;
+        padding: 4px 5px;
+        font-size: 9px;
       }
       
       .excel-date-input {
-        padding: 4px 5px;
-        font-size: 10px;
+        padding: 3px 4px;
+        font-size: 9px;
       }
       
       .excel-input-group {
@@ -2083,7 +2083,7 @@
       </div>
     </section>
 
-    <!-- BARI-BARIS KOLOM EXCEL -->
+    <!-- BARI-BARIS KOLOM EXCEL - REVISI: 31 BARIS, 4 NAMA, 1 TANGGAL -->
     <section class="panel baris-kolom-panel" id="barisKolomPanel">
       <div class="section-head">
         <div class="section-title title-bagan">📊 NAMA STAFF DIVISI 📊</div>
@@ -2096,10 +2096,8 @@
       
       <div style="margin:15px; padding:10px; background:rgba(139,0,0,0.3); border-radius:12px; border:1px solid rgba(255,215,0,0.3);">
         <div style="color:#FFD700; font-weight:900; font-size:12px; margin-bottom:10px;">
-          <b>REVISI:</b> Setiap sel memiliki 3 input nama dan 2 input tanggal. Total 42 baris.
         </div>
         <div style="color:#FFD700; font-weight:900; font-size:12px;">
-          • Nama: Putih tebal • Tanggal: Hijau stabilo metalik • Tombol COPY per kolom
         </div>
       </div>
       
@@ -2446,7 +2444,34 @@
       }
 
       if (payload.barisKolomExcel) {
-        barisKolomExcelData = payload.barisKolomExcel;
+        // MIGRASI DATA DARI VERSI LAMA KE BARU JIKA PERLU
+        const needsMigration = Object.keys(payload.barisKolomExcel).some(row => {
+          const firstCell = payload.barisKolomExcel[row]?.[0];
+          return firstCell && (
+            firstCell.tanggal1 !== undefined || // Data lama punya tanggal1
+            firstCell.nama4 === undefined       // Data lama tidak punya nama4
+          );
+        });
+        
+        if (needsMigration) {
+          const migratedData = {};
+          for (let row in payload.barisKolomExcel) {
+            migratedData[row] = [];
+            for (let col = 0; col < 6; col++) {
+              const oldCell = payload.barisKolomExcel[row]?.[col] || {};
+              migratedData[row][col] = {
+                nama1: oldCell.nama1 || "",
+                nama2: oldCell.nama2 || "",
+                nama3: oldCell.nama3 || "",
+                nama4: "", // Tambahkan nama4 kosong
+                tanggal: oldCell.tanggal1 || oldCell.tanggal || "" // Ambil tanggal1 atau tanggal
+              };
+            }
+          }
+          barisKolomExcelData = migratedData;
+        } else {
+          barisKolomExcelData = payload.barisKolomExcel;
+        }
         saveBarisKolomExcel();
       }
 
@@ -2617,8 +2642,8 @@
     });
   }
 
-  // Store untuk BARI-BARIS KOLOM EXCEL dengan struktur baru: 42 baris, 3 nama, 2 tanggal
-  const barisKolomExcelKey = "baris-kolom-excel-v2"; // Versi baru
+  // Store untuk BARI-BARIS KOLOM EXCEL dengan struktur baru: 31 baris, 4 nama, 1 tanggal
+  const barisKolomExcelKey = "baris-kolom-excel-v4"; // Versi baru dengan 4 nama dan 1 tanggal
   let barisKolomExcelData = JSON.parse(localStorage.getItem(barisKolomExcelKey) || "null") || {};
   
   function saveBarisKolomExcel() {
@@ -3658,16 +3683,16 @@
   };
 
   // =========================
-  // REVISI: FUNGSI BARI-BARIS KOLOM EXCEL DENGAN 3 NAMA DAN 2 TANGGAL (42 BARIS)
+  // FUNGSI BARI-BARIS KOLOM EXCEL DENGAN 31 BARIS, 4 NAMA, 1 TANGGAL
   // =========================
   function renderBarisKolomTable() {
     const container = $("#barisKolomTableContainer");
     if (!container) return;
     
-    // NAMA KOLOM BARU YANG DIMINTA
+    // NAMA KOLOM
     const kolomNames = ["LIVE CHAT", "WHATSAPP", "DEPOSIT", "FINANCE", "WHITDRAW", "DESIGN"];
     
-    // Buat tabel dengan 6 kolom
+    // Buat tabel dengan 6 kolom dan 31 baris
     let html = `
         <table class="baris-kolom-excel-table">
             <thead>
@@ -3675,7 +3700,7 @@
                     <th>NO</th>
     `;
     
-    // Header untuk 6 kolom dengan nama baru
+    // Header untuk 6 kolom
     for (let i = 0; i < 6; i++) {
         html += `
             <th>
@@ -3689,8 +3714,8 @@
     
     html += `</tr></thead><tbody>`;
     
-    // Data untuk 42 baris (dari 30 menjadi 42)
-    for (let row = 0; row < 42; row++) {
+    // Data untuk 31 baris (bukan 42)
+    for (let row = 0; row < 31; row++) {
         html += `<tr>`;
         html += `<td>${row+1}</td>`;
         
@@ -3699,27 +3724,27 @@
                 nama1: "", 
                 nama2: "", 
                 nama3: "", 
-                tanggal1: "", 
-                tanggal2: "" 
+                nama4: "",  // Nama ke-4 ditambahkan
+                tanggal: "" // Hanya 1 tanggal
             };
             
             html += `
                 <td>
                     <div class="excel-input-group">
-                        <!-- 3 Input Nama -->
+                        <!-- 4 Input Nama (bukan 3) -->
                         <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama1" 
                                value="${data.nama1}" placeholder="Nama 1">
                         <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama2" 
                                value="${data.nama2}" placeholder="Nama 2">
                         <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama3" 
                                value="${data.nama3}" placeholder="Nama 3">
+                        <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama4" 
+                               value="${data.nama4}" placeholder="Nama 4">
                         
-                        <!-- Container untuk 2 Input Tanggal -->
+                        <!-- Hanya 1 Input Tanggal -->
                         <div class="excel-date-container">
-                            <input type="date" class="excel-date-input" data-row="${row}" data-col="${col}" data-type="tanggal1" 
-                                   value="${data.tanggal1}">
-                            <input type="date" class="excel-date-input" data-row="${row}" data-col="${col}" data-type="tanggal2" 
-                                   value="${data.tanggal2}">
+                            <input type="date" class="excel-date-input" data-row="${row}" data-col="${col}" data-type="tanggal" 
+                                   value="${data.tanggal}">
                         </div>
                     </div>
                 </td>
@@ -3733,7 +3758,7 @@
     
     container.innerHTML = html;
     
-    // Event listener untuk input nama (3 input per sel)
+    // Event listener untuk input nama (4 input per sel)
     container.querySelectorAll(".excel-nama-input").forEach(input => {
         input.addEventListener("input", (e) => {
             const row = parseInt(e.target.dataset.row);
@@ -3746,8 +3771,8 @@
                     nama1: "", 
                     nama2: "", 
                     nama3: "", 
-                    tanggal1: "", 
-                    tanggal2: "" 
+                    nama4: "", 
+                    tanggal: "" 
                 };
             }
             
@@ -3758,7 +3783,7 @@
         });
     });
     
-    // Event listener untuk input tanggal (2 input per sel)
+    // Event listener untuk input tanggal (hanya 1)
     container.querySelectorAll(".excel-date-input").forEach(input => {
         input.addEventListener("change", (e) => {
             const row = parseInt(e.target.dataset.row);
@@ -3771,8 +3796,8 @@
                     nama1: "", 
                     nama2: "", 
                     nama3: "", 
-                    tanggal1: "", 
-                    tanggal2: "" 
+                    nama4: "", 
+                    tanggal: "" 
                 };
             }
             
@@ -3783,28 +3808,30 @@
         });
     });
     
-    // Event listener untuk tombol copy kolom (mencopy semua 3 nama per baris)
+    // Event listener untuk tombol copy kolom (menyalin 4 nama)
     container.querySelectorAll(".copy-kolom-excel-btn").forEach(btn => {
         btn.addEventListener("click", async (e) => {
             const kolom = parseInt(e.target.dataset.kolom);
             let allNames = [];
             
-            for (let row = 0; row < 42; row++) {
+            for (let row = 0; row < 31; row++) {
                 const cell = barisKolomExcelData[row]?.[kolom] || { 
                     nama1: "", 
                     nama2: "", 
-                    nama3: "" 
+                    nama3: "", 
+                    nama4: "" 
                 };
                 
-                // Gabungkan 3 nama yang tidak kosong
+                // Gabungkan 4 nama yang tidak kosong
                 const cellNames = [
                     cell.nama1?.trim(),
                     cell.nama2?.trim(),
-                    cell.nama3?.trim()
+                    cell.nama3?.trim(),
+                    cell.nama4?.trim()
                 ].filter(n => n && n !== "");
                 
                 if (cellNames.length > 0) {
-                    // Format: "Nama1, Nama2, Nama3" per baris
+                    // Format: "Nama1, Nama2, Nama3, Nama4" per baris
                     allNames.push(cellNames.join(", "));
                 }
             }
@@ -4032,7 +4059,7 @@
   }
 
   // =========================
-  // EVENT LISTENERS BARU UNTUK EXCEL DIVISI
+  // SETUP EVENT LISTENERS UNTUK EXCEL DIVISI
   // =========================
   function setupExcelEvents() {
     $("#addExcelRowBtn").onclick = () => {
@@ -4041,50 +4068,66 @@
         return; 
       }
       
+      // Tambah baris (dari 31 menjadi lebih)
       const count = prompt("Tambah berapa baris?", "5");
       if (!count || isNaN(count)) return;
       
       const numRows = parseInt(count);
       if (numRows <= 0) return;
       
-      // Update jumlah baris di tampilan (akan ter-refresh saat render ulang)
-      toast(`${numRows} baris ditambahkan`);
+      // Update data untuk baris tambahan
+      const currentRows = Object.keys(barisKolomExcelData).length;
+      for (let row = currentRows; row < currentRows + numRows; row++) {
+        if (!barisKolomExcelData[row]) {
+          barisKolomExcelData[row] = [];
+          for (let col = 0; col < 6; col++) {
+            barisKolomExcelData[row][col] = { 
+              nama1: "", 
+              nama2: "", 
+              nama3: "", 
+              nama4: "", 
+              tanggal: "" 
+            };
+          }
+        }
+      }
+      
+      saveBarisKolomExcel();
       renderBarisKolomTable();
       schedulePush();
+      toast(`${numRows} baris ditambahkan`);
     };
     
     $("#exportExcelAllBtn").onclick = async () => {
-      let allData = "DAFTAR NAMA DAN TANGGAL PER KOLOM:\n\n";
+      let allData = "DAFTAR NAMA DAN TANGGAL PER KOLOM (31 Baris):\n\n";
       const kolomNames = ["LIVE CHAT", "WHATSAPP", "DEPOSIT", "FINANCE", "WHITDRAW", "DESIGN"];
       
       for (let col = 0; col < 6; col++) {
         let kolomData = [];
         
-        for (let row = 0; row < 42; row++) {
+        for (let row = 0; row < 31; row++) {
           const cell = barisKolomExcelData[row]?.[col] || { 
             nama1: "", 
             nama2: "", 
             nama3: "", 
-            tanggal1: "", 
-            tanggal2: "" 
+            nama4: "", 
+            tanggal: "" 
           };
           
-          // Format per baris: "No. Nama1, Nama2, Nama3 | Tanggal1, Tanggal2"
+          // Format per baris: "No. Nama1, Nama2, Nama3, Nama4 | Tanggal"
           const names = [
             cell.nama1?.trim(),
             cell.nama2?.trim(),
-            cell.nama3?.trim()
+            cell.nama3?.trim(),
+            cell.nama4?.trim()
           ].filter(n => n && n !== "");
           
-          const dates = [
-            cell.tanggal1?.trim(),
-            cell.tanggal2?.trim()
-          ].filter(d => d && d !== "");
+          const dateStr = cell.tanggal?.trim() || "";
           
-          if (names.length > 0 || dates.length > 0) {
+          if (names.length > 0 || dateStr) {
             const nameStr = names.length > 0 ? names.join(", ") : "-";
-            const dateStr = dates.length > 0 ? dates.join(", ") : "-";
-            kolomData.push(`${row+1}. ${nameStr} | ${dateStr}`);
+            const rowStr = dateStr ? `${nameStr} | ${dateStr}` : nameStr;
+            kolomData.push(`${row+1}. ${rowStr}`);
           }
         }
         
@@ -4095,7 +4138,7 @@
       
       try {
         await navigator.clipboard.writeText(allData);
-        toast("Semua data Excel dicopy (42 baris, 3 nama, 2 tanggal)");
+        toast("Semua data Excel dicopy (31 baris, 4 nama, 1 tanggal)");
       } catch(e) {
         prompt("Copy manual (Ctrl+C):", allData);
         toast("Gagal auto copy, copy manual");
@@ -4114,22 +4157,23 @@
         () => {
           if (confirm("Reset semua data Excel? Semua nama dan tanggal akan dihapus.")) {
             barisKolomExcelData = {};
-            for (let row = 0; row < 42; row++) {
+            // Inisialisasi 31 baris kosong dengan 4 nama
+            for (let row = 0; row < 31; row++) {
               barisKolomExcelData[row] = [];
               for (let col = 0; col < 6; col++) {
                 barisKolomExcelData[row][col] = { 
                   nama1: "", 
                   nama2: "", 
                   nama3: "", 
-                  tanggal1: "", 
-                  tanggal2: "" 
+                  nama4: "", 
+                  tanggal: "" 
                 };
               }
             }
             saveBarisKolomExcel();
             renderBarisKolomTable();
             schedulePush();
-            toast("Data Excel direset (42 baris)");
+            toast("Data Excel direset (31 baris, 4 nama per sel)");
           }
         },
         "EXCEL"
@@ -4177,6 +4221,36 @@
         "NAMA"
       );
     };
+  }
+
+  // =========================
+  // FUNGSI MIGRASI DATA DARI VERSI LAMA
+  // =========================
+  function migrateBarisKolomData() {
+    // Cek jika ada data versi lama (v2 - 3 nama, 2 tanggal)
+    const oldDataV2 = JSON.parse(localStorage.getItem("baris-kolom-excel-v2") || "null");
+    if (oldDataV2 && Object.keys(oldDataV2).length > 0) {
+      // Migrasi dari v2 ke v4 (4 nama, 1 tanggal)
+      for (let row in oldDataV2) {
+        if (!barisKolomExcelData[row]) {
+          barisKolomExcelData[row] = [];
+          for (let col in oldDataV2[row]) {
+            const oldCell = oldDataV2[row][col];
+            // Konversi dari struktur lama (3 nama, 2 tanggal) ke baru (4 nama, 1 tanggal)
+            barisKolomExcelData[row][col] = {
+              nama1: oldCell.nama1 || "",
+              nama2: oldCell.nama2 || "",
+              nama3: oldCell.nama3 || "",
+              nama4: "", // Tambahkan nama ke-4 kosong
+              tanggal: oldCell.tanggal1 || "" // Ambil hanya tanggal pertama
+            };
+          }
+        }
+      }
+      saveBarisKolomExcel();
+      localStorage.removeItem("baris-kolom-excel-v2"); // Hapus data lama
+      toast("Data Excel dimigrasi ke versi baru (4 nama, 1 tanggal)");
+    }
   }
 
   function renderPiketTable(){
@@ -4696,7 +4770,7 @@
       hideAll();
       $("#barisKolomPanel").style.display="flex";
       renderBarisKolomTable();
-      toast("Mode: EXCEL DIVISI (6 Kolom, 42 Baris, 3 Nama, 2 Tanggal)");
+      toast("Mode: EXCEL DIVISI (31 Baris, 4 Nama, 1 Tanggal)");
       return;
     }
 
@@ -4956,6 +5030,9 @@
     setupCatatanForm();
     setupExcelEvents();
     setupNamaEvents();
+
+    // Migrasi data dari versi lama
+    migrateBarisKolomData();
 
     startRealtimeSync();
 
