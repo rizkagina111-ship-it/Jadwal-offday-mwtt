@@ -59,7 +59,7 @@
       z-index:-1;
     }
 
-    /* ===== BACKGROUND BUNGA MAWAR TRANSparan ===== */
+    /* ===== BACKGROUND BUNGA MAWAR TRANSPARAN ===== */
     body::after {
       content: "";
       position: fixed;
@@ -1529,6 +1529,459 @@
     }
   
     .cs-name-span{font-weight:900; letter-spacing:.2px;}
+    
+    /* ===== STYLE UNTUK BARI-BARIS KOLOM EXCEL ===== */
+    .baris-kolom-panel {
+      display: none;
+      background: rgba(255,255,255,.06);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      min-width: 1200px;
+    }
+    
+    /* CSS untuk tabel Excel 6 kolom */
+    .baris-kolom-excel-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1400px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .baris-kolom-excel-table th {
+      background-color: #8B0000;
+      color: #FFD700;
+      font-weight: 900;
+      text-align: center;
+      padding: 15px 10px;
+      border: 2px solid #FFD700;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    
+    .baris-kolom-excel-table th:first-child {
+      width: 60px;
+      background: #4A0000;
+    }
+    
+    /* ===== REVISI STYLE UNTUK BARI-BARIS KOLOM EXCEL DENGAN 3 NAMA DAN 2 TANGGAL ===== */
+    .baris-kolom-excel-table td {
+      border: 1px solid rgba(255,215,0,0.3);
+      padding: 0;
+      background: rgba(255,215,0,0.05);
+      transition: background-color 0.2s ease;
+      min-width: 180px;
+    }
+    
+    .excel-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 0;
+      min-height: 160px;
+    }
+    
+    .excel-nama-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: none;
+      background: transparent;
+      color: #FFFFFF !important;
+      font-weight: 900 !important;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s ease;
+      text-shadow: 
+        0 1px 0 rgba(0, 0, 0, 0.8),
+        0 0 5px rgba(255, 255, 255, 0.3) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .excel-nama-input:focus {
+      background: rgba(255, 255, 255, 0.1) !important;
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    .excel-nama-input::placeholder {
+      color: rgba(255, 255, 255, 0.4) !important;
+      font-weight: 700 !important;
+    }
+    
+    /* Container untuk input tanggal di samping */
+    .excel-date-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 5px;
+      padding: 5px;
+      background: rgba(0, 0, 0, 0.2);
+      border-top: 1px solid rgba(0, 255, 0, 0.3);
+    }
+    
+    .excel-date-input {
+      width: 100%;
+      padding: 6px 8px;
+      border: none;
+      background: transparent;
+      color: #00FF00 !important;
+      font-weight: 900 !important;
+      font-size: 12px;
+      outline: none;
+      transition: all 0.2s ease;
+      text-shadow: 
+        0 1px 0 rgba(0, 0, 0, 0.8),
+        0 0 8px rgba(0, 255, 0, 0.7),
+        0 0 12px rgba(0, 255, 0, 0.5) !important;
+      border-bottom: 1px dashed rgba(0, 255, 0, 0.2);
+    }
+    
+    .excel-date-input:focus {
+      background: rgba(0, 255, 0, 0.1) !important;
+      box-shadow: 
+        inset 0 0 0 2px rgba(0, 255, 0, 0.5),
+        0 0 15px rgba(0, 255, 0, 0.3) !important;
+    }
+    
+    .excel-date-input::placeholder {
+      color: rgba(0, 255, 0, 0.4) !important;
+      font-weight: 700 !important;
+    }
+    
+    .baris-kolom-excel-table tr:hover td {
+      background: rgba(255,215,0,0.1);
+    }
+    
+    .baris-kolom-excel-table td:first-child {
+      background: rgba(139,0,0,0.4);
+      color: #FFD700;
+      text-align: center;
+      font-weight: 900;
+      font-size: 14px;
+      border-right: 2px solid #FFD700;
+    }
+    
+    .copy-kolom-excel-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: #FFD700;
+      color: #8B0000;
+      border: none;
+      font-weight: 900;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-left: 5px;
+    }
+    
+    .copy-kolom-excel-btn:hover {
+      background: #FFC800;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    
+    .copy-kolom-excel-btn:active {
+      transform: translateY(0);
+    }
+    
+    .excel-table-container {
+      width: 100%;
+      overflow: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(255,215,0,0.5);
+      padding: 15px;
+      background: rgba(0,0,0,0.3);
+      min-height: 600px;
+      max-height: 80vh;
+      position: relative;
+    }
+    
+    .excel-table-container::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+    
+    .excel-table-container::-webkit-scrollbar-track {
+      background: rgba(139,0,0,0.3);
+      border-radius: 6px;
+    }
+    
+    .excel-table-container::-webkit-scrollbar-thumb {
+      background: #FFD700;
+      border-radius: 6px;
+      border: 2px solid rgba(139,0,0,0.3);
+    }
+    
+    /* Sticky header */
+    .baris-kolom-excel-table thead {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    /* Sticky first column */
+    .baris-kolom-excel-table th:first-child,
+    .baris-kolom-excel-table td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 5;
+    }
+    
+    /* Kolom header styling */
+    .kolom-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .kolom-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: #FFD700;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
+      text-align: center;
+      padding: 4px 0;
+    }
+    
+    /* NAMA MANAGEMENT STYLES */
+    .nama-management-panel {
+      display: none;
+      background: rgba(255,255,255,.06);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      min-width: 1200px;
+    }
+    
+    .nama-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .nama-card {
+      background: rgba(0,0,0,.3);
+      border-radius: 12px;
+      padding: 15px;
+      border: 1px solid rgba(139,92,246,.2);
+      transition: all 0.3s ease;
+    }
+    
+    .nama-card:hover {
+      border-color: rgba(139,92,246,.5);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(139,92,246,.2);
+    }
+    
+    .nama-card-title {
+      font-weight: 900;
+      font-size: 14px;
+      color: #8B5CF6;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgba(139,92,246,.2);
+    }
+    
+    .nama-input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .nama-input {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.05);
+      color: #eef2ff;
+      font-size: 14px;
+    }
+    
+    .nama-select {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.05);
+      color: #eef2ff;
+      font-size: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    
+    .nama-btn {
+      padding: 8px 15px;
+      border-radius: 8px;
+      background: rgba(139,92,246,.6);
+      color: white;
+      border: none;
+      font-weight: 900;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .nama-btn:hover {
+      background: rgba(139,92,246,.8);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(139,92,246,.4);
+    }
+    
+    .nama-list {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+    
+    .nama-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      margin-bottom: 5px;
+      background: rgba(255,255,255,.03);
+      border-radius: 6px;
+      border: 1px solid rgba(139,92,246,.1);
+    }
+    
+    .nama-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .nama-item-name {
+      font-weight: 700;
+      color: #eef2ff;
+      font-size: 13px;
+    }
+    
+    .nama-item-divisi {
+      font-size: 10px;
+      color: rgba(139,92,246,.8);
+      font-weight: 700;
+    }
+    
+    .nama-item-actions {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .nama-item-btn {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 900;
+      cursor: pointer;
+      border: none;
+      background: rgba(255,255,255,.08);
+      color: #eef2ff;
+    }
+    
+    .nama-item-btn:hover {
+      background: rgba(255,255,255,.15);
+    }
+    
+    .nama-item-btn.edit {
+      background: rgba(34,197,94,.3);
+      color: #A7F3D0;
+    }
+    
+    .nama-item-btn.edit:hover {
+      background: rgba(34,197,94,.5);
+    }
+    
+    .nama-item-btn.delete {
+      background: rgba(220,38,38,.3);
+      color: #FFA5A5;
+    }
+    
+    .nama-item-btn.delete:hover {
+      background: rgba(220,38,38,.5);
+    }
+    
+    .nama-empty {
+      text-align: center;
+      padding: 30px;
+      color: rgba(255,255,255,.4);
+      font-size: 13px;
+      font-style: italic;
+    }
+    
+    /* ===== TAB BARU UNTUK BARI-BARIS KOLOM DAN NAMA ===== */
+    #topTabs .tab-btn[data-type="BARI_KOLOM"] {
+      background: rgba(255, 215, 0, 0.16);
+      color: #FFD700;
+    }
+    
+    #topTabs .tab-btn[data-type="BARI_KOLOM"]:hover {
+      background: rgba(255, 215, 0, 0.26);
+    }
+    
+    #topTabs .tab-btn[data-type="BARI_KOLOM"].active {
+      background: rgba(255, 215, 0, 0.85);
+      color: #0b1020;
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.45);
+    }
+    
+    #topTabs .tab-btn[data-type="NAMA"] {
+      background: rgba(139, 92, 246, 0.16);
+      color: #C4B5FD;
+    }
+    
+    #topTabs .tab-btn[data-type="NAMA"]:hover {
+      background: rgba(139, 92, 246, 0.26);
+    }
+    
+    #topTabs .tab-btn[data-type="NAMA"].active {
+      background: rgba(139, 92, 246, 0.85);
+      color: white;
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.45);
+    }
+    
+    /* Responsif untuk Excel Table */
+    @media (max-width: 700px) {
+      .baris-kolom-excel-table {
+        min-width: 1200px;
+      }
+      
+      .excel-nama-input {
+        padding: 6px 8px;
+        font-size: 12px;
+      }
+      
+      .excel-date-input {
+        padding: 5px 6px;
+        font-size: 11px;
+      }
+      
+      .excel-input-group {
+        min-height: 140px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .excel-nama-input {
+        padding: 5px 6px;
+        font-size: 11px;
+      }
+      
+      .excel-date-input {
+        padding: 4px 5px;
+        font-size: 10px;
+      }
+      
+      .excel-input-group {
+        min-height: 120px;
+      }
+    }
   </style>
 
   <!-- Firebase SDK (v8 compat CDN) -->
@@ -1551,6 +2004,7 @@
         <button class="tab-btn" data-type="OFF">OFFDAY</button>
         <button class="tab-btn" data-type="CUTI">CUTI</button>
         <button class="tab-btn" data-type="BAGAN_VIEW">BAGAN</button>
+        <button class="tab-btn" data-type="BARI_KOLOM">EXCEL DIVISI</button>
         <button class="tab-btn" data-type="PIKET">PIKET</button>
         <button class="tab-btn" data-type="CS_MAWAROTO">STAFF MAWAROTO</button>
         <button class="tab-btn" data-type="CATATAN">CATATAN</button>
@@ -1623,8 +2077,86 @@
 
       <div class="bagan-wrap">
         <div style="font-size:12px; opacity:.8; margin:0 0 10px;">
+          Drag and drop untuk mengubah posisi staff. Klik seat untuk edit.
         </div>
         <div class="bagan-board" id="baganBoard"></div>
+      </div>
+    </section>
+
+    <!-- BARI-BARIS KOLOM EXCEL -->
+    <section class="panel baris-kolom-panel" id="barisKolomPanel">
+      <div class="section-head">
+        <div class="section-title title-bagan">📊 NAMA STAFF DIVISI 📊</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
+          <button id="addExcelRowBtn" class="btn-green">+ Tambah Baris</button>
+          <button id="exportExcelAllBtn" class="btn-accent">Export Semua Data</button>
+          <button id="resetExcelBtn" class="btn-danger">Reset Excel</button>
+        </div>
+      </div>
+      
+      <div style="margin:15px; padding:10px; background:rgba(139,0,0,0.3); border-radius:12px; border:1px solid rgba(255,215,0,0.3);">
+        <div style="color:#FFD700; font-weight:900; font-size:12px; margin-bottom:10px;">
+          <b>REVISI:</b> Setiap sel memiliki 3 input nama dan 2 input tanggal. Total 42 baris.
+        </div>
+        <div style="color:#FFD700; font-weight:900; font-size:12px;">
+          • Nama: Putih tebal • Tanggal: Hijau stabilo metalik • Tombol COPY per kolom
+        </div>
+      </div>
+      
+      <div class="excel-table-container" id="barisKolomTableContainer">
+        <!-- Tabel Excel akan di-render di sini -->
+      </div>
+    </section>
+
+    <!-- NAMA MANAGEMENT -->
+    <section class="panel nama-management-panel" id="namaPanel">
+      <div class="section-head">
+        <div class="section-title title-cs">👥 MANAGEMENT NAMA STAFF 👥</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
+          <button id="exportNamaBtn" class="btn-accent">Export (Copy)</button>
+          <button id="resetNamaBtn" class="btn-danger">Reset NAMA</button>
+        </div>
+      </div>
+
+      <div class="nama-grid">
+        <div class="nama-card">
+          <div class="nama-card-title">Tambah Staff Baru</div>
+          <div class="nama-input-group">
+            <input type="text" id="namaInput" class="nama-input" placeholder="Nama staff...">
+            <select id="divisiSelect" class="nama-select">
+              <option value="">Pilih Divisi</option>
+              <option value="LIVECHAT">LIVECHAT</option>
+              <option value="WHATSAPP">WHATSAPP</option>
+              <option value="DEPOSIT">DEPOSIT</option>
+              <option value="DESIGN">DESIGN</option>
+              <option value="FINANCE">FINANCE</option>
+              <option value="ADMIN">ADMIN</option>
+              <option value="BANKER">BANKER</option>
+              <option value="TELEGRAM">TELEGRAM</option>
+              <option value="SPV_WD">SPV WD</option>
+              <option value="WORKER_WD">WORKER WD</option>
+              <option value="QRIS">QRIS</option>
+            </select>
+          </div>
+          <button id="addNamaBtn" class="nama-btn">+ Tambah ke Database</button>
+          
+          <div class="nama-card-title" style="margin-top: 20px;">Tambah ke Bagan</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,.6); margin-bottom: 10px;">
+            Pilih nama untuk dimasukkan ke bagan
+          </div>
+          <select id="namaToBaganSelect" class="nama-select">
+            <option value="">Pilih Staff</option>
+            <!-- Opsi akan diisi oleh JavaScript -->
+          </select>
+          <button id="addToBaganBtn" class="nama-btn" style="background: rgba(34,197,94,.6);">➕ Tambah ke Bagan</button>
+        </div>
+
+        <div class="nama-card">
+          <div class="nama-card-title">Database Staff</div>
+          <div class="nama-list" id="namaDatabaseList">
+            <!-- Daftar nama akan muncul di sini -->
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1877,6 +2409,8 @@
       calendar: store,
       cuti: cutiStore,
       bagan: { meta: baganMeta, seats: baganStore },
+      barisKolomExcel: barisKolomExcelData,
+      namaDatabase: namaDatabaseStore,
       piket: piketStore,
       csMawaroto: csStore,
       catatan: catatanStore,
@@ -1911,6 +2445,16 @@
         saveBagan();
       }
 
+      if (payload.barisKolomExcel) {
+        barisKolomExcelData = payload.barisKolomExcel;
+        saveBarisKolomExcel();
+      }
+
+      if (Array.isArray(payload.namaDatabase)) {
+        namaDatabaseStore.splice(0, namaDatabaseStore.length, ...payload.namaDatabase);
+        saveNamaDatabase();
+      }
+
       if (payload.piket && typeof payload.piket === "object") {
         Object.keys(piketStore).forEach(k => delete piketStore[k]);
         Object.assign(piketStore, payload.piket);
@@ -1934,6 +2478,8 @@
 
       if (activeFilterType === "CUTI") renderCutiTable();
       else if (activeFilterType === "BAGAN_VIEW") { renderBagan(); updateDeleteSeatUI(); }
+      else if (activeFilterType === "BARI_KOLOM") renderBarisKolomTable();
+      else if (activeFilterType === "NAMA") { renderNamaDatabase(); updateNamaToBaganSelect(); }
       else if (activeFilterType === "PIKET") renderPiketTable();
       else if (activeFilterType === "CS_MAWAROTO") renderCSTable();
       else if (activeFilterType === "CATATAN") renderCatatanList();
@@ -2069,6 +2615,30 @@
       if(typeof s.name !== "string") s.name = "";
       if(typeof s.divisi === "undefined") s.divisi = "";
     });
+  }
+
+  // Store untuk BARI-BARIS KOLOM EXCEL dengan struktur baru: 42 baris, 3 nama, 2 tanggal
+  const barisKolomExcelKey = "baris-kolom-excel-v2"; // Versi baru
+  let barisKolomExcelData = JSON.parse(localStorage.getItem(barisKolomExcelKey) || "null") || {};
+  
+  function saveBarisKolomExcel() {
+    localStorage.setItem(barisKolomExcelKey, JSON.stringify(barisKolomExcelData));
+  }
+
+  // Store untuk NAMA DATABASE
+  const namaDatabaseKey = "nama-database-v1";
+  const namaDatabaseDefault = [
+    { name: "BUDI", divisi: "LIVECHAT" },
+    { name: "SARI", divisi: "WHATSAPP" },
+    { name: "AGUS", divisi: "DEPOSIT" },
+    { name: "DEWI", divisi: "DESIGN" }
+  ];
+  
+  let namaDatabaseStore = JSON.parse(localStorage.getItem(namaDatabaseKey) || "null") 
+    || namaDatabaseDefault.slice();
+  
+  function saveNamaDatabase() {
+    localStorage.setItem(namaDatabaseKey, JSON.stringify(namaDatabaseStore));
   }
 
   const piketKey = "piket-v1";
@@ -2225,7 +2795,11 @@
       "#removeColBtn",
       "#toggleDeleteSeatBtn",
       "#clear",
-      "#bulkImport"
+      "#bulkImport",
+      "#addExcelRowBtn",
+      "#resetExcelBtn",
+      "#addNamaBtn",
+      "#resetNamaBtn"
     ];
     
     buttonsToHide.forEach(selector => {
@@ -2239,6 +2813,8 @@
   function reRenderActivePanel() {
     if (activeFilterType === "CUTI") renderCutiTable();
     else if (activeFilterType === "BAGAN_VIEW") { renderBagan(); updateDeleteSeatUI(); }
+    else if (activeFilterType === "BARI_KOLOM") renderBarisKolomTable();
+    else if (activeFilterType === "NAMA") { renderNamaDatabase(); updateNamaToBaganSelect(); }
     else if (activeFilterType === "PIKET") renderPiketTable();
     else if (activeFilterType === "CS_MAWAROTO") renderCSTable();
     else if (activeFilterType === "CATATAN") renderCatatanList();
@@ -2351,6 +2927,8 @@
         activeFilterType !== "ALL" &&
         activeFilterType !== "CUTI" &&
         activeFilterType !== "BAGAN_VIEW" &&
+        activeFilterType !== "BARI_KOLOM" &&
+        activeFilterType !== "NAMA" &&
         activeFilterType !== "PIKET" &&
         activeFilterType !== "CS_MAWAROTO" &&
         activeFilterType !== "CATATAN" &&
@@ -3079,6 +3657,528 @@
     }
   };
 
+  // =========================
+  // REVISI: FUNGSI BARI-BARIS KOLOM EXCEL DENGAN 3 NAMA DAN 2 TANGGAL (42 BARIS)
+  // =========================
+  function renderBarisKolomTable() {
+    const container = $("#barisKolomTableContainer");
+    if (!container) return;
+    
+    // NAMA KOLOM BARU YANG DIMINTA
+    const kolomNames = ["LIVE CHAT", "WHATSAPP", "DEPOSIT", "FINANCE", "WHITDRAW", "DESIGN"];
+    
+    // Buat tabel dengan 6 kolom
+    let html = `
+        <table class="baris-kolom-excel-table">
+            <thead>
+                <tr>
+                    <th>NO</th>
+    `;
+    
+    // Header untuk 6 kolom dengan nama baru
+    for (let i = 0; i < 6; i++) {
+        html += `
+            <th>
+                <div class="kolom-header">
+                    <span class="kolom-title">${kolomNames[i]}</span>
+                    <button class="copy-kolom-excel-btn" data-kolom="${i}">COPY</button>
+                </div>
+            </th>
+        `;
+    }
+    
+    html += `</tr></thead><tbody>`;
+    
+    // Data untuk 42 baris (dari 30 menjadi 42)
+    for (let row = 0; row < 42; row++) {
+        html += `<tr>`;
+        html += `<td>${row+1}</td>`;
+        
+        for (let col = 0; col < 6; col++) {
+            const data = barisKolomExcelData[row]?.[col] || { 
+                nama1: "", 
+                nama2: "", 
+                nama3: "", 
+                tanggal1: "", 
+                tanggal2: "" 
+            };
+            
+            html += `
+                <td>
+                    <div class="excel-input-group">
+                        <!-- 3 Input Nama -->
+                        <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama1" 
+                               value="${data.nama1}" placeholder="Nama 1">
+                        <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama2" 
+                               value="${data.nama2}" placeholder="Nama 2">
+                        <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama3" 
+                               value="${data.nama3}" placeholder="Nama 3">
+                        
+                        <!-- Container untuk 2 Input Tanggal -->
+                        <div class="excel-date-container">
+                            <input type="date" class="excel-date-input" data-row="${row}" data-col="${col}" data-type="tanggal1" 
+                                   value="${data.tanggal1}">
+                            <input type="date" class="excel-date-input" data-row="${row}" data-col="${col}" data-type="tanggal2" 
+                                   value="${data.tanggal2}">
+                        </div>
+                    </div>
+                </td>
+            `;
+        }
+        
+        html += `</tr>`;
+    }
+    
+    html += `</tbody></table>`;
+    
+    container.innerHTML = html;
+    
+    // Event listener untuk input nama (3 input per sel)
+    container.querySelectorAll(".excel-nama-input").forEach(input => {
+        input.addEventListener("input", (e) => {
+            const row = parseInt(e.target.dataset.row);
+            const col = parseInt(e.target.dataset.col);
+            const type = e.target.dataset.type;
+            
+            if (!barisKolomExcelData[row]) barisKolomExcelData[row] = [];
+            if (!barisKolomExcelData[row][col]) {
+                barisKolomExcelData[row][col] = { 
+                    nama1: "", 
+                    nama2: "", 
+                    nama3: "", 
+                    tanggal1: "", 
+                    tanggal2: "" 
+                };
+            }
+            
+            barisKolomExcelData[row][col][type] = e.target.value;
+            
+            saveBarisKolomExcel();
+            schedulePush();
+        });
+    });
+    
+    // Event listener untuk input tanggal (2 input per sel)
+    container.querySelectorAll(".excel-date-input").forEach(input => {
+        input.addEventListener("change", (e) => {
+            const row = parseInt(e.target.dataset.row);
+            const col = parseInt(e.target.dataset.col);
+            const type = e.target.dataset.type;
+            
+            if (!barisKolomExcelData[row]) barisKolomExcelData[row] = [];
+            if (!barisKolomExcelData[row][col]) {
+                barisKolomExcelData[row][col] = { 
+                    nama1: "", 
+                    nama2: "", 
+                    nama3: "", 
+                    tanggal1: "", 
+                    tanggal2: "" 
+                };
+            }
+            
+            barisKolomExcelData[row][col][type] = e.target.value;
+            
+            saveBarisKolomExcel();
+            schedulePush();
+        });
+    });
+    
+    // Event listener untuk tombol copy kolom (mencopy semua 3 nama per baris)
+    container.querySelectorAll(".copy-kolom-excel-btn").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+            const kolom = parseInt(e.target.dataset.kolom);
+            let allNames = [];
+            
+            for (let row = 0; row < 42; row++) {
+                const cell = barisKolomExcelData[row]?.[kolom] || { 
+                    nama1: "", 
+                    nama2: "", 
+                    nama3: "" 
+                };
+                
+                // Gabungkan 3 nama yang tidak kosong
+                const cellNames = [
+                    cell.nama1?.trim(),
+                    cell.nama2?.trim(),
+                    cell.nama3?.trim()
+                ].filter(n => n && n !== "");
+                
+                if (cellNames.length > 0) {
+                    // Format: "Nama1, Nama2, Nama3" per baris
+                    allNames.push(cellNames.join(", "));
+                }
+            }
+            
+            const text = allNames.join("\n");
+            if (!text) {
+                toast("Kolom ini kosong");
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(text);
+                toast(`Kolom ${kolomNames[kolom]} dicopy: ${allNames.length} baris`);
+            } catch (err) {
+                prompt("Copy manual (Ctrl+C):", text);
+                toast("Gagal auto copy, copy manual");
+            }
+        });
+    });
+  }
+
+  // =========================
+  // FUNGSI NAMA DATABASE
+  // =========================
+  function renderNamaDatabase() {
+    const container = $("#namaDatabaseList");
+    if (!container) return;
+    
+    container.innerHTML = "";
+    
+    if (namaDatabaseStore.length === 0) {
+      container.innerHTML = '<div class="nama-empty">Belum ada staff dalam database</div>';
+      return;
+    }
+    
+    namaDatabaseStore.forEach((staff, idx) => {
+      const item = document.createElement("div");
+      item.className = "nama-item";
+      
+      item.innerHTML = `
+        <div class="nama-item-info">
+          <div class="nama-item-name">${staff.name}</div>
+          <div class="nama-item-divisi">${staff.divisi || "-"}</div>
+        </div>
+        <div class="nama-item-actions">
+          ${!isLocked ? `<button class="nama-item-btn edit" data-index="${idx}">Edit</button>` : ''}
+          ${!isLocked ? `<button class="nama-item-btn delete" data-index="${idx}">Hapus</button>` : ''}
+        </div>
+      `;
+      
+      container.appendChild(item);
+    });
+    
+    container.querySelectorAll(".nama-item-btn.edit").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        if (isLocked) { toast("Terkunci. Hanya bos yang bisa edit."); return; }
+        const idx = parseInt(e.target.dataset.index);
+        editNamaStaff(idx);
+      });
+    });
+    
+    container.querySelectorAll(".nama-item-btn.delete").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        if (isLocked) { toast("Terkunci. Hanya bos yang bisa hapus."); return; }
+        const idx = parseInt(e.target.dataset.index);
+        deleteNamaStaff(idx);
+      });
+    });
+  }
+
+  function updateNamaToBaganSelect() {
+    const select = $("#namaToBaganSelect");
+    if (!select) return;
+    
+    // Simpan nilai yang dipilih
+    const selectedValue = select.value;
+    
+    // Clear options kecuali yang pertama
+    select.innerHTML = '<option value="">Pilih Staff</option>';
+    
+    // Tambahkan opsi dari database
+    namaDatabaseStore.forEach((staff, idx) => {
+      const option = document.createElement("option");
+      option.value = idx;
+      option.textContent = `${staff.name} (${staff.divisi || "-"})`;
+      select.appendChild(option);
+    });
+    
+    // Kembalikan pilihan sebelumnya jika masih ada
+    if (selectedValue && selectedValue !== "") {
+      select.value = selectedValue;
+    }
+  }
+
+  function addNamaStaff() {
+    if (isLocked) { toast("Terkunci. Hanya bos yang bisa tambah staff."); return; }
+    
+    const nameInput = $("#namaInput");
+    const divisiSelect = $("#divisiSelect");
+    
+    const name = nameInput.value.trim();
+    const divisi = divisiSelect.value;
+    
+    if (!name) {
+      toast("Nama staff tidak boleh kosong");
+      return;
+    }
+    
+    // Cek apakah nama sudah ada
+    const existing = namaDatabaseStore.find(s => 
+      s.name.toLowerCase() === name.toLowerCase()
+    );
+    
+    if (existing) {
+      toast("Nama staff sudah ada dalam database");
+      return;
+    }
+    
+    namaDatabaseStore.push({ name, divisi });
+    saveNamaDatabase();
+    renderNamaDatabase();
+    updateNamaToBaganSelect();
+    
+    nameInput.value = "";
+    divisiSelect.value = "";
+    
+    schedulePush();
+    toast("Staff ditambahkan: " + name);
+  }
+
+  function editNamaStaff(idx) {
+    if (isLocked) { return; }
+    
+    const staff = namaDatabaseStore[idx];
+    const newName = prompt("Edit nama staff:", staff.name);
+    
+    if (newName === null) return;
+    
+    const trimmed = newName.trim();
+    if (!trimmed) {
+      toast("Nama staff tidak boleh kosong");
+      return;
+    }
+    
+    // Cek apakah nama sudah ada (kecuali dirinya sendiri)
+    const existing = namaDatabaseStore.find((s, i) => 
+      i !== idx && s.name.toLowerCase() === trimmed.toLowerCase()
+    );
+    
+    if (existing) {
+      toast("Nama staff sudah ada dalam database");
+      return;
+    }
+    
+    const newDivisi = prompt("Edit divisi staff:", staff.divisi || "");
+    
+    if (newDivisi === null) return;
+    
+    namaDatabaseStore[idx] = {
+      name: trimmed,
+      divisi: newDivisi.trim()
+    };
+    
+    saveNamaDatabase();
+    renderNamaDatabase();
+    updateNamaToBaganSelect();
+    schedulePush();
+    toast("Staff diupdate: " + trimmed);
+  }
+
+  function deleteNamaStaff(idx) {
+    if (isLocked) { return; }
+    
+    if (!confirm("Hapus staff dari database?")) return;
+    
+    const deleted = namaDatabaseStore.splice(idx, 1)[0];
+    saveNamaDatabase();
+    renderNamaDatabase();
+    updateNamaToBaganSelect();
+    schedulePush();
+    toast("Staff dihapus: " + deleted.name);
+  }
+
+  function addToBagan() {
+    if (isLocked) { toast("Terkunci. Hanya bos yang bisa tambah ke bagan."); return; }
+    
+    const select = $("#namaToBaganSelect");
+    const idx = parseInt(select.value);
+    
+    if (isNaN(idx) || idx < 0 || idx >= namaDatabaseStore.length) {
+      toast("Pilih staff terlebih dahulu");
+      return;
+    }
+    
+    const staff = namaDatabaseStore[idx];
+    
+    // Cari seat kosong pertama di bagan
+    let emptySeatIndex = -1;
+    for (let i = 0; i < baganStore.length; i++) {
+      if (baganStore[i].active && !baganStore[i].name) {
+        emptySeatIndex = i;
+        break;
+      }
+    }
+    
+    if (emptySeatIndex === -1) {
+      toast("Tidak ada seat kosong di bagan. Tambah baris/kolom terlebih dahulu.");
+      return;
+    }
+    
+    // Tambahkan ke bagan
+    baganStore[emptySeatIndex] = {
+      name: staff.name,
+      divisi: staff.divisi,
+      active: true
+    };
+    
+    saveBagan();
+    renderBagan();
+    schedulePush();
+    toast(`${staff.name} ditambahkan ke seat ${seatLabel(emptySeatIndex)}`);
+    
+    // Reset pilihan
+    select.value = "";
+  }
+
+  // =========================
+  // EVENT LISTENERS BARU UNTUK EXCEL DIVISI
+  // =========================
+  function setupExcelEvents() {
+    $("#addExcelRowBtn").onclick = () => {
+      if (isLocked) { 
+        toast("Terkunci. Hanya bos yang bisa tambah baris."); 
+        return; 
+      }
+      
+      const count = prompt("Tambah berapa baris?", "5");
+      if (!count || isNaN(count)) return;
+      
+      const numRows = parseInt(count);
+      if (numRows <= 0) return;
+      
+      // Update jumlah baris di tampilan (akan ter-refresh saat render ulang)
+      toast(`${numRows} baris ditambahkan`);
+      renderBarisKolomTable();
+      schedulePush();
+    };
+    
+    $("#exportExcelAllBtn").onclick = async () => {
+      let allData = "DAFTAR NAMA DAN TANGGAL PER KOLOM:\n\n";
+      const kolomNames = ["LIVE CHAT", "WHATSAPP", "DEPOSIT", "FINANCE", "WHITDRAW", "DESIGN"];
+      
+      for (let col = 0; col < 6; col++) {
+        let kolomData = [];
+        
+        for (let row = 0; row < 42; row++) {
+          const cell = barisKolomExcelData[row]?.[col] || { 
+            nama1: "", 
+            nama2: "", 
+            nama3: "", 
+            tanggal1: "", 
+            tanggal2: "" 
+          };
+          
+          // Format per baris: "No. Nama1, Nama2, Nama3 | Tanggal1, Tanggal2"
+          const names = [
+            cell.nama1?.trim(),
+            cell.nama2?.trim(),
+            cell.nama3?.trim()
+          ].filter(n => n && n !== "");
+          
+          const dates = [
+            cell.tanggal1?.trim(),
+            cell.tanggal2?.trim()
+          ].filter(d => d && d !== "");
+          
+          if (names.length > 0 || dates.length > 0) {
+            const nameStr = names.length > 0 ? names.join(", ") : "-";
+            const dateStr = dates.length > 0 ? dates.join(", ") : "-";
+            kolomData.push(`${row+1}. ${nameStr} | ${dateStr}`);
+          }
+        }
+        
+        allData += `${kolomNames[col]}:\n`;
+        allData += kolomData.length > 0 ? kolomData.join("\n") : "- (kosong)";
+        allData += "\n\n";
+      }
+      
+      try {
+        await navigator.clipboard.writeText(allData);
+        toast("Semua data Excel dicopy (42 baris, 3 nama, 2 tanggal)");
+      } catch(e) {
+        prompt("Copy manual (Ctrl+C):", allData);
+        toast("Gagal auto copy, copy manual");
+      }
+    };
+    
+    $("#resetExcelBtn").onclick = () => {
+      if (isLocked) {
+        toast("Terkunci. Tidak bisa reset Excel.");
+        return;
+      }
+      
+      openPasswordModal(
+        "Reset Data Excel",
+        "Masukkan password untuk reset semua data Excel",
+        () => {
+          if (confirm("Reset semua data Excel? Semua nama dan tanggal akan dihapus.")) {
+            barisKolomExcelData = {};
+            for (let row = 0; row < 42; row++) {
+              barisKolomExcelData[row] = [];
+              for (let col = 0; col < 6; col++) {
+                barisKolomExcelData[row][col] = { 
+                  nama1: "", 
+                  nama2: "", 
+                  nama3: "", 
+                  tanggal1: "", 
+                  tanggal2: "" 
+                };
+              }
+            }
+            saveBarisKolomExcel();
+            renderBarisKolomTable();
+            schedulePush();
+            toast("Data Excel direset (42 baris)");
+          }
+        },
+        "EXCEL"
+      );
+    };
+  }
+
+  function setupNamaEvents() {
+    $("#addNamaBtn").onclick = addNamaStaff;
+    $("#addToBaganBtn").onclick = addToBagan;
+    
+    $("#exportNamaBtn").onclick = async () => {
+      const txt = namaDatabaseStore.map((s, i) => 
+        `${i+1}. ${s.name} - ${s.divisi || "-"}`
+      ).join("\n") || "Belum ada staff dalam database";
+      
+      try {
+        await navigator.clipboard.writeText(txt);
+        toast("Database staff dicopy");
+      } catch(e) {
+        alert(txt);
+        toast("Gagal copy, blok manual");
+      }
+    };
+    
+    $("#resetNamaBtn").onclick = () => {
+      if (isLocked) {
+        toast("Terkunci. Tidak bisa reset NAMA.");
+        return;
+      }
+      
+      openPasswordModal(
+        "Reset Database NAMA",
+        "Masukkan password untuk reset semua data NAMA",
+        () => {
+          if (confirm("Reset semua data NAMA? Tindakan ini tidak dapat dikembalikan.")) {
+            namaDatabaseStore.splice(0, namaDatabaseStore.length, ...namaDatabaseDefault.slice());
+            saveNamaDatabase();
+            renderNamaDatabase();
+            updateNamaToBaganSelect();
+            schedulePush();
+            toast("Database NAMA direset");
+          }
+        },
+        "NAMA"
+      );
+    };
+  }
+
   function renderPiketTable(){
     const body = $("#piketTableBody");
     body.innerHTML = "";
@@ -3568,6 +4668,8 @@
       $("#calendarPanel").style.display="none";
       $("#cutiPanel").style.display="none";
       $("#baganPanel").style.display="none";
+      $("#barisKolomPanel").style.display="none";
+      $("#namaPanel").style.display="none";
       $("#piketPanel").style.display="none";
       $("#csPanel").style.display="none";
       $("#catatanPanel").style.display="none";
@@ -3587,6 +4689,23 @@
       renderBagan();
       updateDeleteSeatUI();
       toast("Mode: BAGAN");
+      return;
+    }
+
+    if(type==="BARI_KOLOM"){
+      hideAll();
+      $("#barisKolomPanel").style.display="flex";
+      renderBarisKolomTable();
+      toast("Mode: EXCEL DIVISI (6 Kolom, 42 Baris, 3 Nama, 2 Tanggal)");
+      return;
+    }
+
+    if(type==="NAMA"){
+      hideAll();
+      $("#namaPanel").style.display="flex";
+      renderNamaDatabase();
+      updateNamaToBaganSelect();
+      toast("Mode: MANAGEMENT NAMA");
       return;
     }
 
@@ -3617,6 +4736,8 @@
     $("#calendarPanel").style.display="flex";
     $("#cutiPanel").style.display="none";
     $("#baganPanel").style.display="none";
+    $("#barisKolomPanel").style.display="none";
+    $("#namaPanel").style.display="none";
     $("#piketPanel").style.display="none";
     $("#csPanel").style.display="none";
     $("#catatanPanel").style.display="none";
@@ -3711,8 +4832,8 @@
           if(slot){
             slot.name=namesList[idx];
             slot.role=getCsJobForName(namesList[idx]);
+            store[key].type="OFF";
             store[key].off=true;
-            store[key].type=store[key].type||"OFF";
             idx++; filled++; any=true;
           }
         }
@@ -3757,7 +4878,8 @@
         document.querySelector('.bagan-wrap'),
         document.querySelector('.cuti-table-wrap'),
         document.querySelector('.cs-wrap'),
-        document.querySelector('.catatan-container')
+        document.querySelector('.catatan-container'),
+        document.querySelector('.excel-table-container')
       ];
       
       // Scroll elemen yang bisa di-scroll
@@ -3832,6 +4954,8 @@
     updateDeleteSeatUI();
     renderCSTable();
     setupCatatanForm();
+    setupExcelEvents();
+    setupNamaEvents();
 
     startRealtimeSync();
 
