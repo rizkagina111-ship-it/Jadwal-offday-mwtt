@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="id">
 <head>
@@ -28,8 +27,22 @@
       margin:0;
       font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
       color:var(--text);
-      background: url("https://mariterbang.io/download/RiKzs6Ne.png")
-                  center/cover no-repeat fixed;
+      background: 
+        radial-gradient(ellipse at 20% 20%, 
+          rgba(139, 0, 0, 0.1) 0%, 
+          transparent 40%),
+        radial-gradient(ellipse at 80% 80%, 
+          rgba(165, 42, 42, 0.08) 0%, 
+          transparent 40%),
+        radial-gradient(ellipse at 40% 60%, 
+          rgba(178, 34, 34, 0.06) 0%, 
+          transparent 50%),
+        url("https://mariterbang.io/download/RiKzs6Ne.png") center/cover no-repeat fixed,
+        linear-gradient(135deg, 
+          #0b1020 0%, 
+          #1a0f1a 30%, 
+          #0f0f1a 70%, 
+          #0b1020 100%);
       min-height:100vh;
       width:100vw;
       display:block;
@@ -116,6 +129,219 @@
       }
     }
 
+    /* ===== BACKGROUND BINTANG/BULAN BERJATUHAN ===== */
+    .falling-stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .falling-star {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: fallingStar linear infinite;
+    }
+
+    .falling-star.moon {
+      background: radial-gradient(circle at 30% 30%, 
+        rgba(255, 255, 220, 0.9) 0%, 
+        rgba(200, 200, 255, 0.6) 50%, 
+        transparent 70%);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 200, 0.5),
+        0 0 40px rgba(200, 200, 255, 0.3);
+    }
+
+    .falling-star.star {
+      background: radial-gradient(circle, 
+        rgba(255, 255, 200, 1) 0%, 
+        rgba(255, 255, 100, 0.8) 50%, 
+        rgba(255, 200, 50, 0.6) 100%);
+      box-shadow: 
+        0 0 15px rgba(255, 255, 150, 0.7),
+        0 0 30px rgba(255, 255, 100, 0.4),
+        0 0 45px rgba(255, 200, 50, 0.2);
+      clip-path: polygon(
+        50% 0%, 
+        61% 35%, 
+        98% 35%, 
+        68% 57%, 
+        79% 91%, 
+        50% 70%, 
+        21% 91%, 
+        32% 57%, 
+        2% 35%, 
+        39% 35%
+      );
+    }
+
+    @keyframes fallingStar {
+      0% {
+        transform: translateY(-100px) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* ===== BUNGA MAWAR BESAR BERGERAK ===== */
+    .floating-roses {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .floating-rose {
+      position: absolute;
+      opacity: 0.2;
+      filter: blur(0.5px);
+      animation: floatRose 20s linear infinite;
+    }
+
+    .floating-rose.large {
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle at 40% 40%,
+        rgba(255, 100, 100, 0.4) 0%,
+        rgba(220, 20, 60, 0.3) 40%,
+        rgba(178, 34, 34, 0.2) 70%,
+        transparent 100%);
+      border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+    }
+
+    .floating-rose.medium {
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle at 35% 35%,
+        rgba(255, 150, 150, 0.3) 0%,
+        rgba(219, 112, 147, 0.25) 50%,
+        rgba(255, 182, 193, 0.15) 80%,
+        transparent 100%);
+      border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+    }
+
+    .floating-rose.small {
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle at 45% 45%,
+        rgba(255, 200, 200, 0.25) 0%,
+        rgba(255, 182, 193, 0.2) 60%,
+        rgba(255, 192, 203, 0.1) 90%,
+        transparent 100%);
+      border-radius: 50%;
+    }
+
+    @keyframes floatRose {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.2;
+      }
+      95% {
+        opacity: 0.2;
+      }
+      100% {
+        transform: translateY(-100px) translateX(100px) rotate(180deg);
+        opacity: 0;
+      }
+    }
+
+    /* ===== GLOW EFFECT UNTUK SEMUA PANEL ===== */
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: radial-gradient(circle at 50% 0%,
+        rgba(255, 100, 100, 0.1) 0%,
+        rgba(139, 0, 0, 0.05) 30%,
+        transparent 70%);
+      border-radius: 28px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ===== ANIMASI PADA TAB AKTIF ===== */
+    #topTabs .tab-btn.active::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg,
+        rgba(255, 100, 100, 0.3),
+        rgba(139, 0, 0, 0.2),
+        rgba(255, 200, 200, 0.3));
+      border-radius: 12px;
+      z-index: -1;
+      animation: tabGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes tabGlow {
+      0% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0.8;
+        transform: scale(1.02);
+      }
+    }
+
+    /* ===== ANIMASI UNTUK TOMBOL UTAMA ===== */
+    .controls button {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .controls button::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%);
+      transform: rotate(45deg);
+      animation: buttonShine 3s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes buttonShine {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+
     .app{
       width:100%;
       max-width:none;
@@ -173,6 +399,7 @@
       font-size:12px; padding:7px 10px; border-radius:10px;
       color:#e2e8f0; background:rgba(255,255,255,.06);
       transition:.15s; text-transform:uppercase; white-space:nowrap;
+      position: relative;
     }
     .tab-btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.12)}
     .tab-btn.active{
@@ -187,6 +414,35 @@
       display:flex; flex-direction:column;
       min-height:calc(100vh - 130px);
       min-width:1200px;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .panel::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, 
+        rgba(255,100,100,0.1) 0%, 
+        rgba(139,0,0,0.05) 30%, 
+        rgba(255,200,200,0.05) 70%, 
+        rgba(255,100,100,0.1) 100%);
+      border-radius: 20px;
+      z-index: -2;
+      pointer-events: none;
+      animation: panelGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes panelGlow {
+      0% {
+        opacity: 0.3;
+      }
+      100% {
+        opacity: 0.6;
+      }
     }
 
     .cal-head{
@@ -865,8 +1121,11 @@
 
     .toast{
       position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
-      background:rgba(0,0,0,.7); color:white; padding:10px 12px; border-radius:10px;
+      background: linear-gradient(135deg, rgba(139,0,0,0.9) 0%, rgba(165,42,42,0.9) 100%);
+      color:white; padding:10px 12px; border-radius:10px;
       font-size:13px; opacity:0; pointer-events:none; transition:.2s; z-index:99;
+      border: 1px solid rgba(255,215,0,0.3);
+      box-shadow: 0 0 20px rgba(255,100,100,0.5);
     }
     .toast.show{opacity:1; transform:translateX(-50%) translateY(-4px);}
 
@@ -2032,6 +2291,66 @@
       margin-bottom: 8px;
       border: 1px solid rgba(255,215,0,0.3);
     }
+
+    /* ===== ANIMASI RIPPLE ===== */
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* ===== RESPONSIF UNTUK EFEK BARU ===== */
+    @media (max-width: 700px) {
+      .falling-star {
+        display: none;
+      }
+      
+      .floating-rose.large {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .floating-rose.medium {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .floating-rose.small {
+        width: 30px;
+        height: 30px;
+      }
+      
+      .panel::before,
+      .panel::after {
+        display: none;
+      }
+      
+      .controls button::after {
+        animation: none;
+      }
+      
+      #topTabs .tab-btn.active::before {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .floating-rose {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .falling-star,
+      .floating-rose,
+      .panel::before,
+      .panel::after,
+      .controls button::after,
+      #topTabs .tab-btn.active::before {
+        animation: none !important;
+      }
+    }
   </style>
 
   <!-- Firebase SDK (v8 compat CDN) -->
@@ -2065,6 +2384,8 @@
         <button id="todayBtn" class="btn-green">Hari ini</button>
         <button id="next">Bulan depan →</button>
         <div style="display:flex; gap:4px;">
+          <button id="undoBtn" class="btn-amber" title="Ctrl+Z">↶ Undo</button>
+          <button id="redoBtn" class="btn-amber" title="Ctrl+Y">↷ Redo</button>
         </div>
         <button id="clear" class="btn-accent">Reset bulan ini</button>
         <button id="bulkImport" class="btn-accent">📥 Import Excel</button>
@@ -2148,8 +2469,10 @@
       
       <div style="margin:15px; padding:10px; background:rgba(139,0,0,0.3); border-radius:12px; border:1px solid rgba(255,215,0,0.3);">
         <div style="color:#FFD700; font-weight:900; font-size:12px; margin-bottom:10px;">
+          Struktur: 31 Baris x 6 Kolom | Setiap sel: 4 Nama + 1 Tanggal
         </div>
         <div style="color:#FFD700; font-weight:900; font-size:12px;">
+          Kolom: LIVE CHAT, WHATSAPP, DEPOSIT, FINANCE, WHITDRAW, DESIGN
         </div>
       </div>
       
@@ -2674,23 +2997,6 @@
       redoBtn.style.opacity = redoStack.length === 0 ? "0.5" : "1";
     }
   }
-
-  // Event listener untuk Ctrl+Z dan Ctrl+Y
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey || e.metaKey) && !e.altKey) {
-      if (e.key === 'z' || e.key === 'Z') {
-        e.preventDefault();
-        if (e.shiftKey) {
-          redo(); // Ctrl+Shift+Z untuk redo
-        } else {
-          undo(); // Ctrl+Z untuk undo
-        }
-      } else if (e.key === 'y' || e.key === 'Y') {
-        e.preventDefault();
-        redo(); // Ctrl+Y untuk redo
-      }
-    }
-  });
 
   // =========================
   // APP ORIGINAL LOGIC
@@ -5260,6 +5566,232 @@
     }, 1000);
   })();
 
+  // =========================
+  // EFEK VISUAL BARU
+  // =========================
+
+  // ===== FUNGSI UNTUK MEMBUAT BINTANG/BULAN BERJATUHAN =====
+  function createFallingStars() {
+    const container = document.createElement('div');
+    container.className = 'falling-stars';
+    
+    // Buat 15 bintang/bulan
+    for (let i = 0; i < 15; i++) {
+      const star = document.createElement('div');
+      const isMoon = Math.random() > 0.7;
+      star.className = `falling-star ${isMoon ? 'moon' : 'star'}`;
+      
+      // Ukuran random
+      const size = isMoon ? 
+        Math.random() * 15 + 10 : 
+        Math.random() * 8 + 5;
+      
+      // Posisi awal random
+      const left = Math.random() * 100;
+      
+      // Animasi random
+      const duration = Math.random() * 10 + 15;
+      const delay = Math.random() * 10;
+      
+      Object.assign(star.style, {
+        width: `${size}px`,
+        height: `${size}px`,
+        left: `${left}vw`,
+        top: '-100px',
+        animation: `fallingStar ${duration}s linear infinite`,
+        animationDelay: `${delay}s`,
+        opacity: '0'
+      });
+      
+      container.appendChild(star);
+    }
+    
+    document.body.appendChild(container);
+  }
+
+  // ===== FUNGSI UNTUK MEMBUAT BUNGA MAWAR BESAR BERGERAK =====
+  function createFloatingRoses() {
+    const container = document.createElement('div');
+    container.className = 'floating-roses';
+    
+    // Buat 8 bunga mawar
+    for (let i = 0; i < 8; i++) {
+      const rose = document.createElement('div');
+      const sizes = ['large', 'medium', 'small'];
+      const size = sizes[i % 3];
+      
+      rose.className = `floating-rose ${size}`;
+      
+      // Posisi dan animasi random
+      const left = Math.random() * 100;
+      const duration = Math.random() * 10 + 20;
+      const delay = Math.random() * 15;
+      
+      Object.assign(rose.style, {
+        left: `${left}vw`,
+        animation: `floatRose ${duration}s linear infinite`,
+        animationDelay: `${delay}s`
+      });
+      
+      container.appendChild(rose);
+    }
+    
+    document.body.appendChild(container);
+  }
+
+  // ===== FUNGSI UNTUK MEMBUAT BACKGROUND BINTANG STATIS =====
+  function createStarfield() {
+    const starsContainer = document.createElement('div');
+    starsContainer.className = 'starfield';
+    starsContainer.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -3;
+    `;
+    
+    // Buat 100 bintang kecil statis
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      const size = Math.random() * 2 + 1;
+      const left = Math.random() * 100;
+      const top = Math.random() * 100;
+      const opacity = Math.random() * 0.5 + 0.2;
+      const twinkleDelay = Math.random() * 5;
+      
+      star.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: rgba(255, 255, 255, ${opacity});
+        border-radius: 50%;
+        left: ${left}vw;
+        top: ${top}vh;
+        box-shadow: 0 0 ${size * 2}px rgba(255, 255, 255, ${opacity * 0.5});
+        animation: twinkle ${Math.random() * 3 + 2}s ease-in-out infinite;
+        animation-delay: ${twinkleDelay}s;
+      `;
+      
+      starsContainer.appendChild(star);
+    }
+    
+    document.body.appendChild(starsContainer);
+  }
+
+  // ===== ANIMASI KEDIP BINTANG =====
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // ===== INISIALISASI SEMUA EFEK VISUAL =====
+  function initVisualEffects() {
+    createStarfield();
+    createFloatingRoses();
+    createFallingStars();
+    
+    // Tambahkan efek hover pada semua panel
+    document.querySelectorAll('.panel').forEach(panel => {
+      panel.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+      panel.addEventListener('mouseenter', () => {
+        if (window.innerWidth > 768) {
+          panel.style.transform = 'translateY(-5px)';
+          panel.style.boxShadow = '0 25px 70px rgba(0, 0, 0, 0.6)';
+        }
+      });
+      
+      panel.addEventListener('mouseleave', () => {
+        panel.style.transform = 'translateY(0)';
+        panel.style.boxShadow = 'var(--shadow)';
+      });
+    });
+    
+    // Tambahkan efek pada tab aktif
+    document.querySelectorAll('#topTabs .tab-btn').forEach(tab => {
+      tab.addEventListener('click', function(e) {
+        // Tambahkan efek ripple
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.3);
+          transform: scale(0);
+          animation: ripple 0.6s linear;
+          width: ${size}px;
+          height: ${size}px;
+          left: ${x}px;
+          top: ${y}px;
+          pointer-events: none;
+        `;
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      });
+    });
+    
+    // Animasi ripple
+    const rippleStyle = document.createElement('style');
+    rippleStyle.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(rippleStyle);
+  }
+
+  // ===== RESET EFEK VISUAL SAAT RESIZE =====
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      // Hapus dan buat ulang efek visual
+      document.querySelectorAll('.falling-stars, .floating-roses, .starfield').forEach(el => {
+        if (el.parentNode) {
+          el.parentNode.removeChild(el);
+        }
+      });
+      
+      if (window.innerWidth > 480) {
+        initVisualEffects();
+      }
+    }, 250);
+  });
+
+  // ===== EVENT LISTENER UNTUK UNDO/REDO =====
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && !e.altKey) {
+      if (e.key === 'z' || e.key === 'Z') {
+        e.preventDefault();
+        if (e.shiftKey) {
+          redo(); // Ctrl+Shift+Z untuk redo
+        } else {
+          undo(); // Ctrl+Z untuk undo
+        }
+      } else if (e.key === 'y' || e.key === 'Y') {
+        e.preventDefault();
+        redo(); // Ctrl+Y untuk redo
+      }
+    }
+  });
+
   window.addEventListener("load", () => {
     updateLockUI();
     initTopTabs();
@@ -5282,6 +5814,11 @@
     updateUndoRedoUI();
 
     startRealtimeSync();
+
+    // Inisialisasi efek visual
+    setTimeout(() => {
+      initVisualEffects();
+    }, 500);
 
     setTimeout(() => {
       dbRef.once("value").then(snap => {
