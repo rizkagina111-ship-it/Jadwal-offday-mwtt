@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="id">
 <head>
@@ -28,29 +27,14 @@
       margin:0;
       font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
       color:var(--text);
-      background: 
-        radial-gradient(ellipse at 20% 20%, 
-          rgba(139, 0, 0, 0.1) 0%, 
-          transparent 40%),
-        radial-gradient(ellipse at 80% 80%, 
-          rgba(165, 42, 42, 0.08) 0%, 
-          transparent 40%),
-        radial-gradient(ellipse at 40% 60%, 
-          rgba(178, 34, 34, 0.06) 0%, 
-          transparent 50%),
-        url("https://mariterbang.io/download/RiKzs6Ne.png") center/cover no-repeat fixed,
-        linear-gradient(135deg, 
-          #0b1020 0%, 
-          #1a0f1a 30%, 
-          #0f0f1a 70%, 
-          #0b1020 100%);
+      background: url("https://mariterbang.io/download/RiKzs6Ne.png")
+                  center/cover no-repeat fixed;
       min-height:100vh;
       width:100vw;
       display:block;
       padding:0;
       overflow-x:hidden;
       position:relative;
-      user-select:none;
     }
 
     body::before{
@@ -74,17 +58,20 @@
       z-index:-1;
     }
 
-    /* ===== BACKGROUND BUNGA MAWAR TRANSPARAN ===== */
+    /* ===== BACKGROUND BUNGA MAWAR TRANSparan ===== */
     body::after {
       content: "";
       position: fixed;
       inset: 0;
       background-image: 
+        /* Bunga mawar pattern - transparan merah */
         url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,30 Q60,20 70,30 Q80,40 70,50 Q60,60 50,50 Q40,60 30,50 Q20,40 30,30 Q40,20 50,30' fill='rgba(139,0,0,0.15)'/%3E%3Cpath d='M50,35 Q55,30 60,35 Q65,40 60,45 Q55,50 50,45 Q45,50 40,45 Q35,40 40,35 Q45,30 50,35' fill='rgba(178,34,34,0.1)'/%3E%3C/svg%3E"),
         url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40,25 Q48,18 56,25 Q64,32 56,40 Q48,48 40,40 Q32,48 24,40 Q16,32 24,25 Q32,18 40,25' fill='rgba(165,42,42,0.12)'/%3E%3C/svg%3E"),
         url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30,18 Q36,12 42,18 Q48,24 42,30 Q36,36 30,30 Q24,36 18,30 Q12,24 18,18 Q24,12 30,18' fill='rgba(139,0,0,0.08)'/%3E%3C/svg%3E"),
+        /* Tambahan pattern bunga kecil */
         url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20,12 Q24,8 28,12 Q32,16 28,20 Q24,24 20,20 Q16,24 12,20 Q8,16 12,12 Q16,8 20,12' fill='rgba(178,34,34,0.06)'/%3E%3C/svg%3E"),
         url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15,9 Q18,6 21,9 Q24,12 21,15 Q18,18 15,15 Q12,18 9,15 Q6,12 9,9 Q12,6 15,9' fill='rgba(165,42,42,0.05)'/%3E%3C/svg%3E"),
+        /* Petal kecil */
         url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,6 Q12,4 14,6 Q16,8 14,10 Q12,12 10,10 Q8,12 6,10 Q4,8 6,6 Q8,4 10,6' fill='rgba(139,0,0,0.04)'/%3E%3C/svg%3E");
       
       background-size: 
@@ -108,13 +95,15 @@
         80% 90%;
       
       background-repeat: no-repeat;
-      opacity: 0.4;
+      opacity: 0.4; /* Transparan */
       z-index: -2;
       pointer-events: none;
       
+      /* Animasi lembut untuk bunga-bunga */
       animation: floatRoses 30s infinite ease-in-out;
     }
 
+    /* Animasi mengambang untuk bunga mawar */
     @keyframes floatRoses {
       0%, 100% {
         transform: translate(0, 0) rotate(0deg);
@@ -130,219 +119,6 @@
       }
     }
 
-    /* ===== BACKGROUND BINTANG/BULAN BERJATUHAN ===== */
-    .falling-stars {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .falling-star {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
-      animation: fallingStar linear infinite;
-    }
-
-    .falling-star.moon {
-      background: radial-gradient(circle at 30% 30%, 
-        rgba(255, 255, 220, 0.9) 0%, 
-        rgba(200, 200, 255, 0.6) 50%, 
-        transparent 70%);
-      box-shadow: 
-        0 0 20px rgba(255, 255, 200, 0.5),
-        0 0 40px rgba(200, 200, 255, 0.3);
-    }
-
-    .falling-star.star {
-      background: radial-gradient(circle, 
-        rgba(255, 255, 200, 1) 0%, 
-        rgba(255, 255, 100, 0.8) 50%, 
-        rgba(255, 200, 50, 0.6) 100%);
-      box-shadow: 
-        0 0 15px rgba(255, 255, 150, 0.7),
-        0 0 30px rgba(255, 255, 100, 0.4),
-        0 0 45px rgba(255, 200, 50, 0.2);
-      clip-path: polygon(
-        50% 0%, 
-        61% 35%, 
-        98% 35%, 
-        68% 57%, 
-        79% 91%, 
-        50% 70%, 
-        21% 91%, 
-        32% 57%, 
-        2% 35%, 
-        39% 35%
-      );
-    }
-
-    @keyframes fallingStar {
-      0% {
-        transform: translateY(-100px) translateX(0) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) translateX(100px) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    /* ===== BUNGA MAWAR BESAR BERGERAK ===== */
-    .floating-roses {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -2;
-    }
-
-    .floating-rose {
-      position: absolute;
-      opacity: 0.2;
-      filter: blur(0.5px);
-      animation: floatRose 20s linear infinite;
-    }
-
-    .floating-rose.large {
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle at 40% 40%,
-        rgba(255, 100, 100, 0.4) 0%,
-        rgba(220, 20, 60, 0.3) 40%,
-        rgba(178, 34, 34, 0.2) 70%,
-        transparent 100%);
-      border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
-    }
-
-    .floating-rose.medium {
-      width: 80px;
-      height: 80px;
-      background: radial-gradient(circle at 35% 35%,
-        rgba(255, 150, 150, 0.3) 0%,
-        rgba(219, 112, 147, 0.25) 50%,
-        rgba(255, 182, 193, 0.15) 80%,
-        transparent 100%);
-      border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
-    }
-
-    .floating-rose.small {
-      width: 40px;
-      height: 40px;
-      background: radial-gradient(circle at 45% 45%,
-        rgba(255, 200, 200, 0.25) 0%,
-        rgba(255, 182, 193, 0.2) 60%,
-        rgba(255, 192, 203, 0.1) 90%,
-        transparent 100%);
-      border-radius: 50%;
-    }
-
-    @keyframes floatRose {
-      0% {
-        transform: translateY(100vh) translateX(0) rotate(0deg);
-        opacity: 0;
-      }
-      5% {
-        opacity: 0.2;
-      }
-      95% {
-        opacity: 0.2;
-      }
-      100% {
-        transform: translateY(-100px) translateX(100px) rotate(180deg);
-        opacity: 0;
-      }
-    }
-
-    /* ===== GLOW EFFECT UNTUK SEMUA PANEL ===== */
-    .panel::before {
-      content: '';
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      right: -10px;
-      bottom: -10px;
-      background: radial-gradient(circle at 50% 0%,
-        rgba(255, 100, 100, 0.1) 0%,
-        rgba(139, 0, 0, 0.05) 30%,
-        transparent 70%);
-      border-radius: 28px;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    /* ===== ANIMASI PADA TAB AKTIF ===== */
-    #topTabs .tab-btn.active::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg,
-        rgba(255, 100, 100, 0.3),
-        rgba(139, 0, 0, 0.2),
-        rgba(255, 200, 200, 0.3));
-      border-radius: 12px;
-      z-index: -1;
-      animation: tabGlow 2s ease-in-out infinite alternate;
-    }
-
-    @keyframes tabGlow {
-      0% {
-        opacity: 0.5;
-        transform: scale(1);
-      }
-      100% {
-        opacity: 0.8;
-        transform: scale(1.02);
-      }
-    }
-
-    /* ===== ANIMASI UNTUK TOMBOL UTAMA ===== */
-    .controls button {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .controls button::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg,
-        transparent 30%,
-        rgba(255, 255, 255, 0.1) 50%,
-        transparent 70%);
-      transform: rotate(45deg);
-      animation: buttonShine 3s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes buttonShine {
-      0% {
-        transform: translateX(-100%) translateY(-100%) rotate(45deg);
-      }
-      100% {
-        transform: translateX(100%) translateY(100%) rotate(45deg);
-      }
-    }
-
     .app{
       width:100%;
       max-width:none;
@@ -350,7 +126,6 @@
       display:grid;
       gap:14px;
       padding:16px;
-      overflow-x:auto;
     }
 
     .header{
@@ -359,7 +134,6 @@
       box-shadow:var(--shadow); backdrop-filter:blur(10px);
       position:sticky; top:0; z-index:10;
       gap:10px; flex-wrap:wrap;
-      min-width:1200px;
     }
     .brand{display:flex; gap:10px; align-items:center;}
     .logo{
@@ -400,7 +174,6 @@
       font-size:12px; padding:7px 10px; border-radius:10px;
       color:#e2e8f0; background:rgba(255,255,255,.06);
       transition:.15s; text-transform:uppercase; white-space:nowrap;
-      position: relative;
     }
     .tab-btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.12)}
     .tab-btn.active{
@@ -414,36 +187,6 @@
       box-shadow:var(--shadow); backdrop-filter:blur(10px); padding:12px;
       display:flex; flex-direction:column;
       min-height:calc(100vh - 130px);
-      min-width:1200px;
-      position: relative;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .panel::after {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, 
-        rgba(255,100,100,0.1) 0%, 
-        rgba(139,0,0,0.05) 30%, 
-        rgba(255,200,200,0.05) 70%, 
-        rgba(255,100,100,0.1) 100%);
-      border-radius: 20px;
-      z-index: -2;
-      pointer-events: none;
-      animation: panelGlow 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes panelGlow {
-      0% {
-        opacity: 0.3;
-      }
-      100% {
-        opacity: 0.6;
-      }
     }
 
     .cal-head{
@@ -463,6 +206,7 @@
     }
     .cal-head button:hover{background:rgba(255,255,255,.12)}
 
+    /* ===== WEEKDAYS HEADER - MERAH METALIK ===== */
     .weekdays{
       display:grid !important;
       grid-template-columns: repeat(7, 1fr) !important;
@@ -474,14 +218,16 @@
       text-align: center !important;
       border-radius: 8px !important;
       margin-bottom: 4px !important;
+
+      /* Red metallic gradient background */
       background: linear-gradient(145deg,
-        #8B0000 0%,
-        #A52A2A 25%,
-        #B22222 50%,
-        #8B0000 75%,
-        #4A0000 100%
+        #8B0000 0%,      /* Dark Red/Maroon */
+        #A52A2A 25%,     /* Brownish Red */
+        #B22222 50%,     /* Firebrick */
+        #8B0000 75%,     /* Dark Red kembali */
+        #4A0000 100%     /* Very Dark Red ke Hitam */
       ) !important;
-      color: #FFD700 !important;
+      color: #FFD700 !important;  /* Gold text untuk kontras */
       border: 1px solid rgba(255, 215, 0, 0.6) !important;
       box-shadow: 
         inset 0 1px 0 rgba(255, 255, 255, 0.4),
@@ -492,6 +238,7 @@
         0 0 5px rgba(255, 215, 0, 0.5);
     }
 
+    /* ===== KALENDER GRID ===== */
     .grid{
       display:grid;
       grid-template-columns:repeat(7,1fr);
@@ -500,8 +247,6 @@
       flex:1;
       grid-auto-rows: minmax(140px, auto);
       align-items: stretch;
-      min-width:1200px;
-      overflow-x:auto;
     }
 
     .day{
@@ -510,11 +255,11 @@
       border-radius:12px;
       padding:6px;
       background: linear-gradient(145deg,
-        #8B0000 0%,
-        #A52A2A 25%,
-        #B22222 50%,
-        #8B0000 75%,
-        #4A0000 100%
+        #8B0000 0%,      /* Dark Red/Maroon */
+        #A52A2A 25%,     /* Brownish Red */
+        #B22222 50%,     /* Firebrick */
+        #8B0000 75%,     /* Dark Red kembali */
+        #4A0000 100%     /* Very Dark Red ke Hitam */
       );
       border:1px solid rgba(255, 215, 0, 0.5);
       box-shadow:
@@ -551,6 +296,7 @@
         0 0 12px rgba(255, 215, 0, 0.6);
     }
 
+    /* ===== BADGE WORKDAY & WEEKEND - MERAH METALIK ===== */
     .badge {
       font-size: 9px;
       padding: 2px 6px;
@@ -559,13 +305,13 @@
       text-transform: uppercase;
       letter-spacing: .2px;
       background: linear-gradient(145deg,
-        #8B0000 0%,
-        #A52A2A 25%,
-        #B22222 50%,
-        #8B0000 75%,
-        #4A0000 100%
+        #8B0000 0%,      /* Dark Red/Maroon */
+        #A52A2A 25%,     /* Brownish Red */
+        #B22222 50%,     /* Firebrick */
+        #8B0000 75%,     /* Dark Red kembali */
+        #4A0000 100%     /* Very Dark Red ke Hitam */
       );
-      color: #FFD700;
+      color: #FFD700;    /* Gold text untuk kontras */
       border: 1px solid rgba(139, 0, 0, 0.7);
       text-shadow: 
         0 1px 0 rgba(0, 0, 0, 0.8),
@@ -578,28 +324,30 @@
       overflow: hidden;
     }
 
+    /* Badge untuk WEEKEND - sedikit lebih terang */
     .day.weekend .badge {
       background: linear-gradient(145deg,
-        #A52A2A 0%,
-        #C04040 25%,
-        #D2691E 50%,
-        #A52A2A 75%,
-        #5D1E1E 100%
+        #A52A2A 0%,      /* Brown Red */
+        #C04040 25%,     /* Lighter Red */
+        #D2691E 50%,     /* Chocolate */
+        #A52A2A 75%,     /* Brown Red kembali */
+        #5D1E1E 100%     /* Dark Brownish Red */
       );
-      color: #FFE4B5;
+      color: #FFE4B5;    /* Moccasin - lebih terang */
       border: 1px solid rgba(210, 105, 30, 0.7);
       text-shadow: 
         0 1px 0 rgba(0, 0, 0, 0.8),
         0 0 6px rgba(255, 228, 181, 0.6);
     }
 
+    /* ===== HARI BLOCKED - WARNA EMAS ===== */
     .day.blocked {
       background: linear-gradient(145deg,
-        #FFD700 0%,
-        #FFC800 25%,
-        #FFB900 50%,
-        #FFAA00 75%,
-        #FF9B00 100%
+        #FFD700 0%,      /* Gold */
+        #FFC800 25%,     /* Slightly darker gold */
+        #FFB900 50%,     /* More darker gold */
+        #FFAA00 75%,     /* Even more darker gold */
+        #FF9B00 100%     /* Dark gold */
       ) !important;
       border-color: rgba(255, 200, 0, 0.8) !important;
       color: #000000 !important;
@@ -618,11 +366,11 @@
 
     .day.blocked .badge {
       background: linear-gradient(145deg,
-        #000000 0%,
-        #333333 25%,
-        #666666 50%,
-        #333333 75%,
-        #000000 100%
+        #000000 0%,      /* Black */
+        #333333 25%,     /* Dark gray */
+        #666666 50%,     /* Gray */
+        #333333 75%,     /* Dark gray kembali */
+        #000000 100%     /* Black */
       ) !important;
       color: #FFD700 !important;
       border: 1px solid rgba(0, 0, 0, 0.7) !important;
@@ -649,14 +397,15 @@
         0 0 12px rgba(0, 0, 0, 0.8) !important;
     }
 
+    /* ===== HARI OFFDAY - MERAH MARUN GELAP METALIK ===== */
     .day.off {
       background: linear-gradient(145deg,
-        #4A0000 0%,
-        #5A0000 20%,
-        #6B0000 40%,
-        #8B0000 60%,
-        #A52A2A 80%,
-        #8B0000 100%
+        #4A0000 0%,      /* Very Dark Red */
+        #5A0000 20%,     /* Dark Red 2 */
+        #6B0000 40%,     /* Dark Red 3 */
+        #8B0000 60%,     /* Dark Red/Maroon */
+        #A52A2A 80%,     /* Brownish Red */
+        #8B0000 100%     /* Dark Red kembali */
       ) !important;
       
       border: 1px solid rgba(255, 100, 100, 0.5) !important;
@@ -666,7 +415,7 @@
         inset 0 -6px 12px rgba(0, 0, 0, 0.5),
         0 4px 12px rgba(139, 0, 0, 0.5) !important;
       
-      color: #FFFFFF !important;
+      color: #FFFFFF !important; /* Teks putih untuk hari offday */
     }
 
     .day.off:hover {
@@ -677,28 +426,30 @@
         0 6px 16px rgba(139, 0, 0, 0.6) !important;
     }
 
+    /* Teks pada hari offday - PUTIH */
     .day.off .date-row {
       background: rgba(255, 255, 255, 0.15) !important;
-      color: #FFFFFF !important;
+      color: #FFFFFF !important; /* Teks putih */
       border: 1px solid rgba(255, 200, 200, 0.3) !important;
     }
 
     .day.off .date-row span:first-child {
-      color: #FFFFFF !important;
+      color: #FFFFFF !important; /* Teks putih */
       text-shadow: 
         0 0 5px rgba(255, 180, 180, 0.8),
         0 0 10px rgba(255, 100, 100, 0.6) !important;
     }
 
+    /* Badge untuk offday */
     .day.off .badge {
       background: linear-gradient(145deg,
-        #8B0000 0%,
-        #A52A2A 25%,
-        #B22222 50%,
-        #8B0000 75%,
-        #4A0000 100%
+        #8B0000 0%,      /* Dark Red/Maroon */
+        #A52A2A 25%,     /* Brownish Red */
+        #B22222 50%,     /* Firebrick */
+        #8B0000 75%,     /* Dark Red kembali */
+        #4A0000 100%     /* Very Dark Red ke Hitam */
       ) !important;
-      color: #FFD700 !important;
+      color: #FFD700 !important;    /* Gold text untuk kontras */
       border: 1px solid rgba(139, 0, 0, 0.7) !important;
       text-shadow: 
         0 1px 0 rgba(0, 0, 0, 0.8),
@@ -709,10 +460,11 @@
         0 2px 4px rgba(0, 0, 0, 0.4) !important;
     }
 
+    /* Nama-nama di dalam hari offday - PUTIH */
     .day.off .names-mini .line {
       background: rgba(255, 255, 255, 0.1) !important;
       border: 1px solid rgba(255, 180, 180, 0.2) !important;
-      color: #FFFFFF !important;
+      color: #FFFFFF !important; /* Teks putih */
       text-shadow: 
         0 1px 0 rgba(0, 0, 0, 0.8),
         0 0 3px rgba(255, 255, 255, 0.5) !important;
@@ -722,24 +474,30 @@
       background: rgba(255, 255, 255, 0.2) !important;
     }
 
+    /* Nama staff di hari offday menjadi PUTIH */
     .day.off .names-mini .nm {
-      color: #FFFFFF !important;
+      color: #FFFFFF !important; /* Teks putih */
       font-weight: 900 !important;
       text-shadow: 
         0 1px 0 rgba(0, 0, 0, 0.8),
         0 0 3px rgba(255, 255, 255, 0.5) !important;
     }
 
+    /* Role pill di hari offday - WARNA TETAP TIDAK BERUBAH */
     .day.off .role-pill {
       border-color: rgba(255, 200, 200, 0.5) !important;
+      /* Warna teks dan background tetap sesuai dengan ROLE_OPTIONS */
+      text-shadow: none !important;
     }
 
+    /* Teks kosong di hari offday */
     .day.off .names-mini .empty {
-      color: rgba(255, 255, 255, 0.7) !important;
+      color: rgba(255, 255, 255, 0.7) !important; /* Putih transparan */
       border: 1px dashed rgba(255, 200, 200, 0.4) !important;
       text-shadow: none !important;
     }
 
+    /* Dot indikator untuk offday - merah marun */
     .day.off .dot {
       background: #8B0000 !important;
       box-shadow: 
@@ -747,6 +505,7 @@
         0 0 10px rgba(139, 0, 0, 0.8) !important;
     }
 
+    /* Efek hover pada hari offday dengan background bunga mawar */
     .day.off:hover::before {
       background: 
         radial-gradient(circle at center, 
@@ -773,11 +532,13 @@
       border-color:#c8b9ff; color:#16092a;
     }
 
+    /* Container nama yang lebih rapi */
     .names-mini{
       font-size:11.5px; line-height:1.2; font-weight:800;
       display:grid; gap:3px; margin-top:2px; flex:1; overflow:hidden;
     }
 
+    /* Baris nama yang rapi seperti Excel */
     .names-mini .line{
       display:flex; align-items:center; gap:4px; padding:3px 4px; border-radius:5px;
       background:rgba(255, 255, 255, 0.15); border:1px solid rgba(255, 215, 0, 0.3);
@@ -788,14 +549,16 @@
         0 0 3px rgba(255, 215, 0, 0.5);
     }
     
+    /* Nama staff - TEKS EMAS UNTUK HARI KERJA */
     .names-mini .nm{
       flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0;
-      color: #FFD700;
+      color: #FFD700; /* Emas untuk hari kerja */
       text-shadow: 
         0 1px 0 rgba(0, 0, 0, 0.8),
         0 0 3px rgba(255, 215, 0, 0.5);
     }
 
+    /* Pill role lebih kecil */
     .role-pill{
       font-size:8.5px; font-weight:900; padding:1px 5px; border-radius:999px;
       border:1px solid rgba(255, 215, 0, 0.5); text-transform:uppercase; white-space:nowrap;
@@ -807,6 +570,7 @@
         0 0 3px rgba(255, 215, 0, 0.5);
     }
 
+    /* Hari kosong */
     .names-mini .empty{
       opacity:.7; font-weight:700; font-size:10px; text-align:center;
       padding:6px 0; background:transparent; border:1px dashed rgba(255, 215, 0, 0.5);
@@ -816,6 +580,7 @@
         0 0 3px rgba(255, 215, 0, 0.5);
     }
 
+    /* Dot indikator lebih kecil */
     .dot{
       position:absolute; right:6px; bottom:6px; width:8px; height:8px; border-radius:50%;
       background: rgba(255, 215, 0, 0.7); box-shadow:0 0 0 1.5px rgba(139, 0, 0, 0.8) inset;
@@ -824,8 +589,10 @@
       background:#fff; box-shadow:0 0 8px rgba(255,255,255,.8);
     }
 
+    /* Hari ini */
     .today{outline:2px solid rgba(255, 215, 0, 0.9); outline-offset:-2px;}
 
+    /* ===== HEADERS ===== */
     .section-head{
       display:grid;
       grid-template-columns: 1fr auto;
@@ -857,6 +624,7 @@
       .section-head > div:last-child{justify-self:center;}
     }
 
+    /* ===== TEKS HIDUP ===== */
     @supports (-webkit-background-clip:text) or (background-clip:text){
       .section-title{
         position:relative;
@@ -901,6 +669,9 @@
       .section-title.title-catatan{
         background-image: linear-gradient(90deg,#FFE5E5 0%,#FFAAAA 35%,#FF6B6B 70%,#FFE5E5 100%);
       }
+      .section-title.title-log{
+        background-image: linear-gradient(90deg,#6366f1 0%,#8b5cf6 35%,#a855f7 70%,#6366f1 100%);
+      }
 
       @keyframes titleFlow{
         0%   { background-position: 0% 50%; }
@@ -918,6 +689,7 @@
       .section-title, .section-title::after{ animation:none !important; }
     }
 
+    /* ===== CUTI ===== */
     .cuti-panel{display:none;}
     .cuti-table-wrap{
       width:100%;
@@ -963,6 +735,7 @@
       margin-left:6px;
     }
 
+    /* ===== BAGAN ===== */
     .bagan-panel{display:none;}
     .bagan-wrap{
       position:relative;
@@ -973,7 +746,6 @@
       padding:14px;
       overflow:auto;
       min-height:65vh;
-      min-width:1200px;
     }
     .bagan-board{
       display:grid;
@@ -985,6 +757,7 @@
       border-radius:12px;
     }
     
+    /* STYLE SEAT BAGAN DENGAN DIVISI */
     .seat{
       position: relative;
       border-radius: 10px;
@@ -1050,6 +823,7 @@
       box-shadow: none !important;
     }
 
+    /* ===== MODAL ===== */
     .modal-backdrop{
       position:fixed; inset:0; background:rgba(2,6,23,.6); display:none;
       place-items:center; padding:18px; z-index:50; backdrop-filter: blur(4px);
@@ -1122,14 +896,12 @@
 
     .toast{
       position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
-      background: linear-gradient(135deg, rgba(139,0,0,0.9) 0%, rgba(165,42,42,0.9) 100%);
-      color:white; padding:10px 12px; border-radius:10px;
+      background:rgba(0,0,0,.7); color:white; padding:10px 12px; border-radius:10px;
       font-size:13px; opacity:0; pointer-events:none; transition:.2s; z-index:99;
-      border: 1px solid rgba(255,215,0,0.3);
-      box-shadow: 0 0 20px rgba(255,100,100,0.5);
     }
     .toast.show{opacity:1; transform:translateX(-50%) translateY(-4px);}
 
+    /* ===== PIKET ===== */
     .piket-panel{display:none;}
     .piket-panel .cuti-table thead th{
       background:linear-gradient(90deg, #111827, #334155);
@@ -1235,13 +1007,14 @@
       border: 1px solid rgba(255, 200, 200, 0.3);
     }
 
+    /* ===== TOMBOL BLOCKED TANGGAL - MERAH ===== */
     #toggleBlock {
       background: linear-gradient(145deg,
-        #DC2626 0%,
-        #EF4444 25%,
-        #F87171 50%,
-        #EF4444 75%,
-        #B91C1C 100%
+        #DC2626 0%,      /* Red-600 */
+        #EF4444 25%,     /* Red-500 */
+        #F87171 50%,     /* Red-400 */
+        #EF4444 75%,     /* Red-500 kembali */
+        #B91C1C 100%     /* Red-700 */
       ) !important;
       color: white !important;
       border: 1px solid rgba(220, 38, 38, 0.7) !important;
@@ -1260,11 +1033,11 @@
 
     #toggleBlock:hover {
       background: linear-gradient(145deg,
-        #EF4444 0%,
-        #F87171 25%,
-        #FCA5A5 50%,
-        #F87171 75%,
-        #DC2626 100%
+        #EF4444 0%,      /* Red-500 */
+        #F87171 25%,     /* Red-400 */
+        #FCA5A5 50%,     /* Red-300 */
+        #F87171 75%,     /* Red-400 kembali */
+        #DC2626 100%     /* Red-600 */
       ) !important;
       transform: translateY(-2px);
       box-shadow:
@@ -1273,6 +1046,7 @@
         0 6px 16px rgba(220, 38, 38, 0.6) !important;
     }
 
+    /* ===== CS MAWAROTO TABLE ===== */
     .cs-panel{display:none;}
     .cs-wrap{
       width:100%;
@@ -1282,7 +1056,6 @@
       background:rgba(0,0,0,.35);
       backdrop-filter: blur(6px);
       box-shadow: var(--shadow);
-      min-width:1200px;
     }
     table.cs-table{
       width:100%;
@@ -1382,13 +1155,13 @@
     }
     .cs-reset-btn:hover{background:rgba(244,63,94,.30); transform:translateY(-1px);}
 
+    /* ===== CATATAN PANEL ===== */
     .catatan-panel{display:none;}
     .catatan-container{
       display:flex;
       flex-direction:column;
       gap:15px;
       padding:10px;
-      min-width:1200px;
     }
     
     .catatan-form{
@@ -1470,6 +1243,8 @@
       font-size:15px;
       font-weight:900;
       letter-spacing:.5px;
+      
+      /* Efek teks putih kemerahan metalik */
       color: transparent !important;
       background-image: linear-gradient(
         135deg,
@@ -1503,11 +1278,14 @@
       padding:8px;
       border-radius:6px;
       background:rgba(0,0,0,.25);
+      
+      /* Efek teks putih kemerahan metalik untuk konten */
       color: #FFE5E5;
       text-shadow: 
         0 0 8px rgba(255, 100, 100, 0.7),
         0 0 12px rgba(255, 200, 200, 0.5),
         0 0 20px rgba(255, 255, 255, 0.3);
+      
       border: 1px solid rgba(255, 180, 180, 0.3);
     }
     
@@ -1521,6 +1299,8 @@
     .catatan-date{
       opacity:.8;
       font-weight:900;
+      
+      /* Efek teks metalik untuk tanggal */
       color: #FFCACA;
       text-shadow: 
         0 0 5px rgba(255, 150, 150, 0.6),
@@ -1542,6 +1322,8 @@
       color:var(--text);
       font-weight:900;
       letter-spacing:.3px;
+      
+      /* Efek tombol metalik */
       background-image: linear-gradient(
         180deg,
         rgba(255, 245, 245, 0.9) 0%,
@@ -1608,6 +1390,7 @@
       font-size:14px;
     }
 
+    /* Kategori warna untuk catatan */
     .catatan-category[data-category="DI BAWAH 3 BULAN"] {
       background: rgba(34, 197, 94, 0.3);
       color: #a7f3d0;
@@ -1638,6 +1421,7 @@
       border: 1px solid rgba(239, 68, 68, 0.5);
     }
 
+    /* Menu Catatan di Top Tabs */
     #topTabs .tab-btn[data-type="CATATAN"] {
       background:rgba(255, 100, 100, 0.16);
       color:#FFCACA;
@@ -1653,6 +1437,7 @@
       box-shadow:0 6px 20px rgba(255, 100, 100, 0.45);
     }
 
+    /* ===== MODAL PASSWORD RESET ===== */
     .password-modal .modal {
       width: min(400px, 90%);
       grid-template-columns: 1fr;
@@ -1683,11 +1468,84 @@
       text-align: center;
     }
 
+    /* ===== LOG/AUDIT PANEL ===== */
+    .log-panel{display:none;}
+    .log-wrap{
+      width:100%;
+      overflow:auto;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.35);
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow);
+      max-height:70vh;
+    }
+    table.log-table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:800px;
+      font-size:12px;
+    }
+    .log-table thead th{
+      background:linear-gradient(90deg,#6366f1,#8b5cf6,#a855f7);
+      color:#ffffff;
+      text-align:center;
+      padding:10px 8px;
+      font-weight:900;
+      letter-spacing:.4px;
+      position:sticky; top:0; z-index:1;
+      font-size:11px;
+    }
+    .log-table tbody td{
+      padding:8px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      text-align:center;
+      font-weight:800;
+      color:#f8fafc;
+      background:rgba(0,0,0,.25);
+    }
+    .log-table tbody tr:hover td{background:rgba(255,255,255,.06)}
+    .log-table td.log-time{
+      font-family:'Courier New', monospace;
+      font-size:11px;
+      color:#cbd5e1;
+    }
+    .log-table td.log-user{
+      color:#60a5fa;
+      font-weight:900;
+    }
+    .log-table td.log-action{
+      font-weight:900;
+    }
+    .log-action.create{color:#22c55e;}
+    .log-action.update{color:#3b82f6;}
+    .log-action.delete{color:#ef4444;}
+    .log-action.reset{color:#f59e0b;}
+    .log-action.import{color:#8b5cf6;}
+    .log-action.lock{color:#f97316;}
+
+    /* Tombol Log di Top Tabs */
+    #topTabs .tab-btn[data-type="LOG"] {
+      background:rgba(139, 92, 246, 0.16);
+      color:#c4b5fd;
+    }
+    
+    #topTabs .tab-btn[data-type="LOG"]:hover {
+      background:rgba(139, 92, 246, 0.26);
+    }
+    
+    #topTabs .tab-btn[data-type="LOG"].active {
+      background:rgba(139, 92, 246, 0.85);
+      color:#ede9fe;
+      box-shadow:0 6px 20px rgba(139, 92, 246, 0.45);
+    }
+
     /* Responsif untuk mobile */
     @media (max-width: 700px){
       .modal{grid-template-columns:1fr;}
       .bagan-board{grid-template-columns:repeat(20, 80px);}
       
+      /* Responsif kalender */
       .grid{
         gap:6px;
         padding:6px;
@@ -1721,6 +1579,7 @@
         max-width:60px;
       }
 
+      /* Responsif untuk bunga mawar */
       body::after {
         background-size: 
           60px 60px,
@@ -1761,6 +1620,7 @@
       }
     }
 
+    /* Untuk layar sangat kecil */
     @media (max-width: 480px){
       .grid{
         gap:4px;
@@ -1776,6 +1636,7 @@
         max-height:16px;
       }
 
+      /* Untuk bunga mawar di layar kecil */
       body::after {
         background-size: 
           40px 40px,
@@ -1790,568 +1651,6 @@
     }
   
     .cs-name-span{font-weight:900; letter-spacing:.2px;}
-    
-    /* ===== STYLE UNTUK BARI-BARIS KOLOM EXCEL ===== */
-    .baris-kolom-panel {
-      display: none;
-      background: rgba(255,255,255,.06);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      min-width: 1200px;
-    }
-    
-    /* CSS untuk tabel Excel 6 kolom */
-    .baris-kolom-excel-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 1400px;
-      background: rgba(0,0,0,0.3);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    
-    .baris-kolom-excel-table th {
-      background-color: #8B0000;
-      color: #FFD700;
-      font-weight: 900;
-      text-align: center;
-      padding: 15px 10px;
-      border: 2px solid #FFD700;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    
-    .baris-kolom-excel-table th:first-child {
-      width: 60px;
-      background: #4A0000;
-    }
-    
-    /* ===== REVISI STYLE UNTUK BARI-BARIS KOLOM EXCEL DENGAN 4 NAMA DAN 1 TANGGAL ===== */
-    .baris-kolom-excel-table td {
-      border: 1px solid rgba(255,215,0,0.3);
-      padding: 0;
-      background: rgba(255,215,0,0.05);
-      transition: background-color 0.2s ease;
-      min-width: 180px;
-    }
-    
-    .excel-input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      padding: 0;
-      min-height: 160px;
-    }
-    
-    .excel-nama-input {
-      width: 100%;
-      padding: 6px 8px;
-      border: none;
-      background: transparent;
-      color: #FFFFFF !important;
-      font-weight: 900 !important;
-      font-size: 11px;
-      outline: none;
-      transition: all 0.2s ease;
-      text-shadow: 
-        0 1px 0 rgba(0, 0, 0, 0.8),
-        0 0 5px rgba(255, 255, 255, 0.3) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .excel-nama-input:focus {
-      background: rgba(255, 255, 255, 0.1) !important;
-      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3) !important;
-    }
-    
-    .excel-nama-input::placeholder {
-      color: rgba(255, 255, 255, 0.4) !important;
-      font-weight: 700 !important;
-    }
-    
-    /* Container untuk input tanggal */
-    .excel-date-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      margin-top: 3px;
-      padding: 3px;
-      background: rgba(0, 0, 0, 0.2);
-      border-top: 1px solid rgba(0, 255, 0, 0.3);
-    }
-    
-    .excel-date-input {
-      width: 100%;
-      padding: 5px 6px;
-      border: none;
-      background: transparent;
-      color: #00FF00 !important;
-      font-weight: 900 !important;
-      font-size: 11px;
-      outline: none;
-      transition: all 0.2s ease;
-      text-shadow: 
-        0 1px 0 rgba(0, 0, 0, 0.8),
-        0 0 8px rgba(0, 255, 0, 0.7),
-        0 0 12px rgba(0, 255, 0, 0.5) !important;
-      border-bottom: 1px dashed rgba(0, 255, 0, 0.2);
-    }
-    
-    .excel-date-input:focus {
-      background: rgba(0, 255, 0, 0.1) !important;
-      box-shadow: 
-        inset 0 0 0 2px rgba(0, 255, 0, 0.5),
-        0 0 15px rgba(0, 255, 0, 0.3) !important;
-    }
-    
-    .excel-date-input::placeholder {
-      color: rgba(0, 255, 0, 0.4) !important;
-      font-weight: 700 !important;
-    }
-    
-    .baris-kolom-excel-table tr:hover td {
-      background: rgba(255,215,0,0.1);
-    }
-    
-    .baris-kolom-excel-table td:first-child {
-      background: rgba(139,0,0,0.4);
-      color: #FFD700;
-      text-align: center;
-      font-weight: 900;
-      font-size: 14px;
-      border-right: 2px solid #FFD700;
-    }
-    
-    .copy-kolom-excel-btn {
-      padding: 6px 12px;
-      border-radius: 6px;
-      background: #FFD700;
-      color: #8B0000;
-      border: none;
-      font-weight: 900;
-      font-size: 11px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      margin-left: 5px;
-    }
-    
-    .copy-kolom-excel-btn:hover {
-      background: #FFC800;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-    
-    .copy-kolom-excel-btn:active {
-      transform: translateY(0);
-    }
-    
-    .excel-table-container {
-      width: 100%;
-      overflow: auto;
-      border-radius: 14px;
-      border: 1px solid rgba(255,215,0,0.5);
-      padding: 15px;
-      background: rgba(0,0,0,0.3);
-      min-height: 600px;
-      max-height: 80vh;
-      position: relative;
-    }
-    
-    .excel-table-container::-webkit-scrollbar {
-      width: 12px;
-      height: 12px;
-    }
-    
-    .excel-table-container::-webkit-scrollbar-track {
-      background: rgba(139,0,0,0.3);
-      border-radius: 6px;
-    }
-    
-    .excel-table-container::-webkit-scrollbar-thumb {
-      background: #FFD700;
-      border-radius: 6px;
-      border: 2px solid rgba(139,0,0,0.3);
-    }
-    
-    /* Sticky header */
-    .baris-kolom-excel-table thead {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    
-    /* Sticky first column */
-    .baris-kolom-excel-table th:first-child,
-    .baris-kolom-excel-table td:first-child {
-      position: sticky;
-      left: 0;
-      z-index: 5;
-    }
-    
-    /* Kolom header styling */
-    .kolom-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-    
-    .kolom-title {
-      font-size: 14px;
-      font-weight: 900;
-      color: #FFD700;
-      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
-      text-align: center;
-      padding: 4px 0;
-    }
-    
-    /* NAMA MANAGEMENT STYLES */
-    .nama-management-panel {
-      display: none;
-      background: rgba(255,255,255,.06);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      min-width: 1200px;
-    }
-    
-    .nama-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-    
-    .nama-card {
-      background: rgba(0,0,0,.3);
-      border-radius: 12px;
-      padding: 15px;
-      border: 1px solid rgba(139,92,246,.2);
-      transition: all 0.3s ease;
-    }
-    
-    .nama-card:hover {
-      border-color: rgba(139,92,246,.5);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(139,92,246,.2);
-    }
-    
-    .nama-card-title {
-      font-weight: 900;
-      font-size: 14px;
-      color: #8B5CF6;
-      margin-bottom: 10px;
-      padding-bottom: 5px;
-      border-bottom: 1px solid rgba(139,92,246,.2);
-    }
-    
-    .nama-input-group {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    
-    .nama-input {
-      flex: 1;
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,.1);
-      background: rgba(255,255,255,.05);
-      color: #eef2ff;
-      font-size: 14px;
-    }
-    
-    .nama-select {
-      width: 100%;
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,.1);
-      background: rgba(255,255,255,.05);
-      color: #eef2ff;
-      font-size: 14px;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-    
-    .nama-btn {
-      padding: 8px 15px;
-      border-radius: 8px;
-      background: rgba(139,92,246,.6);
-      color: white;
-      border: none;
-      font-weight: 900;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .nama-btn:hover {
-      background: rgba(139,92,246,.8);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(139,92,246,.4);
-    }
-    
-    .nama-list {
-      max-height: 300px;
-      overflow-y: auto;
-      margin-top: 10px;
-    }
-    
-    .nama-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 10px;
-      margin-bottom: 5px;
-      background: rgba(255,255,255,.03);
-      border-radius: 6px;
-      border: 1px solid rgba(139,92,246,.1);
-    }
-    
-    .nama-item-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    
-    .nama-item-name {
-      font-weight: 700;
-      color: #eef2ff;
-      font-size: 13px;
-    }
-    
-    .nama-item-divisi {
-      font-size: 10px;
-      color: rgba(139,92,246,.8);
-      font-weight: 700;
-    }
-    
-    .nama-item-actions {
-      display: flex;
-      gap: 5px;
-    }
-    
-    .nama-item-btn {
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 10px;
-      font-weight: 900;
-      cursor: pointer;
-      border: none;
-      background: rgba(255,255,255,.08);
-      color: #eef2ff;
-    }
-    
-    .nama-item-btn:hover {
-      background: rgba(255,255,255,.15);
-    }
-    
-    .nama-item-btn.edit {
-      background: rgba(34,197,94,.3);
-      color: #A7F3D0;
-    }
-    
-    .nama-item-btn.edit:hover {
-      background: rgba(34,197,94,.5);
-    }
-    
-    .nama-item-btn.delete {
-      background: rgba(220,38,38,.3);
-      color: #FFA5A5;
-    }
-    
-    .nama-item-btn.delete:hover {
-      background: rgba(220,38,38,.5);
-    }
-    
-    .nama-empty {
-      text-align: center;
-      padding: 30px;
-      color: rgba(255,255,255,.4);
-      font-size: 13px;
-      font-style: italic;
-    }
-    
-    /* ===== TAB BARU UNTUK BARI-BARIS KOLOM DAN NAMA ===== */
-    #topTabs .tab-btn[data-type="BARI_KOLOM"] {
-      background: rgba(255, 215, 0, 0.16);
-      color: #FFD700;
-    }
-    
-    #topTabs .tab-btn[data-type="BARI_KOLOM"]:hover {
-      background: rgba(255, 215, 0, 0.26);
-    }
-    
-    #topTabs .tab-btn[data-type="BARI_KOLOM"].active {
-      background: rgba(255, 215, 0, 0.85);
-      color: #0b1020;
-      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.45);
-    }
-    
-    #topTabs .tab-btn[data-type="NAMA"] {
-      background: rgba(139, 92, 246, 0.16);
-      color: #C4B5FD;
-    }
-    
-    #topTabs .tab-btn[data-type="NAMA"]:hover {
-      background: rgba(139, 92, 246, 0.26);
-    }
-    
-    #topTabs .tab-btn[data-type="NAMA"].active {
-      background: rgba(139, 92, 246, 0.85);
-      color: white;
-      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.45);
-    }
-    
-    /* Responsif untuk Excel Table */
-    @media (max-width: 700px) {
-      .baris-kolom-excel-table {
-        min-width: 1200px;
-      }
-      
-      .excel-nama-input {
-        padding: 5px 6px;
-        font-size: 10px;
-      }
-      
-      .excel-date-input {
-        padding: 4px 5px;
-        font-size: 10px;
-      }
-      
-      .excel-input-group {
-        min-height: 140px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .excel-nama-input {
-        padding: 4px 5px;
-        font-size: 9px;
-      }
-      
-      .excel-date-input {
-        padding: 3px 4px;
-        font-size: 9px;
-      }
-      
-      .excel-input-group {
-        min-height: 120px;
-      }
-    }
-    
-    /* ===== STYLE UNTUK MODAL 10 BARIS ===== */
-    #modalNames {
-      max-height: 350px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-right: 5px;
-    }
-    
-    #modalNames::-webkit-scrollbar {
-      width: 6px;
-    }
-    
-    #modalNames::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.05);
-      border-radius: 3px;
-    }
-    
-    #modalNames::-webkit-scrollbar-thumb {
-      background: rgba(139,92,246,0.5);
-      border-radius: 3px;
-    }
-    
-    #modalNames::-webkit-scrollbar-thumb:hover {
-      background: rgba(139,92,246,0.7);
-    }
-    
-    /* Tombol undo/redo */
-    #undoBtn:not(:disabled):hover, #redoBtn:not(:disabled):hover {
-      transform: translateY(-1px);
-      background: rgba(245,158,11,0.26);
-    }
-    
-    #undoBtn:disabled, #redoBtn:disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-    
-    /* Info jumlah slot di modal */
-    .slot-info {
-      font-size: 11px;
-      color: #FFD700;
-      text-align: center;
-      padding: 4px;
-      background: rgba(139,0,0,0.2);
-      border-radius: 6px;
-      margin-bottom: 8px;
-      border: 1px solid rgba(255,215,0,0.3);
-    }
-
-    /* ===== ANIMASI RIPPLE ===== */
-    @keyframes ripple {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
-    }
-
-    /* ===== RESPONSIF UNTUK EFEK BARU ===== */
-    @media (max-width: 700px) {
-      .falling-star {
-        display: none;
-      }
-      
-      .floating-rose.large {
-        width: 80px;
-        height: 80px;
-      }
-      
-      .floating-rose.medium {
-        width: 60px;
-        height: 60px;
-      }
-      
-      .floating-rose.small {
-        width: 30px;
-        height: 30px;
-      }
-      
-      .panel::before,
-      .panel::after {
-        display: none;
-      }
-      
-      .controls button::after {
-        animation: none;
-      }
-      
-      #topTabs .tab-btn.active::before {
-        animation: none;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .floating-rose {
-        display: none;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .falling-star,
-      .floating-rose,
-      .panel::before,
-      .panel::after,
-      .controls button::after,
-      #topTabs .tab-btn.active::before {
-        animation: none !important;
-      }
-    }
   </style>
 
   <!-- Firebase SDK (v8 compat CDN) -->
@@ -2370,21 +1669,20 @@
       </div>
 
       <div class="top-tabs" id="topTabs">
+        <button class="tab-btn active" data-type="ALL">ALL</button>
         <button class="tab-btn" data-type="OFF">OFFDAY</button>
         <button class="tab-btn" data-type="CUTI">CUTI</button>
         <button class="tab-btn" data-type="BAGAN_VIEW">BAGAN</button>
-        <button class="tab-btn" data-type="BARI_KOLOM">EXCEL DIVISI</button>
         <button class="tab-btn" data-type="PIKET">PIKET</button>
         <button class="tab-btn" data-type="CS_MAWAROTO">STAFF MAWAROTO</button>
         <button class="tab-btn" data-type="CATATAN">CATATAN</button>
+        <button class="tab-btn" data-type="LOG">LOG</button>
       </div>
 
       <div class="controls">
         <button id="prev">← Bulan lalu</button>
         <button id="todayBtn" class="btn-green">Hari ini</button>
         <button id="next">Bulan depan →</button>
-        <div style="display:flex; gap:4px;">
-        </div>
         <button id="clear" class="btn-accent">Reset bulan ini</button>
         <button id="bulkImport" class="btn-accent">📥 Import Excel</button>
         <button id="lockBtn" class="btn-amber">🔒 TERKUNCI</button>
@@ -2450,83 +1748,6 @@
         <div style="font-size:12px; opacity:.8; margin:0 0 10px;">
         </div>
         <div class="bagan-board" id="baganBoard"></div>
-      </div>
-    </section>
-
-    <!-- BARI-BARIS KOLOM EXCEL - REVISI: 31 BARIS, 4 NAMA, 1 TANGGAL -->
-    <section class="panel baris-kolom-panel" id="barisKolomPanel">
-      <div class="section-head">
-        <div class="section-title title-bagan">📊 NAMA STAFF DIVISI 📊</div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
-          <button id="addExcelRowBtn" class="btn-green">+ Tambah Baris</button>
-          <button id="exportExcelAllBtn" class="btn-accent">Export Semua Data</button>
-          <button id="resetExcelBtn" class="btn-danger">Reset Excel</button>
-        </div>
-      </div>
-      
-      <div style="margin:15px; padding:10px; background:rgba(139,0,0,0.3); border-radius:12px; border:1px solid rgba(255,215,0,0.3);">
-        <div style="color:#FFD700; font-weight:900; font-size:12px; margin-bottom:10px;">
-          Struktur: 31 Baris x 6 Kolom | Setiap sel: 4 Nama + 1 Tanggal
-        </div>
-        <div style="color:#FFD700; font-weight:900; font-size:12px;">
-          Kolom: LIVE CHAT, WHATSAPP, DEPOSIT, FINANCE, WHITDRAW, DESIGN
-        </div>
-      </div>
-      
-      <div class="excel-table-container" id="barisKolomTableContainer">
-        <!-- Tabel Excel akan di-render di sini -->
-      </div>
-    </section>
-
-    <!-- NAMA MANAGEMENT -->
-    <section class="panel nama-management-panel" id="namaPanel">
-      <div class="section-head">
-        <div class="section-title title-cs">👥 MANAGEMENT NAMA STAFF 👥</div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
-          <button id="exportNamaBtn" class="btn-accent">Export (Copy)</button>
-          <button id="resetNamaBtn" class="btn-danger">Reset NAMA</button>
-        </div>
-      </div>
-
-      <div class="nama-grid">
-        <div class="nama-card">
-          <div class="nama-card-title">Tambah Staff Baru</div>
-          <div class="nama-input-group">
-            <input type="text" id="namaInput" class="nama-input" placeholder="Nama staff...">
-            <select id="divisiSelect" class="nama-select">
-              <option value="">Pilih Divisi</option>
-              <option value="LIVECHAT">LIVECHAT</option>
-              <option value="WHATSAPP">WHATSAPP</option>
-              <option value="DEPOSIT">DEPOSIT</option>
-              <option value="DESIGN">DESIGN</option>
-              <option value="FINANCE">FINANCE</option>
-              <option value="ADMIN">ADMIN</option>
-              <option value="BANKER">BANKER</option>
-              <option value="TELEGRAM">TELEGRAM</option>
-              <option value="SPV_WD">SPV WD</option>
-              <option value="WORKER_WD">WORKER WD</option>
-              <option value="QRIS">QRIS</option>
-            </select>
-          </div>
-          <button id="addNamaBtn" class="nama-btn">+ Tambah ke Database</button>
-          
-          <div class="nama-card-title" style="margin-top: 20px;">Tambah ke Bagan</div>
-          <div style="font-size: 12px; color: rgba(255,255,255,.6); margin-bottom: 10px;">
-            Pilih nama untuk dimasukkan ke bagan
-          </div>
-          <select id="namaToBaganSelect" class="nama-select">
-            <option value="">Pilih Staff</option>
-            <!-- Opsi akan diisi oleh JavaScript -->
-          </select>
-          <button id="addToBaganBtn" class="nama-btn" style="background: rgba(34,197,94,.6);">➕ Tambah ke Bagan</button>
-        </div>
-
-        <div class="nama-card">
-          <div class="nama-card-title">Database Staff</div>
-          <div class="nama-list" id="namaDatabaseList">
-            <!-- Daftar nama akan muncul di sini -->
-          </div>
-        </div>
       </div>
     </section>
 
@@ -2628,6 +1849,44 @@
         </div>
       </div>
     </section>
+
+    <!-- LOG/AUDIT PANEL -->
+    <section class="panel log-panel" id="logPanel">
+      <div class="section-head">
+        <div class="section-title title-log">📋 AUDIT LOG / RIWAYAT PERUBAHAN 📋</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
+          <button id="refreshLogBtn" class="btn-green">🔄 Refresh</button>
+          <button id="clearLogBtn" class="btn-danger">🗑 Clear Log (Password)</button>
+          <button id="exportLogBtn" class="btn-accent">📥 Export Log</button>
+        </div>
+      </div>
+
+      <div class="log-wrap">
+        <table class="log-table">
+          <thead>
+            <tr>
+              <th style="width:15%;">WAKTU</th>
+              <th style="width:12%;">USER ID</th>
+              <th style="width:10%;">AKSI</th>
+              <th style="width:13%;">MODUL</th>
+              <th style="width:50%;">DETAIL PERUBAHAN</th>
+            </tr>
+          </thead>
+          <tbody id="logTableBody">
+            <tr><td colspan="5" style="padding:20px; text-align:center; opacity:.7;">Memuat log...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div style="margin-top:10px; font-size:12px; opacity:.85;">
+        <b>Keterangan Warna:</b> 
+        <span style="color:#22c55e;">Hijau = Buat Baru</span> | 
+        <span style="color:#3b82f6;">Biru = Update</span> | 
+        <span style="color:#ef4444;">Merah = Hapus</span> | 
+        <span style="color:#f59e0b;">Kuning = Reset</span> | 
+        <span style="color:#8b5cf6;">Ungu = Import</span>
+      </div>
+    </section>
   </div>
 
   <!-- MODAL OFFDAY/BAGAN -->
@@ -2635,7 +1894,7 @@
     <div class="modal">
       <div>
         <h3 id="modalTitle">Isi Jadwal</h3>
-        <div class="sub" id="modalSub">Maksimal 10 orang</div>
+        <div class="sub" id="modalSub">Maksimal 8 orang</div>
 
         <div style="margin:8px 0 10px;">
           <label style="font-size:12px; font-weight:900; letter-spacing:.3px; opacity:.9;">
@@ -2753,7 +2012,7 @@
   // =========================
   // ✅ GLOBAL FIREBASE SYNC
   // =========================
-  const GLOBAL_ROOM_ID = "mwtt-main";
+  const GLOBAL_ROOM_ID = "mwtt-main"; // semua user pakai room ini → data sama global
 
   const clientIdKey = "mwtt-client-id";
   const clientId = localStorage.getItem(clientIdKey) || ("c_" + Math.random().toString(16).slice(2));
@@ -2771,119 +2030,163 @@
     pushTimer = setTimeout(pushNow, 300);
   }
 
+  // ===== SISTEM AUDIT LOG =====
+  const LOG_KEY = "offday-audit-log";
+  let auditLog = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+  const MAX_LOG_ENTRIES = 100;
+
+  // Fungsi untuk menambah log
+  function addAuditLog(action, module, details) {
+    const timestamp = new Date().toLocaleString('id-ID', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    
+    const logEntry = {
+      id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+      timestamp: timestamp,
+      user: clientId,
+      action: action,
+      module: module,
+      details: details,
+      ip: 'N/A'
+    };
+    
+    auditLog.unshift(logEntry);
+    
+    if (auditLog.length > MAX_LOG_ENTRIES) {
+      auditLog = auditLog.slice(0, MAX_LOG_ENTRIES);
+    }
+    
+    localStorage.setItem(LOG_KEY, JSON.stringify(auditLog));
+    
+    if (typeof firebase !== 'undefined') {
+      try {
+        const logRef = firebase.database().ref(`offday/${GLOBAL_ROOM_ID}/logs`).push();
+        logRef.set(logEntry);
+      } catch (e) {
+        console.log("Gagal simpan log ke Firebase:", e);
+      }
+    }
+    
+    if (activeFilterType === "LOG") {
+      renderAuditLog();
+    }
+  }
+
+  // Fungsi untuk merender log
+  function renderAuditLog() {
+    const tbody = $("#logTableBody");
+    if (!tbody) return;
+    
+    if (auditLog.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="padding:20px; text-align:center; opacity:.7;">Belum ada log aktivitas.</td></tr>';
+      return;
+    }
+    
+    tbody.innerHTML = auditLog.map(log => `
+      <tr>
+        <td class="log-time">${log.timestamp}</td>
+        <td class="log-user" title="Client ID: ${log.user}">
+          ${log.user.substring(0, 8)}...
+        </td>
+        <td class="log-action ${log.action.toLowerCase()}">${log.action}</td>
+        <td>${log.module}</td>
+        <td style="text-align:left; padding-left:12px;">${log.details}</td>
+      </tr>
+    `).join('');
+  }
+
+  // ===== PERBAIKAN SISTEM SYNC FIREBASE =====
+  const DATA_VERSION_KEY = "offday-data-version";
+  let currentDataVersion = localStorage.getItem(DATA_VERSION_KEY) || "1";
+
   function pushNow() {
     if (isApplyingRemote) return;
+    
+    currentDataVersion = Date.now().toString();
+    localStorage.setItem(DATA_VERSION_KEY, currentDataVersion);
+    
     const payload = {
+      version: currentDataVersion,
       updatedAt: Date.now(),
       updatedBy: clientId,
       calendar: store,
       cuti: cutiStore,
       bagan: { meta: baganMeta, seats: baganStore },
-      barisKolomExcel: barisKolomExcelData,
-      namaDatabase: namaDatabaseStore,
       piket: piketStore,
       csMawaroto: csStore,
       catatan: catatanStore,
       lock: { isLocked }
     };
-    dbRef.set(payload).catch(err => console.error("GLOBAL SAVE ERR:", err));
+    
+    dbRef.set(payload).catch(err => {
+      console.error("GLOBAL SAVE ERR:", err);
+      setTimeout(pushNow, 2000);
+    });
   }
 
   function applyRemote(payload) {
     if (!payload) return;
-    const u = Number(payload.updatedAt || 0);
-    if (u && u <= lastRemoteUpdatedAt) return;
-
-    isApplyingRemote = true;
-    try {
-      lastRemoteUpdatedAt = u || lastRemoteUpdatedAt;
-
-      if (payload.calendar && typeof payload.calendar === "object") {
-        Object.keys(store).forEach(k => delete store[k]);
-        Object.assign(store, payload.calendar);
-        saveStore();
-      }
-
-      if (Array.isArray(payload.cuti)) {
-        cutiStore.splice(0, cutiStore.length, ...payload.cuti);
-        saveCuti();
-      }
-
-      if (payload.bagan && typeof payload.bagan === "object") {
-        if (payload.bagan.meta) baganMeta = payload.bagan.meta;
-        if (Array.isArray(payload.bagan.seats)) baganStore = payload.bagan.seats;
-        saveBagan();
-      }
-
-      if (payload.barisKolomExcel) {
-        // MIGRASI DATA DARI VERSI LAMA KE BARU JIKA PERLU
-        const needsMigration = Object.keys(payload.barisKolomExcel).some(row => {
-          const firstCell = payload.barisKolomExcel[row]?.[0];
-          return firstCell && (
-            firstCell.tanggal1 !== undefined || // Data lama punya tanggal1
-            firstCell.nama4 === undefined       // Data lama tidak punya nama4
-          );
-        });
+    
+    const remoteVersion = payload.version || "0";
+    const localVersion = localStorage.getItem(DATA_VERSION_KEY) || "0";
+    
+    if (Number(remoteVersion) > Number(localVersion)) {
+      isApplyingRemote = true;
+      try {
+        addAuditLog("SYNC", "SYSTEM", `Data disinkronkan dari remote (v${remoteVersion})`);
         
-        if (needsMigration) {
-          const migratedData = {};
-          for (let row in payload.barisKolomExcel) {
-            migratedData[row] = [];
-            for (let col = 0; col < 6; col++) {
-              const oldCell = payload.barisKolomExcel[row]?.[col] || {};
-              migratedData[row][col] = {
-                nama1: oldCell.nama1 || "",
-                nama2: oldCell.nama2 || "",
-                nama3: oldCell.nama3 || "",
-                nama4: "", // Tambahkan nama4 kosong
-                tanggal: oldCell.tanggal1 || oldCell.tanggal || "" // Ambil tanggal1 atau tanggal
-              };
-            }
-          }
-          barisKolomExcelData = migratedData;
-        } else {
-          barisKolomExcelData = payload.barisKolomExcel;
+        if (payload.calendar && typeof payload.calendar === "object") {
+          Object.keys(store).forEach(k => delete store[k]);
+          Object.assign(store, payload.calendar);
+          saveStore();
         }
-        saveBarisKolomExcel();
+
+        if (Array.isArray(payload.cuti)) {
+          cutiStore.splice(0, cutiStore.length, ...payload.cuti);
+          saveCuti();
+        }
+
+        if (payload.bagan && typeof payload.bagan === "object") {
+          if (payload.bagan.meta) baganMeta = payload.bagan.meta;
+          if (Array.isArray(payload.bagan.seats)) baganStore = payload.bagan.seats;
+          saveBagan();
+        }
+
+        if (payload.piket && typeof payload.piket === "object") {
+          Object.keys(piketStore).forEach(k => delete piketStore[k]);
+          Object.assign(piketStore, payload.piket);
+          savePiket();
+        }
+
+        if (Array.isArray(payload.csMawaroto)) {
+          csStore.splice(0, csStore.length, ...payload.csMawaroto);
+          saveCS();
+        }
+
+        if (Array.isArray(payload.catatan)) {
+          catatanStore.splice(0, catatanStore.length, ...payload.catatan);
+          saveCatatan();
+        }
+
+        if (payload.lock && typeof payload.lock.isLocked === "boolean") {
+          isLocked = payload.lock.isLocked;
+          updateLockUI();
+        }
+        
+        localStorage.setItem(DATA_VERSION_KEY, remoteVersion);
+        currentDataVersion = remoteVersion;
+
+        reRenderActivePanel();
+
+      } finally {
+        isApplyingRemote = false;
       }
-
-      if (Array.isArray(payload.namaDatabase)) {
-        namaDatabaseStore.splice(0, namaDatabaseStore.length, ...payload.namaDatabase);
-        saveNamaDatabase();
-      }
-
-      if (payload.piket && typeof payload.piket === "object") {
-        Object.keys(piketStore).forEach(k => delete piketStore[k]);
-        Object.assign(piketStore, payload.piket);
-        savePiket();
-      }
-
-      if (Array.isArray(payload.csMawaroto)) {
-        csStore.splice(0, csStore.length, ...payload.csMawaroto);
-        saveCS();
-      }
-
-      if (Array.isArray(payload.catatan)) {
-        catatanStore.splice(0, catatanStore.length, ...payload.catatan);
-        saveCatatan();
-      }
-
-      if (payload.lock && typeof payload.lock.isLocked === "boolean") {
-        isLocked = payload.lock.isLocked;
-        updateLockUI();
-      }
-
-      if (activeFilterType === "CUTI") renderCutiTable();
-      else if (activeFilterType === "BAGAN_VIEW") { renderBagan(); updateDeleteSeatUI(); }
-      else if (activeFilterType === "BARI_KOLOM") renderBarisKolomTable();
-      else if (activeFilterType === "NAMA") { renderNamaDatabase(); updateNamaToBaganSelect(); }
-      else if (activeFilterType === "PIKET") renderPiketTable();
-      else if (activeFilterType === "CS_MAWAROTO") renderCSTable();
-      else if (activeFilterType === "CATATAN") renderCatatanList();
-      else renderCalendar();
-
-    } finally {
-      isApplyingRemote = false;
     }
   }
 
@@ -2894,105 +2197,6 @@
     }, err => {
       console.error("GLOBAL LOAD ERR:", err);
     });
-  }
-
-  // =========================
-  // ✅ FITUR UNDO/REDO (CTRL+Z)
-  // =========================
-  let undoStack = [];
-  let redoStack = [];
-  const MAX_UNDO_HISTORY = 20;
-
-  function saveToUndoStack() {
-    if (activeKey && store[activeKey]) {
-      const snapshot = {
-        key: activeKey,
-        data: JSON.parse(JSON.stringify(store[activeKey]))
-      };
-      
-      undoStack.push(snapshot);
-      if (undoStack.length > MAX_UNDO_HISTORY) {
-        undoStack.shift();
-      }
-      
-      redoStack = [];
-      updateUndoRedoUI();
-    }
-  }
-
-  function undo() {
-    if (undoStack.length === 0) {
-      toast("Tidak ada perubahan untuk di-undo");
-      return;
-    }
-    
-    const snapshot = undoStack.pop();
-    const currentState = store[snapshot.key] ? JSON.parse(JSON.stringify(store[snapshot.key])) : null;
-    
-    if (currentState) {
-      redoStack.push({
-        key: snapshot.key,
-        data: currentState
-      });
-    }
-    
-    store[snapshot.key] = snapshot.data;
-    saveStore();
-    
-    if (activeKey === snapshot.key && $("#backdrop").style.display === "grid") {
-      const date = new Date(snapshot.key);
-      openCalendarModal(snapshot.key, date);
-    }
-    
-    renderCalendar();
-    schedulePush();
-    updateUndoRedoUI();
-    toast("Undo berhasil");
-  }
-
-  function redo() {
-    if (redoStack.length === 0) {
-      toast("Tidak ada perubahan untuk di-redo");
-      return;
-    }
-    
-    const snapshot = redoStack.pop();
-    const currentState = store[snapshot.key] ? JSON.parse(JSON.stringify(store[snapshot.key])) : null;
-    
-    if (currentState) {
-      undoStack.push({
-        key: snapshot.key,
-        data: currentState
-      });
-    }
-    
-    store[snapshot.key] = snapshot.data;
-    saveStore();
-    
-    if (activeKey === snapshot.key && $("#backdrop").style.display === "grid") {
-      const date = new Date(snapshot.key);
-      openCalendarModal(snapshot.key, date);
-    }
-    
-    renderCalendar();
-    schedulePush();
-    updateUndoRedoUI();
-    toast("Redo berhasil");
-  }
-
-  function updateUndoRedoUI() {
-    const undoBtn = $("#undoBtn");
-    const redoBtn = $("#redoBtn");
-    
-    if (undoBtn) {
-      undoBtn.disabled = undoStack.length === 0;
-      undoBtn.style.opacity = undoStack.length === 0 ? "0.5" : "1";
-    }
-    
-    if (redoBtn) {
-      redoBtn.disabled = redoStack.length === 0;
-      redoBtn.style.opacity = redoStack.length === 0 ? "0.5" : "1";
-    }
   }
 
   // =========================
@@ -3009,19 +2213,17 @@
     { value: "SPV_WD", label: "SPV WD", color: "#1f5a6b" },
     { value: "WORKER_WD", label: "WORKER WD", color: "#e5c9ff" },
     { value: "DEPOSIT", label: "DEPOSIT", color: "#8B5CF6" },
-    { value: "BANKER", label: "BANKER", color: "#ebc480ff" },
+    { value: "ADMIN", label: "BANKER", color: "#F59E0B" },
     { value: "ADMIN", label: "ADMIN", color: "#FB923C" },
-    { value: "WD PGA", label: "WD PGA", color: "#FB7185" },
+    { value: "SPV_WD", label: "WD PGA", color: "#FB7185" },
     { value: "ASSIST LEAD UTAMA", label: "ASSIST LEAD UTAMA", color: "#9F1239" },
     { value: "QRIS", label: "QRIS", color: "#C4B5FD" },
     { value: "LEADER WD", label: "LEADER WD", color: "#22D3EE" },
     { value: "LEADER DEPOSIT", label: "LEADER DEPOSIT", color: "#FDE047" },
-    { value: "WHATSAPP", label: "WHATSAPP", color: "#A3E635" },
+    { value: "LEADER WD", label: "WHATSAPP", color: "#A3E635" },
     { value: "LEADER LIVE CHAT", label: "LEADER LIVE CHAT", color: "#CA8A04" },
     { value: "ASSIT LEADER WD", label: "ASSIT LEADER WD", color: "#003333" },
     { value: "TELEGRAM / SOSMED", label: "TELEGRAM / SOSMED", color: "#FF7F50" },
-    { value: "RESULT", label: "RESULT", color: "#ff50c5ff" },
-    { value: "LEADER FIN / BANKER", label: "LEADER FIN / BANKER", color: "#644e4eff" },
   ];
   const ROLE_COLOR_MAP = Object.fromEntries(ROLE_OPTIONS.map(o => [o.value, o.color]));
 
@@ -3040,18 +2242,17 @@
     { value: "REPORT_PHISING", label: "REPORT PHISING", color: "#16a085" },
     { value: "WD_PGA", label: "WD PGA", color: "#8e44ad" },
     { value: "WORKER_WD", label: "WORKER WD", color: "#1d3527ff" },
-    { value: "=", label: "=", color: "#16c5e4ff" },
     { value: "SPV_WD", label: "SPV WD", color: "#92c5e7ff" },
     { value: "ASSIT LEADER UTAMA", label: "ASSIT LEADER UTAMA", color: "#01568fff" },
     { value: "MASTER", label: "MASTER", color: "#f39c12" },
     { value: "LEADER MALAM", label: "LEADER MALAM", color: "#c4fa01ff" },
-    { value: "TELEGRAM / SOSMED", label: "TELEGRAM / SOSMED", color: "#89a789ff" },
+    { value: "TELEGRAM / SOSMED", label: "TELEGRAM / SOSMED", color: "#12f31dff" },
     { value: "*", label: "*", color: "#ff008cff" },
     { value: "-", label: "-", color: "#6e4400ff" },
     { value: "QRIS", label: "QRIS", color: "#d35400" },
-    { value: "LEADER_WD", label: "LEADER WD", color: "#5a7794ff" },
-    { value: "ASSIT_LEADER_WD", label: "ASSIT LEADER WD", color: "#fbff00ff" },
-    { value: "LEADER_DEPOSIT", label: "LEADER DEPOSIT", color: "#ff0000ff" },
+    { value: "LEADER_WD", label: "LEADER WD", color: "#2c3e50" },
+    { value: "ASSIT_LEADER_WD", label: "ASSIT LEADER WD", color: "#7d3c98" },
+    { value: "LEADER_DEPOSIT", label: "LEADER DEPOSIT", color: "#27ae60" },
     { value: "LEADER_LIVE_CHAT", label: "LEADER LIVE CHAT", color: "#923a3aff" },
     { value: "LEADER_UTAMA", label: "LEADER UTAMA", color: "#e74c3c" }
   ];
@@ -3068,7 +2269,7 @@
   let passwordCallback = null;
   let resetPanelName = "";
 
-  const storeKey = "offday-v5"; // Versi baru untuk 10 baris
+  const storeKey = "offday-v4";
   const store = JSON.parse(localStorage.getItem(storeKey) || "{}");
   const saveStore = () => localStorage.setItem(storeKey, JSON.stringify(store));
 
@@ -3113,30 +2314,6 @@
       if(typeof s.name !== "string") s.name = "";
       if(typeof s.divisi === "undefined") s.divisi = "";
     });
-  }
-
-  // Store untuk BARI-BARIS KOLOM EXCEL dengan struktur baru: 31 baris, 4 nama, 1 tanggal
-  const barisKolomExcelKey = "baris-kolom-excel-v4";
-  let barisKolomExcelData = JSON.parse(localStorage.getItem(barisKolomExcelKey) || "null") || {};
-  
-  function saveBarisKolomExcel() {
-    localStorage.setItem(barisKolomExcelKey, JSON.stringify(barisKolomExcelData));
-  }
-
-  // Store untuk NAMA DATABASE
-  const namaDatabaseKey = "nama-database-v1";
-  const namaDatabaseDefault = [
-    { name: "BUDI", divisi: "LIVECHAT" },
-    { name: "SARI", divisi: "WHATSAPP" },
-    { name: "AGUS", divisi: "DEPOSIT" },
-    { name: "DEWI", divisi: "DESIGN" }
-  ];
-  
-  let namaDatabaseStore = JSON.parse(localStorage.getItem(namaDatabaseKey) || "null") 
-    || namaDatabaseDefault.slice();
-  
-  function saveNamaDatabase() {
-    localStorage.setItem(namaDatabaseKey, JSON.stringify(namaDatabaseStore));
   }
 
   const piketKey = "piket-v1";
@@ -3293,13 +2470,7 @@
       "#removeColBtn",
       "#toggleDeleteSeatBtn",
       "#clear",
-      "#bulkImport",
-      "#addExcelRowBtn",
-      "#resetExcelBtn",
-      "#addNamaBtn",
-      "#resetNamaBtn",
-      "#undoBtn",
-      "#redoBtn"
+      "#bulkImport"
     ];
     
     buttonsToHide.forEach(selector => {
@@ -3313,11 +2484,10 @@
   function reRenderActivePanel() {
     if (activeFilterType === "CUTI") renderCutiTable();
     else if (activeFilterType === "BAGAN_VIEW") { renderBagan(); updateDeleteSeatUI(); }
-    else if (activeFilterType === "BARI_KOLOM") renderBarisKolomTable();
-    else if (activeFilterType === "NAMA") { renderNamaDatabase(); updateNamaToBaganSelect(); }
     else if (activeFilterType === "PIKET") renderPiketTable();
     else if (activeFilterType === "CS_MAWAROTO") renderCSTable();
     else if (activeFilterType === "CATATAN") renderCatatanList();
+    else if (activeFilterType === "LOG") renderAuditLog();
     else renderCalendar();
   }
 
@@ -3355,23 +2525,18 @@
     return {y:y, m:m, startDay:startDay, daysInMonth:last.getDate()};
   }
 
-  // =========================
-  // ✅ MODIFIKASI UNTUK 10 BARIS
-  // =========================
   function ensureDay(key){
     store[key]=store[key]||{};
     if(store[key].off===true && !store[key].type) store[key].type="OFF";
     if(!store[key].type) store[key].type="OFF";
 
     if(!store[key].entries){
-      const old = store[key].names || Array(10).fill(""); // Ubah menjadi 10
+      const old = store[key].names || Array(8).fill("");
       store[key].entries = old.map(n=>({name:n||"",role:""}));
       delete store[key].names;
     }
-    
-    // Ubah dari 8 menjadi 10
-    while(store[key].entries.length<10) store[key].entries.push({name:"",role:""});
-    store[key].entries = store[key].entries.slice(0,10);
+    while(store[key].entries.length<8) store[key].entries.push({name:"",role:""});
+    store[key].entries = store[key].entries.slice(0,8);
 
     store[key].blocked = store[key].blocked || false;
   }
@@ -3432,11 +2597,10 @@
         activeFilterType !== "ALL" &&
         activeFilterType !== "CUTI" &&
         activeFilterType !== "BAGAN_VIEW" &&
-        activeFilterType !== "BARI_KOLOM" &&
-        activeFilterType !== "NAMA" &&
         activeFilterType !== "PIKET" &&
         activeFilterType !== "CS_MAWAROTO" &&
         activeFilterType !== "CATATAN" &&
+        activeFilterType !== "LOG" &&
         !isBlocked &&
         type !== activeFilterType;
 
@@ -3465,19 +2629,14 @@
 
         const typeLabel=(TYPE_OPTIONS.find(t=>t.value===type)||{}).label||type;
 
-        // Hitung total dan tampilkan maksimal 8 di kalender
-        const totalEntries = entries.length;
-        const displayedEntries = entries.slice(0, 8);
-        const moreCount = totalEntries - 8;
-
-        if(totalEntries===0){
-          const emptyText = (type==="OFF") ? "Klik untuk isi (10 slot)" : (typeLabel + ": klik untuk isi");
+        if(entries.length===0){
+          const emptyText = (type==="OFF") ? "Klik untuk isi" : (typeLabel + ": klik untuk isi");
           miniHtml=
             '<div class="names-mini">'+
               '<div class="line empty">'+emptyText+'</div>'+
             '</div>';
         } else{
-          const lines=displayedEntries.map(e=>{
+          const lines=entries.map(e=>{
             const copyText=e.name;
             if(!e.role){
               return '<div class="line copy-line" data-copy="'+copyText+'">'+
@@ -3495,14 +2654,6 @@
                    '</div>';
           }).join("");
 
-          // Tambahkan indikator jika ada lebih dari 8
-          let moreIndicator = "";
-          if (moreCount > 0) {
-            moreIndicator = '<div class="line" style="font-size:10px; color:#FFD700; background:rgba(139,0,0,0.3);">' +
-              '<span>+' + moreCount + ' nama lagi</span>' +
-              '</div>';
-          }
-
           const showHeader = (type !== "OFF");
           const headerHtml = showHeader ? ('<div class="line"><b>'+typeLabel+'</b></div>') : "";
 
@@ -3510,7 +2661,6 @@
             '<div class="names-mini">'+
               headerHtml+
               lines+
-              moreIndicator+
             '</div>';
         }
       }
@@ -3545,11 +2695,6 @@
   }
 
   function openCalendarModal(key,date){
-    // Simpan state ke undo stack saat membuka modal
-    if (store[key]) {
-      saveToUndoStack();
-    }
-    
     ensureDay(key);
     const type=store[key].type||"OFF";
 
@@ -3557,10 +2702,9 @@
       "Jadwal: "+WEEKDAYS_ID[(date.getDay()+6)%7]+", "+date.getDate()+" "+MONTHS_ID[date.getMonth()]+" "+date.getFullYear();
 
     const isBlocked=store[key].blocked===true;
-    $("#modalSub").innerHTML = isBlocked
+    $("#modalSub").textContent=isBlocked
       ? "Tanggal ini sedang diblok."
-      : `<div style="margin-bottom: 8px;">Isi sampai 10 orang (boleh kosong).</div>
-         <div class="slot-info">Slot tersedia: ${10 - (store[key].entries?.filter(e => e.name.trim()).length || 0)}/10</div>`;
+      : "Isi sampai 8 orang (boleh kosong).";
 
     const typeSelect=$("#typeSelect");
     typeSelect.value=type;
@@ -3569,10 +2713,7 @@
     const wrap=$("#modalNames");
     wrap.innerHTML="";
 
-    // Buat 10 baris input (dari 8 menjadi 10)
-    for (let i = 0; i < 10; i++) {
-      const entry = store[key].entries[i] || { name: "", role: "" };
-      
+    store[key].entries.forEach((entry,i)=>{
       const row=document.createElement("div");
       row.className="role-row";
 
@@ -3619,14 +2760,12 @@
         store[key].entries[i].name=input.value;
         refreshCopyBox();
       });
-      
       select.addEventListener("change",()=>{
         store[key].entries[i].role=select.value;
         applyColor(); refreshCopyBox();
       });
-      
       applyColor();
-    }
+    });
 
     typeSelect.onchange=()=>{
       store[key].type=typeSelect.value;
@@ -3647,6 +2786,9 @@
 
   $("#save").onclick=()=>{
     if(!activeKey) return;
+    
+    const oldData = JSON.parse(JSON.stringify(store[activeKey] || {}));
+    
     if(store[activeKey].blocked){
       saveStore(); closeCalendarModal(); renderCalendar();
       schedulePush();
@@ -3665,6 +2807,22 @@
 
     store[activeKey].off=true;
     store[activeKey].type=store[activeKey].type||"OFF";
+    
+    const newData = store[activeKey];
+    const changes = [];
+    
+    newData.entries.forEach((entry, idx) => {
+      const oldEntry = oldData.entries ? oldData.entries[idx] : {name: "", role: ""};
+      if (entry.name !== oldEntry.name || entry.role !== oldEntry.role) {
+        changes.push(`Slot ${idx+1}: ${oldEntry.name || '(kosong)'} → ${entry.name || '(kosong)'}`);
+      }
+    });
+    
+    if (changes.length > 0) {
+      addAuditLog("UPDATE", "CALENDAR", 
+        `Edit tanggal ${activeKey}: ${changes.join(', ')}`);
+    }
+    
     saveStore(); closeCalendarModal(); renderCalendar();
     schedulePush();
   };
@@ -3672,27 +2830,45 @@
   $("#deleteOff").onclick=()=>{
     if(!activeKey) return;
     
-    // Simpan ke undo stack sebelum menghapus
-    saveToUndoStack();
+    const deletedData = store[activeKey];
+    if (deletedData && deletedData.entries) {
+      const names = deletedData.entries
+        .filter(e => e.name && e.name.trim())
+        .map(e => e.name)
+        .join(', ');
+      
+      if (names) {
+        addAuditLog("DELETE", "CALENDAR", 
+          `Hapus jadwal tanggal ${activeKey} (${names})`);
+      }
+    }
     
     store[activeKey].off=false;
     store[activeKey].type="OFF";
-    store[activeKey].entries=Array.from({length:10},()=>({name:"",role:""})); // Ubah menjadi 10
+    store[activeKey].entries=Array.from({length:8},()=>({name:"",role:""}));
     if(!store[activeKey].blocked) delete store[activeKey];
+    
     saveStore(); closeCalendarModal(); renderCalendar();
     schedulePush();
   };
 
   $("#toggleBlock").onclick=()=>{
     if(!activeKey) return;
+    const wasBlocked = store[activeKey]?.blocked || false;
+    
     store[activeKey]=store[activeKey]||{};
     store[activeKey].blocked=!store[activeKey].blocked;
+    
+    addAuditLog(wasBlocked ? "UNBLOCK" : "BLOCK", "CALENDAR",
+      `${wasBlocked ? 'Buka' : 'Blok'} tanggal ${activeKey}`);
+    
     if(store[activeKey].blocked){
       store[activeKey].off=false;
-      store[activeKey].entries=Array.from({length:10},()=>({name:"",role:""}));
+      store[activeKey].entries=Array.from({length:8},()=>({name:"",role:""}));
     } else {
       store[activeKey].type=store[activeKey].type||"OFF";
     }
+    
     saveStore(); closeCalendarModal(); renderCalendar();
     schedulePush();
   };
@@ -3748,7 +2924,10 @@
       btn.onclick=()=>{
         if(isLocked) return;
         const idx=Number(btn.dataset.del);
+        const data = cutiStore[idx];
         if(confirm("Hapus data CUTI ini?")){
+          addAuditLog("DELETE", "CUTI", 
+            `Hapus cuti: ${data.name} (${data.start} s/d ${data.end})`);
           cutiStore.splice(idx,1);
           saveCuti(); renderCutiTable();
           schedulePush();
@@ -3804,9 +2983,14 @@
 
     if(editingCutiIndex===null){
       cutiStore.push(data);
+      addAuditLog("CREATE", "CUTI", 
+        `Tambah cuti: ${data.name} (${data.start} s/d ${data.end})`);
       toast("CUTI ditambahkan");
     } else {
+      const oldData = cutiStore[editingCutiIndex];
       cutiStore[editingCutiIndex]=data;
+      addAuditLog("UPDATE", "CUTI", 
+        `Update cuti: ${data.name} (${oldData.start}→${data.start})`);
       toast("CUTI diupdate");
     }
 
@@ -3816,7 +3000,10 @@
 
   $("#cutiDeleteBtn").onclick=()=>{
     if(isLocked || editingCutiIndex===null) return;
+    const data = cutiStore[editingCutiIndex];
     if(confirm("Hapus data CUTI ini?")){
+      addAuditLog("DELETE", "CUTI", 
+        `Hapus cuti: ${data.name} (${data.start} s/d ${data.end})`);
       cutiStore.splice(editingCutiIndex,1);
       saveCuti(); renderCutiTable(); closeCutiModal();
       schedulePush();
@@ -3848,6 +3035,8 @@
       "Masukkan password untuk reset semua data CUTI",
       () => {
         if (confirm("Reset semua data CUTI? Tindakan ini tidak dapat dikembalikan.")) {
+          addAuditLog("RESET", "CUTI", 
+            `Reset semua data cuti (${cutiStore.length} data dihapus)`);
           cutiStore.length = 0;
           saveCuti();
           renderCutiTable();
@@ -3857,22 +3046,6 @@
       },
       "CUTI"
     );
-  };
-
-  function seatLabel(i){ return String(i + 1); }
-
-  let deleteSeatMode = false;
-  function updateDeleteSeatUI(){
-    const b = $("#toggleDeleteSeatBtn");
-    b.textContent = deleteSeatMode ? "🧽 MODE HAPUS: ON" : "🧽 MODE HAPUS: OFF";
-    b.className = deleteSeatMode ? "btn-danger" : "btn-amber";
-  }
-
-  $("#toggleDeleteSeatBtn").onclick = () => {
-    if(isLocked){ toast("Terkunci. Tidak bisa hapus seat."); return; }
-    deleteSeatMode = !deleteSeatMode;
-    updateDeleteSeatUI();
-    toast(deleteSeatMode ? "Klik seat untuk hapus (kotak hilang)" : "Mode hapus dimatikan");
   };
 
   function adjustColor(hex, percent) {
@@ -3895,6 +3068,22 @@
                    DIVISI_OPTIONS.find(d => d.label === value);
     return divisi ? divisi.label : value;
   }
+
+  function seatLabel(i){ return String(i + 1); }
+
+  let deleteSeatMode = false;
+  function updateDeleteSeatUI(){
+    const b = $("#toggleDeleteSeatBtn");
+    b.textContent = deleteSeatMode ? "🧽 MODE HAPUS: ON" : "🧽 MODE HAPUS: OFF";
+    b.className = deleteSeatMode ? "btn-danger" : "btn-amber";
+  }
+
+  $("#toggleDeleteSeatBtn").onclick = () => {
+    if(isLocked){ toast("Terkunci. Tidak bisa hapus seat."); return; }
+    deleteSeatMode = !deleteSeatMode;
+    updateDeleteSeatUI();
+    toast(deleteSeatMode ? "Klik seat untuk hapus (kotak hilang)" : "Mode hapus dimatikan");
+  };
 
   function renderBagan(){
     ensureBaganSize();
@@ -3963,6 +3152,9 @@
           baganStore[i].name = "";
           baganStore[i].divisi = "";
           baganStore[i].active = false;
+          
+          addAuditLog("DELETE", "BAGAN", `Hapus seat ${seatLabel(i)}`);
+          
           saveBagan();
           renderBagan();
           schedulePush();
@@ -3996,6 +3188,9 @@
         const tmp = baganStore[from];
         baganStore[from]=baganStore[to];
         baganStore[to]=tmp;
+        
+        addAuditLog("UPDATE", "BAGAN", `Swap seat ${seatLabel(from)} ↔ ${seatLabel(to)}`);
+        
         saveBagan(); renderBagan();
         schedulePush();
         toast("Swap seat "+seatLabel(from)+" ↔ "+seatLabel(to));
@@ -4064,9 +3259,15 @@
       const name = document.getElementById('baganSeatName').value.trim();
       const divisi = document.getElementById('baganSeatDivisi').value;
       
+      const oldName = baganStore[index].name;
+      const oldDivisi = baganStore[index].divisi;
+      
       baganStore[index].name = name;
       baganStore[index].divisi = divisi;
       baganStore[index].active = true;
+      
+      addAuditLog(name ? "UPDATE" : "DELETE", "BAGAN", 
+        `Edit seat ${seatLabel(index)}: ${oldName || '(kosong)'} → ${name || '(kosong)'}, divisi: ${oldDivisi || '(kosong)'} → ${divisi || '(kosong)'}`);
       
       saveBagan();
       renderBagan();
@@ -4161,6 +3362,8 @@
       "Masukkan password untuk reset semua data BAGAN",
       () => {
         if (confirm("Reset BAGAN? Semua nama hilang & seat yang dihapus muncul lagi.")) {
+          addAuditLog("RESET", "BAGAN", 
+            `Reset semua data bagan (${baganStore.length} seat)`);
           ensureBaganSize();
           for(let i=0;i<BAGAN_SIZE();i++) baganStore[i]={name:"", active:true, divisi: ""};
           saveBagan(); renderBagan();
@@ -4190,599 +3393,6 @@
       toast("Gagal auto copy, copy manual");
     }
   };
-
-  // =========================
-  // FUNGSI BARI-BARIS KOLOM EXCEL DENGAN 31 BARIS, 4 NAMA, 1 TANGGAL
-  // =========================
-  function renderBarisKolomTable() {
-    const container = $("#barisKolomTableContainer");
-    if (!container) return;
-    
-    // NAMA KOLOM
-    const kolomNames = ["LIVE CHAT", "WHATSAPP", "DEPOSIT", "FINANCE", "WHITDRAW", "DESIGN"];
-    
-    // Buat tabel dengan 6 kolom dan 31 baris
-    let html = `
-        <table class="baris-kolom-excel-table">
-            <thead>
-                <tr>
-                    <th>NO</th>
-    `;
-    
-    // Header untuk 6 kolom
-    for (let i = 0; i < 6; i++) {
-        html += `
-            <th>
-                <div class="kolom-header">
-                    <span class="kolom-title">${kolomNames[i]}</span>
-                    <button class="copy-kolom-excel-btn" data-kolom="${i}">COPY</button>
-                </div>
-            </th>
-        `;
-    }
-    
-    html += `</tr></thead><tbody>`;
-    
-    // Data untuk 31 baris (bukan 42)
-    for (let row = 0; row < 31; row++) {
-        html += `<tr>`;
-        html += `<td>${row+1}</td>`;
-        
-        for (let col = 0; col < 6; col++) {
-            const data = barisKolomExcelData[row]?.[col] || { 
-                nama1: "", 
-                nama2: "", 
-                nama3: "", 
-                nama4: "",  // Nama ke-4 ditambahkan
-                tanggal: "" // Hanya 1 tanggal
-            };
-            
-            html += `
-                <td>
-                    <div class="excel-input-group">
-                        <!-- 4 Input Nama (bukan 3) -->
-                        <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama1" 
-                               value="${data.nama1}" placeholder="Nama 1">
-                        <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama2" 
-                               value="${data.nama2}" placeholder="Nama 2">
-                        <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama3" 
-                               value="${data.nama3}" placeholder="Nama 3">
-                        <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama4" 
-                               value="${data.nama4}" placeholder="Nama 4">
-                        
-                        <!-- Hanya 1 Input Tanggal -->
-                        <div class="excel-date-container">
-                            <input type="date" class="excel-date-input" data-row="${row}" data-col="${col}" data-type="tanggal" 
-                                   value="${data.tanggal}">
-                        </div>
-                    </div>
-                </td>
-            `;
-        }
-        
-        html += `</tr>`;
-    }
-    
-    html += `</tbody></table>`;
-    
-    container.innerHTML = html;
-    
-    // Event listener untuk input nama (4 input per sel)
-    container.querySelectorAll(".excel-nama-input").forEach(input => {
-        input.addEventListener("input", (e) => {
-            const row = parseInt(e.target.dataset.row);
-            const col = parseInt(e.target.dataset.col);
-            const type = e.target.dataset.type;
-            
-            if (!barisKolomExcelData[row]) barisKolomExcelData[row] = [];
-            if (!barisKolomExcelData[row][col]) {
-                barisKolomExcelData[row][col] = { 
-                    nama1: "", 
-                    nama2: "", 
-                    nama3: "", 
-                    nama4: "", 
-                    tanggal: "" 
-                };
-            }
-            
-            barisKolomExcelData[row][col][type] = e.target.value;
-            
-            saveBarisKolomExcel();
-            schedulePush();
-        });
-    });
-    
-    // Event listener untuk input tanggal (hanya 1)
-    container.querySelectorAll(".excel-date-input").forEach(input => {
-        input.addEventListener("change", (e) => {
-            const row = parseInt(e.target.dataset.row);
-            const col = parseInt(e.target.dataset.col);
-            const type = e.target.dataset.type;
-            
-            if (!barisKolomExcelData[row]) barisKolomExcelData[row] = [];
-            if (!barisKolomExcelData[row][col]) {
-                barisKolomExcelData[row][col] = { 
-                    nama1: "", 
-                    nama2: "", 
-                    nama3: "", 
-                    nama4: "", 
-                    tanggal: "" 
-                };
-            }
-            
-            barisKolomExcelData[row][col][type] = e.target.value;
-            
-            saveBarisKolomExcel();
-            schedulePush();
-        });
-    });
-    
-    // Event listener untuk tombol copy kolom (menyalin 4 nama)
-    container.querySelectorAll(".copy-kolom-excel-btn").forEach(btn => {
-        btn.addEventListener("click", async (e) => {
-            const kolom = parseInt(e.target.dataset.kolom);
-            let allNames = [];
-            
-            for (let row = 0; row < 31; row++) {
-                const cell = barisKolomExcelData[row]?.[kolom] || { 
-                    nama1: "", 
-                    nama2: "", 
-                    nama3: "", 
-                    nama4: "" 
-                };
-                
-                // Gabungkan 4 nama yang tidak kosong
-                const cellNames = [
-                    cell.nama1?.trim(),
-                    cell.nama2?.trim(),
-                    cell.nama3?.trim(),
-                    cell.nama4?.trim()
-                ].filter(n => n && n !== "");
-                
-                if (cellNames.length > 0) {
-                    // Format: "Nama1, Nama2, Nama3, Nama4" per baris
-                    allNames.push(cellNames.join(", "));
-                }
-            }
-            
-            const text = allNames.join("\n");
-            if (!text) {
-                toast("Kolom ini kosong");
-                return;
-            }
-            
-            try {
-                await navigator.clipboard.writeText(text);
-                toast(`Kolom ${kolomNames[kolom]} dicopy: ${allNames.length} baris`);
-            } catch (err) {
-                prompt("Copy manual (Ctrl+C):", text);
-                toast("Gagal auto copy, copy manual");
-            }
-        });
-    });
-  }
-
-  // =========================
-  // FUNGSI NAMA DATABASE
-  // =========================
-  function renderNamaDatabase() {
-    const container = $("#namaDatabaseList");
-    if (!container) return;
-    
-    container.innerHTML = "";
-    
-    if (namaDatabaseStore.length === 0) {
-      container.innerHTML = '<div class="nama-empty">Belum ada staff dalam database</div>';
-      return;
-    }
-    
-    namaDatabaseStore.forEach((staff, idx) => {
-      const item = document.createElement("div");
-      item.className = "nama-item";
-      
-      item.innerHTML = `
-        <div class="nama-item-info">
-          <div class="nama-item-name">${staff.name}</div>
-          <div class="nama-item-divisi">${staff.divisi || "-"}</div>
-        </div>
-        <div class="nama-item-actions">
-          ${!isLocked ? `<button class="nama-item-btn edit" data-index="${idx}">Edit</button>` : ''}
-          ${!isLocked ? `<button class="nama-item-btn delete" data-index="${idx}">Hapus</button>` : ''}
-        </div>
-      `;
-      
-      container.appendChild(item);
-    });
-    
-    container.querySelectorAll(".nama-item-btn.edit").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        if (isLocked) { toast("Terkunci. Hanya bos yang bisa edit."); return; }
-        const idx = parseInt(e.target.dataset.index);
-        editNamaStaff(idx);
-      });
-    });
-    
-    container.querySelectorAll(".nama-item-btn.delete").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        if (isLocked) { toast("Terkunci. Hanya bos yang bisa hapus."); return; }
-        const idx = parseInt(e.target.dataset.index);
-        deleteNamaStaff(idx);
-      });
-    });
-  }
-
-  function updateNamaToBaganSelect() {
-    const select = $("#namaToBaganSelect");
-    if (!select) return;
-    
-    // Simpan nilai yang dipilih
-    const selectedValue = select.value;
-    
-    // Clear options kecuali yang pertama
-    select.innerHTML = '<option value="">Pilih Staff</option>';
-    
-    // Tambahkan opsi dari database
-    namaDatabaseStore.forEach((staff, idx) => {
-      const option = document.createElement("option");
-      option.value = idx;
-      option.textContent = `${staff.name} (${staff.divisi || "-"})`;
-      select.appendChild(option);
-    });
-    
-    // Kembalikan pilihan sebelumnya jika masih ada
-    if (selectedValue && selectedValue !== "") {
-      select.value = selectedValue;
-    }
-  }
-
-  function addNamaStaff() {
-    if (isLocked) { toast("Terkunci. Hanya bos yang bisa tambah staff."); return; }
-    
-    const nameInput = $("#namaInput");
-    const divisiSelect = $("#divisiSelect");
-    
-    const name = nameInput.value.trim();
-    const divisi = divisiSelect.value;
-    
-    if (!name) {
-      toast("Nama staff tidak boleh kosong");
-      return;
-    }
-    
-    // Cek apakah nama sudah ada
-    const existing = namaDatabaseStore.find(s => 
-      s.name.toLowerCase() === name.toLowerCase()
-    );
-    
-    if (existing) {
-      toast("Nama staff sudah ada dalam database");
-      return;
-    }
-    
-    namaDatabaseStore.push({ name, divisi });
-    saveNamaDatabase();
-    renderNamaDatabase();
-    updateNamaToBaganSelect();
-    
-    nameInput.value = "";
-    divisiSelect.value = "";
-    
-    schedulePush();
-    toast("Staff ditambahkan: " + name);
-  }
-
-  function editNamaStaff(idx) {
-    if (isLocked) { return; }
-    
-    const staff = namaDatabaseStore[idx];
-    const newName = prompt("Edit nama staff:", staff.name);
-    
-    if (newName === null) return;
-    
-    const trimmed = newName.trim();
-    if (!trimmed) {
-      toast("Nama staff tidak boleh kosong");
-      return;
-    }
-    
-    // Cek apakah nama sudah ada (kecuali dirinya sendiri)
-    const existing = namaDatabaseStore.find((s, i) => 
-      i !== idx && s.name.toLowerCase() === trimmed.toLowerCase()
-    );
-    
-    if (existing) {
-      toast("Nama staff sudah ada dalam database");
-      return;
-    }
-    
-    const newDivisi = prompt("Edit divisi staff:", staff.divisi || "");
-    
-    if (newDivisi === null) return;
-    
-    namaDatabaseStore[idx] = {
-      name: trimmed,
-      divisi: newDivisi.trim()
-    };
-    
-    saveNamaDatabase();
-    renderNamaDatabase();
-    updateNamaToBaganSelect();
-    schedulePush();
-    toast("Staff diupdate: " + trimmed);
-  }
-
-  function deleteNamaStaff(idx) {
-    if (isLocked) { return; }
-    
-    if (!confirm("Hapus staff dari database?")) return;
-    
-    const deleted = namaDatabaseStore.splice(idx, 1)[0];
-    saveNamaDatabase();
-    renderNamaDatabase();
-    updateNamaToBaganSelect();
-    schedulePush();
-    toast("Staff dihapus: " + deleted.name);
-  }
-
-  function addToBagan() {
-    if (isLocked) { toast("Terkunci. Hanya bos yang bisa tambah ke bagan."); return; }
-    
-    const select = $("#namaToBaganSelect");
-    const idx = parseInt(select.value);
-    
-    if (isNaN(idx) || idx < 0 || idx >= namaDatabaseStore.length) {
-      toast("Pilih staff terlebih dahulu");
-      return;
-    }
-    
-    const staff = namaDatabaseStore[idx];
-    
-    // Cari seat kosong pertama di bagan
-    let emptySeatIndex = -1;
-    for (let i = 0; i < baganStore.length; i++) {
-      if (baganStore[i].active && !baganStore[i].name) {
-        emptySeatIndex = i;
-        break;
-      }
-    }
-    
-    if (emptySeatIndex === -1) {
-      toast("Tidak ada seat kosong di bagan. Tambah baris/kolom terlebih dahulu.");
-      return;
-    }
-    
-    // Tambahkan ke bagan
-    baganStore[emptySeatIndex] = {
-      name: staff.name,
-      divisi: staff.divisi,
-      active: true
-    };
-    
-    saveBagan();
-    renderBagan();
-    schedulePush();
-    toast(`${staff.name} ditambahkan ke seat ${seatLabel(emptySeatIndex)}`);
-    
-    // Reset pilihan
-    select.value = "";
-  }
-
-  // =========================
-  // SETUP EVENT LISTENERS UNTUK EXCEL DIVISI
-  // =========================
-  function setupExcelEvents() {
-    $("#addExcelRowBtn").onclick = () => {
-      if (isLocked) { 
-        toast("Terkunci. Hanya bos yang bisa tambah baris."); 
-        return; 
-      }
-      
-      // Tambah baris (dari 31 menjadi lebih)
-      const count = prompt("Tambah berapa baris?", "5");
-      if (!count || isNaN(count)) return;
-      
-      const numRows = parseInt(count);
-      if (numRows <= 0) return;
-      
-      // Update data untuk baris tambahan
-      const currentRows = Object.keys(barisKolomExcelData).length;
-      for (let row = currentRows; row < currentRows + numRows; row++) {
-        if (!barisKolomExcelData[row]) {
-          barisKolomExcelData[row] = [];
-          for (let col = 0; col < 6; col++) {
-            barisKolomExcelData[row][col] = { 
-              nama1: "", 
-              nama2: "", 
-              nama3: "", 
-              nama4: "", 
-              tanggal: "" 
-            };
-          }
-        }
-      }
-      
-      saveBarisKolomExcel();
-      renderBarisKolomTable();
-      schedulePush();
-      toast(`${numRows} baris ditambahkan`);
-    };
-    
-    $("#exportExcelAllBtn").onclick = async () => {
-      let allData = "DAFTAR NAMA DAN TANGGAL PER KOLOM (31 Baris):\n\n";
-      const kolomNames = ["LIVE CHAT", "WHATSAPP", "DEPOSIT", "FINANCE", "WHITDRAW", "DESIGN"];
-      
-      for (let col = 0; col < 6; col++) {
-        let kolomData = [];
-        
-        for (let row = 0; row < 31; row++) {
-          const cell = barisKolomExcelData[row]?.[col] || { 
-            nama1: "", 
-            nama2: "", 
-            nama3: "", 
-            nama4: "", 
-            tanggal: "" 
-          };
-          
-          // Format per baris: "No. Nama1, Nama2, Nama3, Nama4 | Tanggal"
-          const names = [
-            cell.nama1?.trim(),
-            cell.nama2?.trim(),
-            cell.nama3?.trim(),
-            cell.nama4?.trim()
-          ].filter(n => n && n !== "");
-          
-          const dateStr = cell.tanggal?.trim() || "";
-          
-          if (names.length > 0 || dateStr) {
-            const nameStr = names.length > 0 ? names.join(", ") : "-";
-            const rowStr = dateStr ? `${nameStr} | ${dateStr}` : nameStr;
-            kolomData.push(`${row+1}. ${rowStr}`);
-          }
-        }
-        
-        allData += `${kolomNames[col]}:\n`;
-        allData += kolomData.length > 0 ? kolomData.join("\n") : "- (kosong)";
-        allData += "\n\n";
-      }
-      
-      try {
-        await navigator.clipboard.writeText(allData);
-        toast("Semua data Excel dicopy (31 baris, 4 nama, 1 tanggal)");
-      } catch(e) {
-        prompt("Copy manual (Ctrl+C):", allData);
-        toast("Gagal auto copy, copy manual");
-      }
-    };
-    
-    $("#resetExcelBtn").onclick = () => {
-      if (isLocked) {
-        toast("Terkunci. Tidak bisa reset Excel.");
-        return;
-      }
-      
-      openPasswordModal(
-        "Reset Data Excel",
-        "Masukkan password untuk reset semua data Excel",
-        () => {
-          if (confirm("Reset semua data Excel? Semua nama dan tanggal akan dihapus.")) {
-            barisKolomExcelData = {};
-            // Inisialisasi 31 baris kosong dengan 4 nama
-            for (let row = 0; row < 31; row++) {
-              barisKolomExcelData[row] = [];
-              for (let col = 0; col < 6; col++) {
-                barisKolomExcelData[row][col] = { 
-                  nama1: "", 
-                  nama2: "", 
-                  nama3: "", 
-                  nama4: "", 
-                  tanggal: "" 
-                };
-              }
-            }
-            saveBarisKolomExcel();
-            renderBarisKolomTable();
-            schedulePush();
-            toast("Data Excel direset (31 baris, 4 nama per sel)");
-          }
-        },
-        "EXCEL"
-      );
-    };
-  }
-
-  function setupNamaEvents() {
-    $("#addNamaBtn").onclick = addNamaStaff;
-    $("#addToBaganBtn").onclick = addToBagan;
-    
-    $("#exportNamaBtn").onclick = async () => {
-      const txt = namaDatabaseStore.map((s, i) => 
-        `${i+1}. ${s.name} - ${s.divisi || "-"}`
-      ).join("\n") || "Belum ada staff dalam database";
-      
-      try {
-        await navigator.clipboard.writeText(txt);
-        toast("Database staff dicopy");
-      } catch(e) {
-        alert(txt);
-        toast("Gagal copy, blok manual");
-      }
-    };
-    
-    $("#resetNamaBtn").onclick = () => {
-      if (isLocked) {
-        toast("Terkunci. Tidak bisa reset NAMA.");
-        return;
-      }
-      
-      openPasswordModal(
-        "Reset Database NAMA",
-        "Masukkan password untuk reset semua data NAMA",
-        () => {
-          if (confirm("Reset semua data NAMA? Tindakan ini tidak dapat dikembalikan.")) {
-            namaDatabaseStore.splice(0, namaDatabaseStore.length, ...namaDatabaseDefault.slice());
-            saveNamaDatabase();
-            renderNamaDatabase();
-            updateNamaToBaganSelect();
-            schedulePush();
-            toast("Database NAMA direset");
-          }
-        },
-        "NAMA"
-      );
-    };
-  }
-
-  // =========================
-  // FUNGSI MIGRASI DATA DARI VERSI LAMA
-  // =========================
-  function migrateBarisKolomData() {
-    // Cek jika ada data versi lama (v2 - 3 nama, 2 tanggal)
-    const oldDataV2 = JSON.parse(localStorage.getItem("baris-kolom-excel-v2") || "null");
-    if (oldDataV2 && Object.keys(oldDataV2).length > 0) {
-      // Migrasi dari v2 ke v4 (4 nama, 1 tanggal)
-      for (let row in oldDataV2) {
-        if (!barisKolomExcelData[row]) {
-          barisKolomExcelData[row] = [];
-          for (let col in oldDataV2[row]) {
-            const oldCell = oldDataV2[row][col];
-            // Konversi dari struktur lama (3 nama, 2 tanggal) ke baru (4 nama, 1 tanggal)
-            barisKolomExcelData[row][col] = {
-              nama1: oldCell.nama1 || "",
-              nama2: oldCell.nama2 || "",
-              nama3: oldCell.nama3 || "",
-              nama4: "", // Tambahkan nama ke-4 kosong
-              tanggal: oldCell.tanggal1 || "" // Ambil hanya tanggal pertama
-            };
-          }
-        }
-      }
-      saveBarisKolomExcel();
-      localStorage.removeItem("baris-kolom-excel-v2"); // Hapus data lama
-      toast("Data Excel dimigrasi ke versi baru (4 nama, 1 tanggal)");
-    }
-    
-    // Migrasi data offday dari versi lama (8 baris) ke versi baru (10 baris)
-    const oldStoreKey = "offday-v4";
-    const oldStore = JSON.parse(localStorage.getItem(oldStoreKey) || "null");
-    if (oldStore && Object.keys(oldStore).length > 0) {
-      for (let key in oldStore) {
-        if (oldStore[key] && oldStore[key].entries && oldStore[key].entries.length === 8) {
-          // Konversi dari 8 ke 10 baris
-          const oldEntries = oldStore[key].entries;
-          const newEntries = [...oldEntries];
-          while (newEntries.length < 10) {
-            newEntries.push({ name: "", role: "" });
-          }
-          oldStore[key].entries = newEntries;
-        }
-      }
-      // Simpan ke store baru
-      Object.assign(store, oldStore);
-      saveStore();
-      localStorage.removeItem(oldStoreKey);
-      toast("Data offday dimigrasi dari 8 ke 10 baris");
-    }
-  }
 
   function renderPiketTable(){
     const body = $("#piketTableBody");
@@ -4825,7 +3435,12 @@
         const old = piketStore[day][i] || "";
         const nm = prompt("Nama piket " + day + " slot " + (i+1) + ":", old);
         if(nm===null) return;
+        const oldName = piketStore[day][i];
         piketStore[day][i] = nm.trim();
+        
+        addAuditLog("UPDATE", "PIKET", 
+          `Edit piket ${day} slot ${i+1}: ${oldName || '(kosong)'} → ${nm.trim() || '(kosong)'}`);
+        
         savePiket();
         renderPiketTable();
         schedulePush();
@@ -4844,6 +3459,7 @@
       "Masukkan password untuk reset semua jadwal PIKET",
       () => {
         if (confirm("Reset semua jadwal PIKET?")) {
+          addAuditLog("RESET", "PIKET", "Reset semua data piket");
           Object.keys(defaultPiket).forEach(d=>{
             piketStore[d] = Array(8).fill("");
           });
@@ -4926,7 +3542,11 @@
         if(nm === null) return;
         const name = nm.trim();
         if(!name){ toast("Nama tidak boleh kosong"); return; }
+        const oldName = csStore[idx].name;
         csStore[idx].name = name;
+        
+        addAuditLog("UPDATE", "CS_MAWAROTO", `Edit CS: ${oldName} → ${name}`);
+        
         saveCS();
         renderCSTable();
         schedulePush();
@@ -4963,7 +3583,12 @@
 
       select.onchange = () => {
         if(isLocked){ toast("Terkunci. Hanya bos yang bisa edit."); renderCSTable(); return; }
+        const oldJob = csStore[idx].job;
         csStore[idx].job = select.value;
+        
+        addAuditLog("UPDATE", "CS_MAWAROTO", 
+          `Ubah jobdesk ${csStore[idx].name}: ${oldJob || '(kosong)'} → ${select.value || '(kosong)'}`);
+        
         saveCS();
         applyJobColor();
         schedulePush();
@@ -4998,7 +3623,7 @@
 
         const slot = store[tgl].entries.find(e => !(e.name||"").trim());
         if(!slot){
-          toast("Slot OFFDAY penuh (maks 10)"); // Update pesan
+          toast("Slot OFFDAY penuh (maks 8)");
           return;
         }
 
@@ -5007,6 +3632,9 @@
         store[tgl].type = "OFF";
         store[tgl].off = true;
 
+        addAuditLog("CREATE", "CALENDAR", 
+          `Tambahkan ${row.name} ke OFFDAY ${tgl} dari CS Mawaroto`);
+        
         saveStore();
         renderCalendar();
         schedulePush();
@@ -5019,6 +3647,8 @@
       del.onclick = () => {
         if(isLocked){ toast("Terkunci. Hanya bos yang bisa edit."); return; }
         if(confirm("Hapus CS ini?")){
+          addAuditLog("DELETE", "CS_MAWAROTO", 
+            `Hapus CS: ${csStore[idx].name} (${csStore[idx].job})`);
           csStore.splice(idx, 1);
           saveCS();
           renderCSTable();
@@ -5044,6 +3674,9 @@
     const name = nm.trim();
     if(!name){ toast("Nama tidak boleh kosong"); return; }
     csStore.push({ name, job: "" });
+    
+    addAuditLog("CREATE", "CS_MAWAROTO", `Tambah CS baru: ${name}`);
+    
     saveCS();
     renderCSTable();
     schedulePush();
@@ -5061,6 +3694,8 @@
       "Masukkan password untuk reset data CS MAWAROTO",
       () => {
         if (confirm("Reset data CS MAWAROTO?")) {
+          addAuditLog("RESET", "CS_MAWAROTO", 
+            `Reset semua data CS Mawaroto (${csStore.length} data)`);
           csStore.splice(0, csStore.length, ...csDefault.slice());
           saveCS();
           renderCSTable();
@@ -5152,6 +3787,9 @@
     if (isLocked) { toast("Terkunci. Hanya bos yang bisa hapus."); return; }
     
     if (confirm("Hapus catatan ini?")) {
+      const catatan = catatanStore[idx];
+      addAuditLog("DELETE", "CATATAN", 
+        `Hapus catatan: ${catatan.title} (${catatan.category})`);
       catatanStore.splice(idx, 1);
       saveCatatan();
       renderCatatanList();
@@ -5192,10 +3830,15 @@
       };
       
       if (editingCatatanIndex !== null) {
+        const oldCatatan = catatanStore[editingCatatanIndex];
         catatanStore[editingCatatanIndex] = newCatatan;
+        addAuditLog("UPDATE", "CATATAN", 
+          `Update catatan: ${oldCatatan.title} → ${title}`);
         toast("Catatan diupdate");
       } else {
         catatanStore.push(newCatatan);
+        addAuditLog("CREATE", "CATATAN", 
+          `Tambah catatan baru: ${title} (${category})`);
         toast("Catatan ditambahkan");
       }
       
@@ -5232,6 +3875,8 @@
       "Masukkan password untuk reset semua catatan",
       () => {
         if (confirm("Reset semua catatan? Tindakan ini tidak dapat dikembalikan.")) {
+          addAuditLog("RESET", "CATATAN", 
+            `Reset semua catatan (${catatanStore.length} data)`);
           catatanStore.length = 0;
           saveCatatan();
           renderCatatanList();
@@ -5273,11 +3918,10 @@
       $("#calendarPanel").style.display="none";
       $("#cutiPanel").style.display="none";
       $("#baganPanel").style.display="none";
-      $("#barisKolomPanel").style.display="none";
-      $("#namaPanel").style.display="none";
       $("#piketPanel").style.display="none";
       $("#csPanel").style.display="none";
       $("#catatanPanel").style.display="none";
+      $("#logPanel").style.display="none";
     };
 
     if(type==="CUTI"){
@@ -5294,23 +3938,6 @@
       renderBagan();
       updateDeleteSeatUI();
       toast("Mode: BAGAN");
-      return;
-    }
-
-    if(type==="BARI_KOLOM"){
-      hideAll();
-      $("#barisKolomPanel").style.display="flex";
-      renderBarisKolomTable();
-      toast("Mode: EXCEL DIVISI (31 Baris, 4 Nama, 1 Tanggal)");
-      return;
-    }
-
-    if(type==="NAMA"){
-      hideAll();
-      $("#namaPanel").style.display="flex";
-      renderNamaDatabase();
-      updateNamaToBaganSelect();
-      toast("Mode: MANAGEMENT NAMA");
       return;
     }
 
@@ -5338,21 +3965,41 @@
       return;
     }
 
+    if(type==="LOG"){
+      hideAll();
+      $("#logPanel").style.display="flex";
+      renderAuditLog();
+      toast("Menu: Audit Log");
+      return;
+    }
+
     $("#calendarPanel").style.display="flex";
     $("#cutiPanel").style.display="none";
     $("#baganPanel").style.display="none";
-    $("#barisKolomPanel").style.display="none";
-    $("#namaPanel").style.display="none";
     $("#piketPanel").style.display="none";
     $("#csPanel").style.display="none";
     $("#catatanPanel").style.display="none";
+    $("#logPanel").style.display="none";
     renderCalendar();
     toast(type==="ALL" ? "Mode: ALL" : "Filter: "+type);
   }
 
   function initTopTabs(){
     $("#topTabs").querySelectorAll(".tab-btn").forEach(btn=>{
-      btn.addEventListener("click", ()=> setActiveTab(btn.dataset.type));
+      if (btn.dataset.type === "LOG") {
+        btn.addEventListener("click", () => {
+          openPasswordModal(
+            "Akses Audit Log",
+            "Masukkan password untuk melihat riwayat perubahan",
+            () => {
+              setActiveTab("LOG");
+              renderAuditLog();
+            }
+          );
+        });
+      } else {
+        btn.addEventListener("click", ()=> setActiveTab(btn.dataset.type));
+      }
     });
   }
 
@@ -5369,6 +4016,14 @@
     if(isLocked){ toast("Terkunci. Tidak bisa reset."); return; }
     const md=getMonthData(view);
     const prefix = md.y+"-"+String(md.m+1).padStart(2,"0");
+    
+    const deletedCount = Object.keys(store).filter(k => k.startsWith(prefix)).length;
+    
+    if (deletedCount > 0) {
+      addAuditLog("RESET", "CALENDAR", 
+        `Reset bulan ${MONTHS_ID[md.m]} ${md.y} (${deletedCount} tanggal dihapus)`);
+    }
+    
     Object.keys(store).forEach(k=>{ if(k.startsWith(prefix)) delete store[k]; });
     saveStore(); renderCalendar();
     schedulePush();
@@ -5397,24 +4052,16 @@
     if(isLocked){ toast("Terkunci. Tidak bisa import."); return; }
 
     const pasted = prompt(
-      "Paste nama dari Excel.\n\nMODE: PENCAR PERIODE\n- Periode 1: tgl 1–15\n- Periode 2: tgl 16–akhir\nNama sama otomatis beda periode.\nRandom 1 nama per tanggal.\nSkip BLOCKED.\n\nNote: Sekarang tersedia 10 slot per tanggal.",
+      "Paste nama dari Excel.\n\nMODE: PENCAR PERIODE\n- Periode 1: tgl 1–15\n- Periode 2: tgl 16–akhir\nNama sama otomatis beda periode.\nRandom 1 nama per tanggal.\nSkip BLOCKED.",
       ""
     );
     if(!pasted) return;
 
+    addAuditLog("IMPORT", "CALENDAR", 
+      `Import data bulk: ${pasted.split('\n').filter(n => n.trim()).length} nama`);
+    
     let rawNames=parseNamesFromPaste(pasted);
     if(rawNames.length===0){ toast("Tidak ada nama terdeteksi"); return; }
-
-    // Simpan ke undo stack sebelum import
-    const md = getMonthData(view);
-    const y = md.y, m = md.m, daysInMonth = md.daysInMonth;
-    for (let d = 1; d <= daysInMonth; d++) {
-        const key = ymd(new Date(y, m, d));
-        if (store[key]) {
-            saveToUndoStack();
-            break;
-        }
-    }
 
     const toggleByName={}, namesP1=[], namesP2=[];
     for(const nm of rawNames){
@@ -5425,12 +4072,12 @@
     }
 
     const listP1=shuffle(namesP1), listP2=shuffle(namesP2);
-    const md2=getMonthData(view);
-    const y2=md2.y, m2=md2.m, daysInMonth2=md2.daysInMonth;
+    const md=getMonthData(view);
+    const y=md.y, m=md.m, daysInMonth=md.daysInMonth;
 
     let eligibleP1=[], eligibleP2=[];
-    for(let d=1; d<=daysInMonth2; d++){
-      const key=ymd(new Date(y2,m2,d));
+    for(let d=1; d<=daysInMonth; d++){
+      const key=ymd(new Date(y,m,d));
       ensureDay(key);
       if(store[key]?.blocked) continue;
       (d<=15?eligibleP1:eligibleP2).push(key);
@@ -5448,8 +4095,8 @@
           if(slot){
             slot.name=namesList[idx];
             slot.role=getCsJobForName(namesList[idx]);
-            store[key].type="OFF";
             store[key].off=true;
+            store[key].type=store[key].type||"OFF";
             idx++; filled++; any=true;
           }
         }
@@ -5462,366 +4109,101 @@
     const r2=fillPeriod(listP2, eligibleP2);
     saveStore(); renderCalendar();
     schedulePush();
-    toast("P1 masuk "+r1.filled+" | P2 masuk "+r2.filled+" | 10 slot per tanggal");
+    toast("P1 masuk "+r1.filled+" | P2 masuk "+r2.filled);
   }
   $("#bulkImport").onclick=bulkImportNames;
 
-  // ===== FITUR GESER KIRI-KANAN DENGAN SHIFT + MOUSE WHEEL =====
-  let isShiftPressed = false;
-  
-  // Event listener untuk tombol Shift
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Shift') {
-      isShiftPressed = true;
+  // Setup fungsi log panel
+  $("#clearLogBtn")?.addEventListener("click", () => {
+    openPasswordModal(
+      "Clear Audit Log",
+      "Masukkan password untuk menghapus semua log",
+      () => {
+        if (confirm("Hapus semua riwayat log? Tindakan ini tidak dapat dikembalikan.")) {
+          auditLog = [];
+          localStorage.setItem(LOG_KEY, JSON.stringify(auditLog));
+          renderAuditLog();
+          toast("Semua log telah dihapus");
+        }
+      }
+    );
+  });
+
+  $("#refreshLogBtn")?.addEventListener("click", () => {
+    renderAuditLog();
+    toast("Log diperbarui");
+  });
+
+  $("#exportLogBtn")?.addEventListener("click", async () => {
+    const csvContent = auditLog.map(log => 
+      `${log.timestamp},${log.user},${log.action},${log.module},"${log.details.replace(/"/g, '""')}"`
+    ).join('\n');
+    
+    const csv = `Waktu,User ID,Aksi,Modul,Detail\n${csvContent}`;
+    
+    try {
+      await navigator.clipboard.writeText(csv);
+      toast("Log berhasil dicopy ke clipboard");
+    } catch(e) {
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `audit-log-${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
     }
   });
 
-  document.addEventListener('keyup', (e) => {
-    if (e.key === 'Shift') {
-      isShiftPressed = false;
+  function createDailyBackup() {
+    const today = new Date().toDateString();
+    const lastBackup = localStorage.getItem("last-backup-date");
+    
+    if (lastBackup !== today) {
+      const backupData = {
+        date: today,
+        calendar: store,
+        cuti: cutiStore,
+        bagan: { meta: baganMeta, seats: baganStore },
+        piket: piketStore,
+        csMawaroto: csStore,
+        catatan: catatanStore
+      };
+      
+      localStorage.setItem("offday-backup-" + today, JSON.stringify(backupData));
+      localStorage.setItem("last-backup-date", today);
+      
+      const backupKeys = Object.keys(localStorage).filter(k => k.startsWith("offday-backup-"));
+      if (backupKeys.length > 7) {
+        backupKeys.sort().slice(0, -7).forEach(k => localStorage.removeItem(k));
+      }
     }
-  });
-
-  // Event listener untuk mouse wheel dengan Shift
-  document.addEventListener('wheel', (e) => {
-    if (isShiftPressed) {
-      e.preventDefault();
-      
-      // Cari elemen yang sedang aktif
-      const activePanels = [
-        document.querySelector('.app'),
-        document.querySelector('#grid'),
-        document.querySelector('.bagan-wrap'),
-        document.querySelector('.cuti-table-wrap'),
-        document.querySelector('.cs-wrap'),
-        document.querySelector('.catatan-container'),
-        document.querySelector('.excel-table-container')
-      ];
-      
-      // Scroll elemen yang bisa di-scroll
-      activePanels.forEach(panel => {
-        if (panel && panel.offsetParent !== null) {
-          panel.scrollLeft += e.deltaY * 2; // Percepat scroll
-        }
-      });
-      
-      // Tampilkan toast petunjuk
-      toast(`📜 Geser ${e.deltaY > 0 ? 'kanan' : 'kiri'} (Shift + Scroll)`);
-    }
-  }, { passive: false });
-
-  // ===== HILANGKAN PESAN "CONSOLE ASSETS SHORTCUTS" =====
-  (function() {
-    const originalLog = console.log;
-    const originalWarn = console.warn;
-    const originalError = console.error;
-    const originalInfo = console.info;
-    
-    console.log = function(...args) {
-      const message = args.join(' ');
-      if (!message.includes('Console Assets Shortcuts') && 
-          !message.includes('assets shortcuts') &&
-          !message.includes('assets-shortcuts')) {
-        originalLog.apply(console, args);
-      }
-    };
-    
-    console.warn = function(...args) {
-      const message = args.join(' ');
-      if (!message.includes('Console Assets Shortcuts') &&
-          !message.includes('assets shortcuts') &&
-          !message.includes('assets-shortcuts')) {
-        originalWarn.apply(console, args);
-      }
-    };
-    
-    console.error = function(...args) {
-      const message = args.join(' ');
-      if (!message.includes('Console Assets Shortcuts') &&
-          !message.includes('assets shortcuts') &&
-          !message.includes('assets-shortcuts')) {
-        originalError.apply(console, args);
-      }
-    };
-    
-    console.info = function(...args) {
-      const message = args.join(' ');
-      if (!message.includes('Console Assets Shortcuts') &&
-          !message.includes('assets shortcuts') &&
-          !message.includes('assets-shortcuts')) {
-        originalInfo.apply(console, args);
-      }
-    };
-    
-    setTimeout(() => {
-      console.clear();
-      console.log("✅ MAWARTOTO - Jadwal Offday System");
-      console.log("🛡️  Sistem berjalan dengan baik");
-      console.log("📱 Gunakan Shift + Scroll mouse untuk geser horizontal");
-      console.log("↶ Gunakan Ctrl+Z untuk undo, Ctrl+Y untuk redo");
-      console.log("📊 Sekarang tersedia 10 slot per tanggal di offday");
-    }, 1000);
-  })();
-
-  // =========================
-  // EFEK VISUAL BARU
-  // =========================
-
-  // ===== FUNGSI UNTUK MEMBUAT BINTANG/BULAN BERJATUHAN =====
-  function createFallingStars() {
-    const container = document.createElement('div');
-    container.className = 'falling-stars';
-    
-    // Buat 15 bintang/bulan
-    for (let i = 0; i < 15; i++) {
-      const star = document.createElement('div');
-      const isMoon = Math.random() > 0.7;
-      star.className = `falling-star ${isMoon ? 'moon' : 'star'}`;
-      
-      // Ukuran random
-      const size = isMoon ? 
-        Math.random() * 15 + 10 : 
-        Math.random() * 8 + 5;
-      
-      // Posisi awal random
-      const left = Math.random() * 100;
-      
-      // Animasi random
-      const duration = Math.random() * 10 + 15;
-      const delay = Math.random() * 10;
-      
-      Object.assign(star.style, {
-        width: `${size}px`,
-        height: `${size}px`,
-        left: `${left}vw`,
-        top: '-100px',
-        animation: `fallingStar ${duration}s linear infinite`,
-        animationDelay: `${delay}s`,
-        opacity: '0'
-      });
-      
-      container.appendChild(star);
-    }
-    
-    document.body.appendChild(container);
   }
-
-  // ===== FUNGSI UNTUK MEMBUAT BUNGA MAWAR BESAR BERGERAK =====
-  function createFloatingRoses() {
-    const container = document.createElement('div');
-    container.className = 'floating-roses';
-    
-    // Buat 8 bunga mawar
-    for (let i = 0; i < 8; i++) {
-      const rose = document.createElement('div');
-      const sizes = ['large', 'medium', 'small'];
-      const size = sizes[i % 3];
-      
-      rose.className = `floating-rose ${size}`;
-      
-      // Posisi dan animasi random
-      const left = Math.random() * 100;
-      const duration = Math.random() * 10 + 20;
-      const delay = Math.random() * 15;
-      
-      Object.assign(rose.style, {
-        left: `${left}vw`,
-        animation: `floatRose ${duration}s linear infinite`,
-        animationDelay: `${delay}s`
-      });
-      
-      container.appendChild(rose);
-    }
-    
-    document.body.appendChild(container);
-  }
-
-  // ===== FUNGSI UNTUK MEMBUAT BACKGROUND BINTANG STATIS =====
-  function createStarfield() {
-    const starsContainer = document.createElement('div');
-    starsContainer.className = 'starfield';
-    starsContainer.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -3;
-    `;
-    
-    // Buat 100 bintang kecil statis
-    for (let i = 0; i < 100; i++) {
-      const star = document.createElement('div');
-      const size = Math.random() * 2 + 1;
-      const left = Math.random() * 100;
-      const top = Math.random() * 100;
-      const opacity = Math.random() * 0.5 + 0.2;
-      const twinkleDelay = Math.random() * 5;
-      
-      star.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        background: rgba(255, 255, 255, ${opacity});
-        border-radius: 50%;
-        left: ${left}vw;
-        top: ${top}vh;
-        box-shadow: 0 0 ${size * 2}px rgba(255, 255, 255, ${opacity * 0.5});
-        animation: twinkle ${Math.random() * 3 + 2}s ease-in-out infinite;
-        animation-delay: ${twinkleDelay}s;
-      `;
-      
-      starsContainer.appendChild(star);
-    }
-    
-    document.body.appendChild(starsContainer);
-  }
-
-  // ===== ANIMASI KEDIP BINTANG =====
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.1); }
-    }
-  `;
-  document.head.appendChild(style);
-
-  // ===== INISIALISASI SEMUA EFEK VISUAL =====
-  function initVisualEffects() {
-    createStarfield();
-    createFloatingRoses();
-    createFallingStars();
-    
-    // Tambahkan efek hover pada semua panel
-    document.querySelectorAll('.panel').forEach(panel => {
-      panel.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-      panel.addEventListener('mouseenter', () => {
-        if (window.innerWidth > 768) {
-          panel.style.transform = 'translateY(-5px)';
-          panel.style.boxShadow = '0 25px 70px rgba(0, 0, 0, 0.6)';
-        }
-      });
-      
-      panel.addEventListener('mouseleave', () => {
-        panel.style.transform = 'translateY(0)';
-        panel.style.boxShadow = 'var(--shadow)';
-      });
-    });
-    
-    // Tambahkan efek pada tab aktif
-    document.querySelectorAll('#topTabs .tab-btn').forEach(tab => {
-      tab.addEventListener('click', function(e) {
-        // Tambahkan efek ripple
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.cssText = `
-          position: absolute;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.3);
-          transform: scale(0);
-          animation: ripple 0.6s linear;
-          width: ${size}px;
-          height: ${size}px;
-          left: ${x}px;
-          top: ${y}px;
-          pointer-events: none;
-        `;
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => {
-          ripple.remove();
-        }, 600);
-      });
-    });
-    
-    // Animasi ripple
-    const rippleStyle = document.createElement('style');
-    rippleStyle.textContent = `
-      @keyframes ripple {
-        to {
-          transform: scale(4);
-          opacity: 0;
-        }
-      }
-    `;
-    document.head.appendChild(rippleStyle);
-  }
-
-  // ===== RESET EFEK VISUAL SAAT RESIZE =====
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      // Hapus dan buat ulang efek visual
-      document.querySelectorAll('.falling-stars, .floating-roses, .starfield').forEach(el => {
-        if (el.parentNode) {
-          el.parentNode.removeChild(el);
-        }
-      });
-      
-      if (window.innerWidth > 480) {
-        initVisualEffects();
-      }
-    }, 250);
-  });
-
-  // ===== EVENT LISTENER UNTUK UNDO/REDO =====
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey || e.metaKey) && !e.altKey) {
-      if (e.key === 'z' || e.key === 'Z') {
-        e.preventDefault();
-        if (e.shiftKey) {
-          redo(); // Ctrl+Shift+Z untuk redo
-        } else {
-          undo(); // Ctrl+Z untuk undo
-        }
-      } else if (e.key === 'y' || e.key === 'Y') {
-        e.preventDefault();
-        redo(); // Ctrl+Y untuk redo
-      }
-    }
-  });
 
   window.addEventListener("load", () => {
     updateLockUI();
     initTopTabs();
     renderWeekdays();
-    
-    // Migrasi data dari versi lama
-    migrateBarisKolomData();
-    
     renderCalendar();
     setActiveTab("ALL");
     updateDeleteSeatUI();
     renderCSTable();
     setupCatatanForm();
-    setupExcelEvents();
-    setupNamaEvents();
+
+    addAuditLog("SYSTEM", "STARTUP", `Aplikasi diakses oleh ${clientId}`);
     
-    // Inisialisasi tombol undo/redo
-    $("#undoBtn").onclick = undo;
-    $("#redoBtn").onclick = redo;
-    updateUndoRedoUI();
-
     startRealtimeSync();
-
-    // Inisialisasi efek visual
-    setTimeout(() => {
-      initVisualEffects();
-    }, 500);
 
     setTimeout(() => {
       dbRef.once("value").then(snap => {
         if (!snap.exists()) pushNow();
       }).catch(()=>{});
     }, 500);
+
+    setInterval(createDailyBackup, 3600000);
+    createDailyBackup();
   });
 })();
 </script>
