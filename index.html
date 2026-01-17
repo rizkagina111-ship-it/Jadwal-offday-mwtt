@@ -2378,7 +2378,6 @@
         <button id="prev">← Bulan lalu</button>
         <button id="todayBtn" class="btn-green">Hari ini</button>
         <button id="next">Bulan depan →</button>
-        <button id="clear" class="btn-accent">Reset bulan ini</button>
         <button id="bulkImport" class="btn-accent">📥 Import Excel</button>
         <button id="lockBtn" class="btn-amber">🔒 TERKUNCI</button>
       </div>
@@ -2392,7 +2391,10 @@
           <button id="nextMini">→</button>
         </div>
         <div class="month" id="monthLabel">-</div>
-        <div><button id="jumpYear">Loncat Tahun</button></div>
+        <div>
+          <button id="jumpYear">Loncat Tahun</button>
+          <button id="clearBlockedOnly" class="btn-danger">🗑 Hapus Blocked</button>
+        </div>
       </div>
 
       <div class="weekdays" id="weekdays"></div>
@@ -2405,7 +2407,6 @@
         <div class="section-title title-cuti"> ✨ DAFTAR CUTI STAFF  ✨</div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
           <button id="addCutiBtn" class="btn-green">+ Tambah Cuti</button>
-          <button id="resetCutiBtn" class="btn-danger">Reset CUTI</button>
           <button id="exportCutiBtn" class="btn-accent">Export (Copy)</button>
         </div>
       </div>
@@ -2434,7 +2435,6 @@
           <button id="addColBtn" class="btn-green">+ Kolom</button>
           <button id="removeColBtn" class="btn-danger">🗑 Hapus Kolom</button>
           <button id="toggleDeleteSeatBtn" class="btn-amber">🧽 MODE HAPUS: OFF</button>
-          <button id="resetBaganBtn" class="btn-danger">Reset BAGAN</button>
           <button id="exportBaganBtn" class="btn-accent">Export (Copy)</button>
         </div>
       </div>
@@ -2452,7 +2452,6 @@
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
           <button id="addExcelRowBtn" class="btn-green">+ Tambah Baris</button>
           <button id="exportExcelAllBtn" class="btn-accent">Export Semua Data</button>
-          <button id="resetExcelBtn" class="btn-danger">Reset Excel</button>
         </div>
       </div>
       
@@ -2471,10 +2470,9 @@
     <!-- NAMA MANAGEMENT -->
     <section class="panel nama-management-panel" id="namaPanel">
       <div class="section-head">
-        <div class="section-title title-cs">👥 MANAGEMENT NAMA STAFF 👥</div>
+        <div class="section-title title-cs">👥 DATABASE NAMA STAFF 👥</div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
           <button id="exportNamaBtn" class="btn-accent">Export (Copy)</button>
-          <button id="resetNamaBtn" class="btn-danger">Reset NAMA</button>
         </div>
       </div>
 
@@ -2522,7 +2520,6 @@
       <div class="section-head">
         <div class="section-title title-piket">⬇️ PIKET BUANG SAMPAH MAWARTOTO ⬇️</div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
-          <button id="resetPiketBtn" class="btn-danger">Reset Piket</button>
           <button id="exportPiketBtn" class="btn-accent">Export (Copy)</button>
         </div>
       </div>
@@ -2550,7 +2547,6 @@
         <div class="section-title title-cs">👤 STAFF MAWAROTO 👤</div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
           <button id="addCsBtn" class="cs-add-btn">+ Tambah CS</button>
-          <button id="resetCsBtn" class="cs-reset-btn">Reset CS</button>
           <button id="exportCsBtn" class="btn-accent">Export (Copy)</button>
         </div>
       </div>
@@ -2579,7 +2575,6 @@
         <div class="section-title title-catatan">📝 INFO CS BARU & RESIGN 📝</div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-self:end;">
           <button id="addCatatanBtn" class="btn-green">+ Tambah Catatan</button>
-          <button id="resetCatatanBtn" class="btn-danger">Reset CATATAN</button>
           <button id="exportCatatanBtn" class="btn-accent">Export (Copy)</button>
         </div>
       </div>
@@ -2799,33 +2794,7 @@
       }
 
       if (payload.barisKolomExcel) {
-        const needsMigration = Object.keys(payload.barisKolomExcel).some(row => {
-          const firstCell = payload.barisKolomExcel[row]?.[0];
-          return firstCell && (
-            firstCell.tanggal1 !== undefined ||
-            firstCell.nama4 === undefined
-          );
-        });
-        
-        if (needsMigration) {
-          const migratedData = {};
-          for (let row in payload.barisKolomExcel) {
-            migratedData[row] = [];
-            for (let col = 0; col < 6; col++) {
-              const oldCell = payload.barisKolomExcel[row]?.[col] || {};
-              migratedData[row][col] = {
-                nama1: oldCell.nama1 || "",
-                nama2: oldCell.nama2 || "",
-                nama3: oldCell.nama3 || "",
-                nama4: "",
-                tanggal: oldCell.tanggal1 || oldCell.tanggal || ""
-              };
-            }
-          }
-          barisKolomExcelData = migratedData;
-        } else {
-          barisKolomExcelData = payload.barisKolomExcel;
-        }
+        barisKolomExcelData = payload.barisKolomExcel;
         saveBarisKolomExcel();
       }
 
@@ -3246,22 +3215,14 @@
     const buttonsToHide = [
       "#addCutiBtn",
       "#addCatatanBtn",
-      "#resetCutiBtn",
-      "#resetBaganBtn",
-      "#resetPiketBtn",
-      "#resetCsBtn",
-      "#resetCatatanBtn",
       "#addCsBtn",
       "#addRowBtn",
       "#addColBtn",
       "#removeColBtn",
       "#toggleDeleteSeatBtn",
-      "#clear",
       "#bulkImport",
       "#addExcelRowBtn",
-      "#resetExcelBtn",
-      "#addNamaBtn",
-      "#resetNamaBtn"
+      "#addNamaBtn"
     ];
     
     buttonsToHide.forEach(selector => {
@@ -3788,28 +3749,6 @@
     }
   };
 
-  $("#resetCutiBtn").onclick = () => {
-    if (isLocked) {
-      toast("Terkunci. Tidak bisa reset CUTI.");
-      return;
-    }
-    
-    openPasswordModal(
-      "Reset Data CUTI",
-      "Masukkan password untuk reset semua data CUTI",
-      () => {
-        if (confirm("Reset semua data CUTI? Tindakan ini tidak dapat dikembalikan.")) {
-          cutiStore.length = 0;
-          saveCuti();
-          renderCutiTable();
-          schedulePush();
-          toast("Semua data CUTI direset.");
-        }
-      },
-      "CUTI"
-    );
-  };
-
   function seatLabel(i){ return String(i + 1); }
 
   let deleteSeatMode = false;
@@ -4099,28 +4038,6 @@
     renderBagan();
     schedulePush();
     toast("Kolom ke-"+colToRemove+" dihapus. Total kolom: "+baganMeta.cols);
-  };
-
-  $("#resetBaganBtn").onclick = () => {
-    if (isLocked) {
-      toast("Terkunci. Tidak bisa reset BAGAN.");
-      return;
-    }
-    
-    openPasswordModal(
-      "Reset BAGAN",
-      "Masukkan password untuk reset semua data BAGAN",
-      () => {
-        if (confirm("Reset BAGAN? Semua nama hilang & seat yang dihapus muncul lagi.")) {
-          ensureBaganSize();
-          for(let i=0;i<BAGAN_SIZE();i++) baganStore[i]={name:"", active:true, divisi: ""};
-          saveBagan(); renderBagan();
-          schedulePush();
-          toast("BAGAN direset");
-        }
-      },
-      "BAGAN"
-    );
   };
 
   $("#exportBaganBtn").onclick=async ()=>{
@@ -4581,40 +4498,6 @@
         toast("Gagal auto copy, copy manual");
       }
     };
-    
-    $("#resetExcelBtn").onclick = () => {
-      if (isLocked) {
-        toast("Terkunci. Tidak bisa reset Excel.");
-        return;
-      }
-      
-      openPasswordModal(
-        "Reset Data Excel",
-        "Masukkan password untuk reset semua data Excel",
-        () => {
-          if (confirm("Reset semua data Excel? Semua nama dan tanggal akan dihapus.")) {
-            barisKolomExcelData = {};
-            for (let row = 0; row < 31; row++) {
-              barisKolomExcelData[row] = [];
-              for (let col = 0; col < 6; col++) {
-                barisKolomExcelData[row][col] = { 
-                  nama1: "", 
-                  nama2: "", 
-                  nama3: "", 
-                  nama4: "", 
-                  tanggal: "" 
-                };
-              }
-            }
-            saveBarisKolomExcel();
-            renderBarisKolomTable();
-            schedulePush();
-            toast("Data Excel direset (31 baris, 4 nama per sel)");
-          }
-        },
-        "EXCEL"
-      );
-    };
   }
 
   function setupNamaEvents() {
@@ -4634,57 +4517,12 @@
         toast("Gagal copy, blok manual");
       }
     };
-    
-    $("#resetNamaBtn").onclick = () => {
-      if (isLocked) {
-        toast("Terkunci. Tidak bisa reset NAMA.");
-        return;
-      }
-      
-      openPasswordModal(
-        "Reset Database NAMA",
-        "Masukkan password untuk reset semua data NAMA",
-        () => {
-          if (confirm("Reset semua data NAMA? Tindakan ini tidak dapat dikembalikan.")) {
-            namaDatabaseStore.splice(0, namaDatabaseStore.length, ...namaDatabaseDefault.slice());
-            saveNamaDatabase();
-            renderNamaDatabase();
-            updateNamaToBaganSelect();
-            schedulePush();
-            toast("Database NAMA direset");
-          }
-        },
-        "NAMA"
-      );
-    };
   }
 
   // =========================
   // FUNGSI MIGRASI DATA DARI VERSI LAMA
   // =========================
-  function migrateBarisKolomData() {
-    const oldDataV2 = JSON.parse(localStorage.getItem("baris-kolom-excel-v2") || "null");
-    if (oldDataV2 && Object.keys(oldDataV2).length > 0) {
-      for (let row in oldDataV2) {
-        if (!barisKolomExcelData[row]) {
-          barisKolomExcelData[row] = [];
-          for (let col in oldDataV2[row]) {
-            const oldCell = oldDataV2[row][col];
-            barisKolomExcelData[row][col] = {
-              nama1: oldCell.nama1 || "",
-              nama2: oldCell.nama2 || "",
-              nama3: oldCell.nama3 || "",
-              nama4: "",
-              tanggal: oldCell.tanggal1 || ""
-            };
-          }
-        }
-      }
-      saveBarisKolomExcel();
-      localStorage.removeItem("baris-kolom-excel-v2");
-      toast("Data Excel dimigrasi ke versi baru (4 nama, 1 tanggal)");
-    }
-    
+  function migrateData() {
     const oldStoreKey = "offday-v4";
     const oldStore = JSON.parse(localStorage.getItem(oldStoreKey) || "null");
     if (oldStore && Object.keys(oldStore).length > 0) {
@@ -4701,7 +4539,6 @@
       Object.assign(store, oldStore);
       saveStore();
       localStorage.removeItem(oldStoreKey);
-      toast("Data offday dimigrasi dari 8 ke 10 baris");
     }
   }
 
@@ -4753,30 +4590,6 @@
       };
     });
   }
-
-  $("#resetPiketBtn").onclick = ()=>{
-    if (isLocked) {
-      toast("Terkunci. Tidak bisa reset PIKET.");
-      return;
-    }
-    
-    openPasswordModal(
-      "Reset PIKET",
-      "Masukkan password untuk reset semua jadwal PIKET",
-      () => {
-        if (confirm("Reset semua jadwal PIKET?")) {
-          Object.keys(defaultPiket).forEach(d=>{
-            piketStore[d] = Array(8).fill("");
-          });
-          savePiket();
-          renderPiketTable();
-          schedulePush();
-          toast("PIKET direset");
-        }
-      },
-      "PIKET"
-    );
-  };
 
   $("#exportPiketBtn").onclick = async ()=>{
     const days = ["SENIN","SELASA","RABU","KAMIS","JUMAT","SABTU","MINGGU"];
@@ -4971,28 +4784,6 @@
     toast("CS ditambahkan");
   };
 
-  $("#resetCsBtn").onclick = () => {
-    if (isLocked) {
-      toast("Terkunci. Tidak bisa reset CS MAWAROTO.");
-      return;
-    }
-    
-    openPasswordModal(
-      "Reset CS MAWAROTO",
-      "Masukkan password untuk reset data CS MAWAROTO",
-      () => {
-        if (confirm("Reset data CS MAWAROTO?")) {
-          csStore.splice(0, csStore.length, ...csDefault.slice());
-          saveCS();
-          renderCSTable();
-          schedulePush();
-          toast("CS direset");
-        }
-      },
-      "CS MAWAROTO"
-    );
-  };
-
   $("#exportCsBtn").onclick = async () => {
     const txt = csStore.map((r,i)=>`${i+1}. ${r.name} — ${r.job || "-"}`).join("\n") || "Belum ada data CS";
     try{
@@ -5142,28 +4933,6 @@
     $("#catatanTitle").focus();
   };
 
-  $("#resetCatatanBtn").onclick = () => {
-    if (isLocked) {
-      toast("Terkunci. Tidak bisa reset Catatan.");
-      return;
-    }
-    
-    openPasswordModal(
-      "Reset Catatan",
-      "Masukkan password untuk reset semua catatan",
-      () => {
-        if (confirm("Reset semua catatan? Tindakan ini tidak dapat dikembalikan.")) {
-          catatanStore.length = 0;
-          saveCatatan();
-          renderCatatanList();
-          schedulePush();
-          toast("Semua catatan direset.");
-        }
-      },
-      "CATATAN"
-    );
-  };
-
   $("#exportCatatanBtn").onclick = async () => {
     if (catatanStore.length === 0) {
       toast("Belum ada catatan untuk diexport");
@@ -5231,7 +5000,7 @@
       $("#namaPanel").style.display="flex";
       renderNamaDatabase();
       updateNamaToBaganSelect();
-      toast("Mode: MANAGEMENT NAMA");
+      toast("Mode: DATABASE NAMA");
       return;
     }
 
@@ -5286,13 +5055,22 @@
     const y=prompt("Masukkan tahun (contoh 2026):", view.getFullYear());
     if(!y) return; view.setFullYear(Number(y)); renderCalendar();
   };
-  $("#clear").onclick=()=>{
-    if(isLocked){ toast("Terkunci. Tidak bisa reset."); return; }
+
+  // Fungsi untuk menghapus hanya data yang blocked di bulan ini
+  $("#clearBlockedOnly").onclick=()=>{
+    if(isLocked){ toast("Terkunci. Tidak bisa hapus."); return; }
     const md=getMonthData(view);
     const prefix = md.y+"-"+String(md.m+1).padStart(2,"0");
-    Object.keys(store).forEach(k=>{ if(k.startsWith(prefix)) delete store[k]; });
+    let count = 0;
+    Object.keys(store).forEach(k=>{ 
+      if(k.startsWith(prefix) && store[k].blocked) {
+        delete store[k];
+        count++;
+      }
+    });
     saveStore(); renderCalendar();
     schedulePush();
+    toast(count + " tanggal blocked dihapus");
   };
 
   function parseNamesFromPaste(text){
@@ -5475,6 +5253,7 @@
       console.log("📱 Gunakan Shift + Scroll mouse untuk geser horizontal");
       console.log("↶ Gunakan Ctrl+Z untuk undo, Ctrl+Y untuk redo");
       console.log("📊 Sekarang tersedia 10 slot per tanggal di offday");
+      console.log("💾 Data tidak terhapus otomatis - sistem penyimpanan permanen");
     }, 1000);
   })();
 
@@ -5692,7 +5471,7 @@
     initTopTabs();
     renderWeekdays();
     
-    migrateBarisKolomData();
+    migrateData();
     
     renderCalendar();
     setActiveTab("ALL");
