@@ -2347,6 +2347,65 @@
       pointer-events: none;
       z-index: -3;
     }
+    
+    /* ===== STYLE UNTUK TOMBOL UNDO/REDO ===== */
+    #undoBtn:not(:disabled), #redoBtn:not(:disabled) {
+        background: linear-gradient(145deg,
+            #F59E0B 0%,
+            #FBBF24 25%,
+            #FCD34D 50%,
+            #FBBF24 75%,
+            #D97706 100%
+        ) !important;
+        color: #000000 !important;
+        border: 1px solid rgba(245, 158, 11, 0.7) !important;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+        font-weight: 900;
+    }
+    
+    #undoBtn:disabled, #redoBtn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    /* ===== STYLE UNTUK TOMBOL RESET BAGAN ===== */
+    #resetBaganBtn {
+        background: linear-gradient(145deg,
+            #DC2626 0%,
+            #EF4444 25%,
+            #F87171 50%,
+            #EF4444 75%,
+            #B91C1C 100%
+        ) !important;
+        color: white !important;
+        border: 1px solid rgba(220, 38, 38, 0.7) !important;
+        text-shadow: 
+            0 1px 0 rgba(0, 0, 0, 0.7),
+            0 0 8px rgba(255, 255, 255, 0.5);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+            0 4px 12px rgba(220, 38, 38, 0.4) !important;
+        font-weight: 900;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    #resetBaganBtn:hover {
+        background: linear-gradient(145deg,
+            #EF4444 0%,
+            #F87171 25%,
+            #FCA5A5 50%,
+            #F87171 75%,
+            #DC2626 100%
+        ) !important;
+        transform: translateY(-2px);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.7),
+            0 6px 16px rgba(220, 38, 38, 0.6) !important;
+    }
   </style>
 
   <!-- Firebase SDK -->
@@ -2380,6 +2439,8 @@
         <button id="next">Bulan depan →</button>
         <button id="bulkImport" class="btn-accent">📥 Import Excel</button>
         <button id="lockBtn" class="btn-amber">🔒 TERKUNCI</button>
+        <button id="undoBtn" disabled>🌹</button>
+        <button id="redoBtn" disabled>🌹</button>
       </div>
     </div>
 
@@ -2435,6 +2496,7 @@
           <button id="addColBtn" class="btn-green">+ Kolom</button>
           <button id="removeColBtn" class="btn-danger">🗑 Hapus Kolom</button>
           <button id="toggleDeleteSeatBtn" class="btn-amber">🧽 MODE HAPUS: OFF</button>
+          <button id="resetBaganBtn" class="btn-danger">🔄 Reset Bagan</button>
           <button id="exportBaganBtn" class="btn-accent">Export (Copy)</button>
         </div>
       </div>
@@ -2848,7 +2910,7 @@
   }
 
   // =========================
-  // ✅ FITUR UNDO/REDO (CTRL+Z)
+  // ✅ FITUR UNDO/REDO (CTRL+Z) UNTUK KALENDER
   // =========================
   let undoStack = [];
   let redoStack = [];
@@ -2929,8 +2991,115 @@
   }
 
   // =========================
-  // APP ORIGINAL LOGIC
+  // ✅ SISTEM UNDO/REDO UNTUK BAGAN
   // =========================
+  let baganUndoStack = [];
+  let baganRedoStack = [];
+  const MAX_BAGAN_UNDO = 20;
+
+  function saveBaganToUndoStack() {
+    const snapshot = {
+        meta: JSON.parse(JSON.stringify(baganMeta)),
+        seats: JSON.parse(JSON.stringify(baganStore)),
+        timestamp: Date.now(),
+        action: "bagan_change"
+    };
+    
+    baganUndoStack.push(snapshot);
+    if (baganUndoStack.length > MAX_BAGAN_UNDO) {
+        baganUndoStack.shift();
+    }
+    
+    // Reset redo stack ketika ada perubahan baru
+    baganRedoStack = [];
+    
+    updateUndoRedoButtons();
+  }
+
+  function undoBagan() {
+    if (baganUndoStack.length === 0) {
+      toast("Tidak ada perubahan bagan untuk di-undo");
+      return;
+    }
+    
+    // Simpan state saat ini ke redo stack
+    const currentState = {
+        meta: JSON.parse(JSON.stringify(baganMeta)),
+        seats: JSON.parse(JSON.stringify(baganStore)),
+        timestamp: Date.now(),
+        action: "bagan_change"
+    };
+    baganRedoStack.push(currentState);
+    
+    // Ambil state sebelumnya dari undo stack
+    const previousState = baganUndoStack.pop();
+    baganMeta = previousState.meta;
+    baganStore = previousState.seats;
+    
+    saveBagan();
+    renderBagan();
+    schedulePush();
+    
+    updateUndoRedoButtons();
+    toast("Undo perubahan bagan berhasil");
+  }
+
+  function redoBagan() {
+    if (baganRedoStack.length === 0) {
+      toast("Tidak ada perubahan bagan untuk di-redo");
+      return;
+    }
+    
+    // Simpan state saat ini ke undo stack
+    const currentState = {
+        meta: JSON.parse(JSON.stringify(baganMeta)),
+        seats: JSON.parse(JSON.stringify(baganStore)),
+        timestamp: Date.now(),
+        action: "bagan_change"
+    };
+    baganUndoStack.push(currentState);
+    
+    // Ambil state berikutnya dari redo stack
+    const nextState = baganRedoStack.pop();
+    baganMeta = nextState.meta;
+    baganStore = nextState.seats;
+    
+    saveBagan();
+    renderBagan();
+    schedulePush();
+    
+    updateUndoRedoButtons();
+    toast("Redo perubahan bagan berhasil");
+  }
+
+  function updateUndoRedoButtons() {
+    const undoBtn = $("#undoBtn");
+    const redoBtn = $("#redoBtn");
+    
+    if (undoBtn) {
+      undoBtn.disabled = baganUndoStack.length === 0 && undoStack.length === 0;
+    }
+    
+    if (redoBtn) {
+      redoBtn.disabled = baganRedoStack.length === 0 && redoStack.length === 0;
+    }
+  }
+
+  // Fungsi untuk menangani semua perubahan bagan yang bisa di-undo
+  function handleBaganChange(action, callback) {
+    if(isLocked) {
+      toast("Terkunci. Hanya bos yang bisa edit bagan.");
+      return;
+    }
+    
+    // Simpan state sebelum perubahan
+    saveBaganToUndoStack();
+    
+    // Eksekusi perubahan
+    callback();
+  }
+
+  // APP ORIGINAL LOGIC
   const WEEKDAYS_ID = ["SENIN","SELASA","RABU","KAMIS","JUMAT","SABTU","MINGGU"];
   const MONTHS_ID = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 
@@ -3222,7 +3391,8 @@
       "#toggleDeleteSeatBtn",
       "#bulkImport",
       "#addExcelRowBtn",
-      "#addNamaBtn"
+      "#addNamaBtn",
+      "#resetBaganBtn"
     ];
     
     buttonsToHide.forEach(selector => {
@@ -3893,6 +4063,9 @@
 
       board.appendChild(div);
     });
+    
+    // Update status tombol undo/redo
+    updateUndoRedoButtons();
   }
 
   function openBaganSeatModal(index) {
@@ -3951,6 +4124,9 @@
     };
     
     document.getElementById('baganSeatSave').onclick = () => {
+      // Simpan state sebelum edit untuk undo
+      saveBaganToUndoStack();
+      
       const name = document.getElementById('baganSeatName').value.trim();
       const divisi = document.getElementById('baganSeatDivisi').value;
       
@@ -3982,64 +4158,108 @@
     select.dispatchEvent(new Event('change'));
   }
 
-  $("#addRowBtn").onclick=()=>{
-    if(isLocked){ toast("Terkunci. Tidak bisa tambah baris."); return; }
-    baganMeta.rows += 1;
-    ensureBaganSize();
-    saveBagan();
-    renderBagan();
-    schedulePush();
-    toast("Baris ditambah. Total: "+baganMeta.rows);
+  // ===== FUNGSI RESET BAGAN =====
+  function resetBagan() {
+      if(isLocked){ 
+          toast("Terkunci. Hanya bos yang bisa reset bagan."); 
+          return; 
+      }
+      
+      if(!confirm("Reset seluruh bagan ke default?\n\nSemua nama akan dihapus, bagan dikembalikan ke 10 baris x 20 kolom.\n\nAksi ini TIDAK BISA di-undo!")){
+          return;
+      }
+      
+      baganMeta = { rows: 10, cols: 20 };
+      baganStore = Array.from({length: 200}, ()=>({name:"", active:true, divisi: ""}));
+      saveBagan();
+      renderBagan();
+      schedulePush();
+      toast("Bagan direset ke default (10 baris x 20 kolom)");
+  }
+
+  // Event listener untuk tombol reset
+  $("#resetBaganBtn").onclick = resetBagan;
+
+  // Update fungsi addRowBtn untuk menggunakan sistem undo
+  $("#addRowBtn").onclick = () => {
+    handleBaganChange("add_row", () => {
+      baganMeta.rows += 1;
+      ensureBaganSize();
+      saveBagan();
+      renderBagan();
+      schedulePush();
+      toast("Baris ditambah. Total: " + baganMeta.rows);
+    });
   };
 
-  $("#addColBtn").onclick=()=>{
-    if(isLocked){ toast("Terkunci. Tidak bisa tambah kolom."); return; }
-    baganMeta.cols += 1;
-    ensureBaganSize();
-    saveBagan();
-    renderBagan();
-    schedulePush();
-    toast("Kolom ditambah. Total: "+baganMeta.cols);
+  // Update fungsi addColBtn untuk menggunakan sistem undo
+  $("#addColBtn").onclick = () => {
+    handleBaganChange("add_col", () => {
+      baganMeta.cols += 1;
+      ensureBaganSize();
+      saveBagan();
+      renderBagan();
+      schedulePush();
+      toast("Kolom ditambah. Total: " + baganMeta.cols);
+    });
   };
 
+  // Update fungsi removeColBtn untuk menggunakan sistem undo
   $("#removeColBtn").onclick = () => {
-    if (isLocked) { toast("Terkunci. Tidak bisa hapus kolom."); return; }
+    handleBaganChange("remove_col", () => {
+      const cols = baganMeta.cols;
+      const rows = baganMeta.rows;
+      if (cols <= 1) { 
+        toast("Kolom minimal 1"); 
+        return; 
+      }
 
-    const cols = baganMeta.cols;
-    const rows = baganMeta.rows;
-    if (cols <= 1) { toast("Kolom minimal 1"); return; }
+      const input = prompt(
+        "Mau hapus kolom ke berapa?\n\nTotal kolom sekarang: " + cols + "\nIsi angka 1 - " + cols,
+        String(cols)
+      );
+      if (input === null) return;
 
-    const input = prompt(
-      "Mau hapus kolom ke berapa?\n\nTotal kolom sekarang: "+cols+"\nIsi angka 1 - "+cols,
-      String(cols)
-    );
-    if (input === null) return;
+      const colToRemove = Number(input);
+      if (!Number.isInteger(colToRemove) || colToRemove < 1 || colToRemove > cols) {
+        toast("Nomor kolom tidak valid");
+        return;
+      }
 
-    const colToRemove = Number(input);
-    if (!Number.isInteger(colToRemove) || colToRemove < 1 || colToRemove > cols) {
-      toast("Nomor kolom tidak valid");
-      return;
-    }
+      if (!confirm("Yakin hapus kolom ke-" + colToRemove + "?\nSemua nama di kolom ini akan hilang.")) return;
 
-    if (!confirm("Yakin hapus kolom ke-"+colToRemove+"?\nSemua nama di kolom ini akan hilang.")) return;
+      const oldCols = cols;
+      const removeIndexInRow = colToRemove - 1;
 
-    const oldCols = cols;
-    const removeIndexInRow = colToRemove - 1;
+      // Simpan kolom yang dihapus untuk informasi undo
+      const deletedColumn = [];
+      for (let r = 0; r < rows; r++) {
+        const idx = r * oldCols + removeIndexInRow;
+        if (idx < baganStore.length) {
+          deletedColumn.push({
+            row: r,
+            col: colToRemove,
+            seat: JSON.parse(JSON.stringify(baganStore[idx]))
+          });
+        }
+      }
 
-    for (let r = rows - 1; r >= 0; r--) {
-      const idx = r * oldCols + removeIndexInRow;
-      baganStore.splice(idx, 1);
-    }
+      // Hapus kolom
+      for (let r = rows - 1; r >= 0; r--) {
+        const idx = r * oldCols + removeIndexInRow;
+        baganStore.splice(idx, 1);
+      }
 
-    baganMeta.cols -= 1;
-
-    ensureBaganSize();
-    saveBagan();
-    renderBagan();
-    schedulePush();
-    toast("Kolom ke-"+colToRemove+" dihapus. Total kolom: "+baganMeta.cols);
+      baganMeta.cols -= 1;
+      ensureBaganSize();
+      saveBagan();
+      renderBagan();
+      schedulePush();
+      toast("Kolom ke-" + colToRemove + " dihapus. Total kolom: " + baganMeta.cols);
+    });
   };
 
+  // Update fungsi exportBaganBtn
   $("#exportBaganBtn").onclick=async ()=>{
     const lines = baganStore.map((s,i)=>{
       const seatNum = seatLabel(i);
@@ -4400,6 +4620,9 @@
       toast("Tidak ada seat kosong di bagan. Tambah baris/kolom terlebih dahulu.");
       return;
     }
+    
+    // Simpan state sebelum perubahan untuk undo
+    saveBaganToUndoStack();
     
     baganStore[emptySeatIndex] = {
       name: staff.name,
@@ -5254,6 +5477,7 @@
       console.log("↶ Gunakan Ctrl+Z untuk undo, Ctrl+Y untuk redo");
       console.log("📊 Sekarang tersedia 10 slot per tanggal di offday");
       console.log("💾 Data tidak terhapus otomatis - sistem penyimpanan permanen");
+      console.log("🔄 Tombol Reset Bagan tersedia di panel Bagan");
     }, 1000);
   })();
 
@@ -5454,17 +5678,46 @@
     if ((e.ctrlKey || e.metaKey) && !e.altKey) {
       if (e.key === 'z' || e.key === 'Z') {
         e.preventDefault();
-        if (e.shiftKey) {
-          redo();
+        if (activeFilterType === "BAGAN_VIEW") {
+          if (e.shiftKey) {
+            redoBagan();
+          } else {
+            undoBagan();
+          }
         } else {
-          undo();
+          if (e.shiftKey) {
+            redo();
+          } else {
+            undo();
+          }
         }
       } else if (e.key === 'y' || e.key === 'Y') {
         e.preventDefault();
-        redo();
+        if (activeFilterType === "BAGAN_VIEW") {
+          redoBagan();
+        } else {
+          redo();
+        }
       }
     }
   });
+
+  // ===== SETUP TOMBOL UNDO/REDO =====
+  $("#undoBtn").onclick = () => {
+    if (activeFilterType === "BAGAN_VIEW") {
+      undoBagan();
+    } else {
+      undo();
+    }
+  };
+
+  $("#redoBtn").onclick = () => {
+    if (activeFilterType === "BAGAN_VIEW") {
+      redoBagan();
+    } else {
+      redo();
+    }
+  };
 
   window.addEventListener("load", () => {
     updateLockUI();
@@ -5492,6 +5745,9 @@
         if (!snap.exists()) pushNow();
       }).catch(()=>{});
     }, 500);
+    
+    // Inisialisasi tombol undo/redo
+    updateUndoRedoButtons();
   });
 })();
 </script>
